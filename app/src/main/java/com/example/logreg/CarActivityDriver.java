@@ -42,7 +42,8 @@ public class CarActivityDriver extends Fragment {
         return fragment;
     }
 
-    public CarActivityDriver() {
+    public CarActivityDriver()
+    {
         // Required empty public constructor
     }
 

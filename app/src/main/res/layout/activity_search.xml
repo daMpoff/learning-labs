@@ -9,25 +9,31 @@
     tools:context=".SearchActivityPassenger">
 
 
-    <EditText
+    <SearchView
         android:id="@+id/start_adress"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#C6CCC5"
-        android:hint="Начало"
+        android:hint="Первый пункт"
         android:textSize="25dp"
         android:textStyle="bold"/>
 
-    <EditText
+    <SearchView
         android:id="@+id/end_adress"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginVertical="15dp"
         android:background="#C6CCC5"
-        android:hint="Конец"
+        android:hint="Второй пункт"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/cities_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

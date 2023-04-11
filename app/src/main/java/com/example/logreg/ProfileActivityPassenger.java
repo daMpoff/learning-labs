@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,8 +59,11 @@ public class ProfileActivityPassenger extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.activity_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_profile, container, false);
+        ImageView imageView = view.findViewById(R.id.imageView);
+        String imageUrl = "https://firebasestorage.googleapis.com/v0/b/duck-e0e86.appspot.com/o/Users_Profile_Cover_image%2Fimage_NBSR6urldCZu5WGC2ZpJo83QD6F3?alt=media&token=42f5f989-df8f-4cac-bc1e-60bab9674b86";
+        Glide.with(this).load(imageUrl).into(imageView);
+        return view;
     }
 }
