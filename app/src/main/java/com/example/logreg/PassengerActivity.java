@@ -25,7 +25,7 @@ public class PassengerActivity extends AppCompatActivity
         adapter.addFragment(new SearchActivityPassenger(),"");
         adapter.addFragment(new CarActivityPassenger(),"");
         adapter.addFragment(new ChatActivity(),"");
-        adapter.addFragment(new ProfileActivityPassenger(),"Пассажир");
+        adapter.addFragment(new EditProfilePage(),"Пассажир");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

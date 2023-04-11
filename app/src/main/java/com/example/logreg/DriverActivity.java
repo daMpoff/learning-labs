@@ -25,7 +25,7 @@ public class DriverActivity extends AppCompatActivity
         adapter.addFragment(new DeployActivity(),"");
         adapter.addFragment(new CarActivityDriver(),"");
         adapter.addFragment(new ChatActivity(),"");
-        adapter.addFragment(new ProfileActivityDriver(),"Водитель");
+        adapter.addFragment(new EditProfilePage(),"Водитель");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

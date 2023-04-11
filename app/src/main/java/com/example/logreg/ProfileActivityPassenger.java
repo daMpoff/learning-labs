@@ -11,11 +11,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileActivityPassenger#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileActivityPassenger extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +43,6 @@ public class ProfileActivityPassenger extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

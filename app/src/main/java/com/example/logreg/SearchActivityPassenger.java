@@ -39,7 +39,8 @@ public class SearchActivityPassenger extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SearchActivityPassenger() {
+    public SearchActivityPassenger()
+    {
         // пустой конструктор
     }
 
