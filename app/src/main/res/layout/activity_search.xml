@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".SearchActivityPassenger">
 
-
     <SearchView
         android:id="@+id/start_adress"
         android:layout_width="200dp"
@@ -30,10 +29,15 @@
         android:hint="Второй пункт"
         android:textSize="25dp"
         android:textStyle="bold"/>
-
     <ListView
         android:id="@+id/cities_list_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
-
+    <com.yandex.mapkit.mapview.MapView
+        android:apiKey="fa9570da-773b-45e9-92f1-54a4175b5e6e"
+        android:id="@+id/map_yandex"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

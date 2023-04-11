@@ -9,6 +9,14 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yandex.mapkit.Animation;
+import com.yandex.mapkit.MapKitFactory;
+import com.yandex.mapkit.geometry.Point;
+import com.yandex.mapkit.map.CameraPosition;
+import com.yandex.mapkit.map.Map;
+import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.PlacemarkMapObject;
+import com.yandex.mapkit.mapview.MapView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +34,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class SearchActivityPassenger extends Fragment {
+public class SearchActivityPassenger extends Fragment
+{
+    private final String MAPKIT_API_KEY = "c2be26a0-5509-40cf-8294-4a6cbf8ca714";
+    public MapView mapview;
+    private MapObjectCollection mapObjects;
     private SearchView searchStartView;
     private SearchView searchEndView;
     private Gson gson;
@@ -43,22 +55,15 @@ public class SearchActivityPassenger extends Fragment {
     {
         // пустой конструктор
     }
-
     public static SearchActivityPassenger newInstance(String param1, String param2) {
         SearchActivityPassenger fragment = new SearchActivityPassenger();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        MapKitFactory.setApiKey(MAPKIT_API_KEY);
+        MapKitFactory.initialize(getActivity());
         gson = new Gson();
         try {
             InputStream inputStream = getResources().openRawResource(R.raw.tb_city);
@@ -76,7 +81,7 @@ public class SearchActivityPassenger extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_search, container, false);
+        View view = inflater.inflate(R.layout.activity_search, container,false);
         searchStartView = view.findViewById(R.id.start_adress);
         searchEndView = view.findViewById(R.id.end_adress);
         ListView citiesListView = view.findViewById(R.id.cities_list_view);
@@ -110,7 +115,6 @@ public class SearchActivityPassenger extends Fragment {
                 return false;
             }
         });
-
         // слушатель изменений текста для searchEndView
         searchEndView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -126,6 +130,28 @@ public class SearchActivityPassenger extends Fragment {
             }
         });
         return view;
+    }
+    @Override
+    public  void onViewCreated(View view,  Bundle savedInstanceState){
+        mapview = (MapView) view.findViewById(R.id.map_yandex);
+    }
+    @Override
+    public void onStop() {
+        mapview.onStop();
+        MapKitFactory.getInstance().onStop();
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MapKitFactory.getInstance().onStart();
+        mapview.onStart();
+        mapview.getMap().move(
+                new CameraPosition(new Point(55.751574, 37.573856), 11.0f, 0.0f, 0.0f),
+                new Animation(Animation.Type.SMOOTH, 0),
+                null);
+        mapview.getMap().setRotateGesturesEnabled(true);
     }
     private void filterCities(String text) {
         filteredCities.clear();
