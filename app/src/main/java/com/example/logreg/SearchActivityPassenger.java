@@ -2,6 +2,7 @@ package com.example.logreg;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,14 +10,6 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.map.Map;
-import com.yandex.mapkit.map.MapObjectCollection;
-import com.yandex.mapkit.map.PlacemarkMapObject;
-import com.yandex.mapkit.mapview.MapView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,34 +28,22 @@ import android.widget.Toast;
 
 public class SearchActivityPassenger extends Fragment
 {
-    private final String MAPKIT_API_KEY = "c2be26a0-5509-40cf-8294-4a6cbf8ca714";
-    public MapView mapview;
-    private MapObjectCollection mapObjects;
     private SearchView searchStartView;
     private SearchView searchEndView;
     private Gson gson;
     private ArrayList<String> cities = new ArrayList<>();
     private ArrayList<String> filteredCities = new ArrayList<>();
-    private EditText editText1, editText2;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public SearchActivityPassenger()
     {
         // пустой конструктор
     }
-    public static SearchActivityPassenger newInstance(String param1, String param2) {
+    public static SearchActivityPassenger newInstance() {
         SearchActivityPassenger fragment = new SearchActivityPassenger();
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MapKitFactory.setApiKey(MAPKIT_API_KEY);
-        MapKitFactory.initialize(getActivity());
         gson = new Gson();
         try {
             InputStream inputStream = getResources().openRawResource(R.raw.tb_city);
@@ -94,9 +74,11 @@ public class SearchActivityPassenger extends Fragment
                 // получаем текст выбранного элемента
                 String selectedCity = filteredCities.get(i);
                 // устанавливаем текст в SearchView
-                if (searchStartView.hasFocus()) {
+                if (searchStartView.hasFocus())
+                {
                     searchStartView.setQuery(selectedCity, true);
-                } else if (searchEndView.hasFocus()) {
+                }
+                else if (searchEndView.hasFocus()) {
                     searchEndView.setQuery(selectedCity, true);
                 }
             }
@@ -107,7 +89,6 @@ public class SearchActivityPassenger extends Fragment
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 filterCities(newText);
@@ -130,28 +111,6 @@ public class SearchActivityPassenger extends Fragment
             }
         });
         return view;
-    }
-    @Override
-    public  void onViewCreated(View view,  Bundle savedInstanceState){
-        mapview = (MapView) view.findViewById(R.id.map_yandex);
-    }
-    @Override
-    public void onStop() {
-        mapview.onStop();
-        MapKitFactory.getInstance().onStop();
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        MapKitFactory.getInstance().onStart();
-        mapview.onStart();
-        mapview.getMap().move(
-                new CameraPosition(new Point(55.751574, 37.573856), 11.0f, 0.0f, 0.0f),
-                new Animation(Animation.Type.SMOOTH, 0),
-                null);
-        mapview.getMap().setRotateGesturesEnabled(true);
     }
     private void filterCities(String text) {
         filteredCities.clear();

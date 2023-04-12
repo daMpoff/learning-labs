@@ -4,8 +4,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
+import java.time.LocalTime;
+
 public class Trip {
-    private String idTrip;
     private String id_driver;
     private int passengers;
     private String firstPass_id;
@@ -14,13 +15,14 @@ public class Trip {
     private String startCity;
     private String endCity;
     private String date;
+    private String starttime;
+    private String endtime;
     private int duration;
     private int price;
     private String driverName;
-    private int type;
+    private String type;
 
-    public Trip(String idTrip, String id_driver, int passengers, String firstPass_id, String secondPass_id, String thirdPass_id, String startCity, String endCity, String date, int duration, int price, String driverName,int type) {
-        this.idTrip = idTrip;
+    public Trip(String id_driver, int passengers, String firstPass_id, String secondPass_id, String thirdPass_id, String startCity, String endCity, String date, String starttime, String endtime, int duration, int price, String driverName, String type) {
         this.id_driver = id_driver;
         this.passengers = passengers;
         this.firstPass_id = firstPass_id;
@@ -29,22 +31,13 @@ public class Trip {
         this.startCity = startCity;
         this.endCity = endCity;
         this.date = date;
+        this.starttime = starttime;
+        this.endtime = endtime;
         this.duration = duration;
         this.price = price;
         this.driverName = driverName;
         this.type = type;
     }
-
-    public Trip() {}
-
-    public String getIdTrip() {
-        return idTrip;
-    }
-
-    public void setIdTrip(String idTrip) {
-        this.idTrip = idTrip;
-    }
-
     public String getId_driver() {
         return id_driver;
     }
@@ -73,68 +66,92 @@ public class Trip {
         return secondPass_id;
     }
 
-    public void setSecondPass_id(String secondPass_id)
-    {
+    public void setSecondPass_id(String secondPass_id) {
         this.secondPass_id = secondPass_id;
     }
 
-    public String getThirdPass_id()
-    {
+    public String getThirdPass_id() {
         return thirdPass_id;
     }
 
-    public void setThirdPass_id(String thirdPass_id)
-    {
+    public void setThirdPass_id(String thirdPass_id) {
         this.thirdPass_id = thirdPass_id;
     }
 
-    public String getStartCity()
-    {
+    public String getStartCity() {
         return startCity;
     }
 
-    public void setStartCity(String startCity)
-    {
+    public void setStartCity(String startCity) {
         this.startCity = startCity;
     }
 
-    public String getEndCity()
-    {
+    public String getEndCity() {
         return endCity;
     }
 
-    public void setEndCity(String endCity)
-    {
+    public void setEndCity(String endCity) {
         this.endCity = endCity;
     }
 
-    public String getDate()
-    {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(String date)
-    {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public int getDuration()
-    {
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration)
-    {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
-    public int getPrice()
-    {
+
+    public int getPrice() {
         return price;
     }
-    public void setPrice(int price)
-    {
+
+    public void setPrice(int price) {
         this.price = price;
     }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Trip() {
+    }
+
     public void saveToFirebase()
     {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
