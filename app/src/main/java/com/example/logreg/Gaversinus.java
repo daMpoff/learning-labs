@@ -1,5 +1,5 @@
 package com.example.logreg;
-
+//Егор я придумал штуку, ну как придумал, есть формула, по ней можем показаываться ближайший город
 public class Gaversinus {
     private static final double EARTH_RADIUS = 6371; // Радиус Земли в километрах
 

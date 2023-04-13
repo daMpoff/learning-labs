@@ -36,11 +36,10 @@ public class CarActivityDriver extends Fragment {
     }
 
     public CarActivityDriver() {
-        // Required empty public constructor
+        //оставь пустышку
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.activity_driver, container, false);
         TextView text = rootView.findViewById(R.id.drivertext);
         recyclerView = rootView.findViewById(R.id.drivertrips);
@@ -52,8 +51,8 @@ public class CarActivityDriver extends Fragment {
                 new FirebaseRecyclerOptions.Builder<Trip>()
                         .setQuery(databaseReference.orderByChild("id_driver").equalTo(firebaseUser.getUid()), Trip.class)
                         .build();
-
-        adapter = new FirebaseRecyclerAdapter<Trip, TripViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Trip, TripViewHolder>(options)
+        {
             @Override
             protected void onBindViewHolder(@NonNull TripViewHolder holder, int position, @NonNull Trip model) {
                 holder.bind(model, position);
@@ -81,7 +80,6 @@ public class CarActivityDriver extends Fragment {
         });
         return rootView;
     }
-    // ViewHolder class for the RecyclerView
     @Override
     public void onStart()
     {
@@ -96,7 +94,7 @@ public class CarActivityDriver extends Fragment {
         adapter.stopListening();
     }
     // ViewHolder class for the RecyclerView
-    private static class TripViewHolder extends RecyclerView.ViewHolder {
+    public static class TripViewHolder extends RecyclerView.ViewHolder {
         private final TextView dateTextView;
         private final TextView driverNameTextView;
         private final TextView durationTextView;

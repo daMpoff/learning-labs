@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DeployActivity extends Fragment {
     public EditText starttime,endtime;
@@ -146,16 +147,16 @@ public class DeployActivity extends Fragment {
                     String firstid = "Свободно";
                     String secondid = "Свободно";
                     String thirdid = "Свободно";
-                    String DriverName = "Владимир";
+                    String DriverName = getUserName(byID);
                     Integer Duration = 5;
                     String typeTrip = "Активно";
-                    Trip trip = new Trip(userId,passcnt,firstid,secondid,thirdid,startCity,endCity,selectedDate,sttime,edtime,Duration,price,DriverName,typeTrip);
+                    List<String> array = new ArrayList<String>();
+                    array.add("Test");
+                    Trip trip = new Trip(userId,passcnt,firstid,secondid,thirdid,startCity,endCity,selectedDate,sttime,edtime,Duration,price,DriverName,typeTrip,array);
                     trip.saveToFirebase();
-
                 }
             }
         });
-
         // слушатель изменений текста для первого элемента
         firstPoint.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

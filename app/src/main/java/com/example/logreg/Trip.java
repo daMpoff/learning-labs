@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class Trip {
     private String id_driver;
@@ -21,8 +22,17 @@ public class Trip {
     private int price;
     private String driverName;
     private String type;
+    private List<String> array;
 
-    public Trip(String id_driver, int passengers, String firstPass_id, String secondPass_id, String thirdPass_id, String startCity, String endCity, String date, String starttime, String endtime, int duration, int price, String driverName, String type) {
+    public List<String > getArray() {
+        return array;
+    }
+
+    public void setArray(List<String> array) {
+        this.array = array;
+    }
+    public Trip(String id_driver, int passengers, String firstPass_id, String secondPass_id, String thirdPass_id, String startCity, String endCity, String date, String starttime, String endtime, int duration, int price, String driverName, String type, List<String> array)
+    {
         this.id_driver = id_driver;
         this.passengers = passengers;
         this.firstPass_id = firstPass_id;
@@ -37,6 +47,7 @@ public class Trip {
         this.price = price;
         this.driverName = driverName;
         this.type = type;
+        this.array = array;
     }
     public String getId_driver() {
         return id_driver;
@@ -145,7 +156,8 @@ public class Trip {
     public String getType() {
         return type;
     }
-    public void setType(String type) {
+    public void setType(String type)
+    {
         this.type = type;
     }
 
