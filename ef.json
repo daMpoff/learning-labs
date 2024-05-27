@@ -1,0 +1,3 @@
+﻿{
+  "connectionString": "Server=localhost;Port=3306;Database=marketplace;Uid=admin;Pwd=[REDACTED];"
+}

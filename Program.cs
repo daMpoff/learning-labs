@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MyMarketplaceProject.Models;
 namespace MyMarketplaceProject
 {
@@ -8,9 +9,20 @@ namespace MyMarketplaceProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<TodoContext>();
+            builder.Services.AddDbContext<MarketplaceContext>();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddSingleton<ITempDataDictionaryFactory, TempDataDictionaryFactory>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -25,6 +37,7 @@ namespace MyMarketplaceProject
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAllOrigins");
 
             app.UseAuthorization();
 
