@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyMarketplaceProject.Models;
+﻿namespace MyMarketplaceProject.Models;
 
 public partial class Good
 {
     public int GoodId { get; set; }
 
-    public int CategoryId { get; set; }
+    public int SubcategoryId { get; set; }
 
     public decimal Price { get; set; }
 

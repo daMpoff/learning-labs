@@ -20,7 +20,7 @@ namespace MyMarketplaceProject.Controllers
         public async Task<IActionResult> Categories()
         {
             var categories = await context.Categories.Include(c => c.Subcategories).ToListAsync();
-
+            //создали объект DTO
             var result = categories.Select(c => new
             {
                 c.CategoryId,

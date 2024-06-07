@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyMarketplaceProject.Models;
+﻿namespace MyMarketplaceProject.Models;
 
 public partial class Account
 {
