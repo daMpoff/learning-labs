@@ -34,10 +34,5 @@ namespace MyMarketplaceProject.Controllers
             });
             return Ok(result);
         }
-
-        private bool GoodExists(int id)
-        {
-            return context.Goods.Any(e => e.GoodId == id);
-        }
     }
 }
