@@ -1,10 +1,13 @@
-﻿namespace MyMarketplaceProject.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MyMarketplaceProject.Models;
 
 public partial class Shop
 {
     public int ShopId { get; set; }
 
-    public int UserId { get; set; }
+    public int SellerId { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -12,5 +15,5 @@ public partial class Shop
 
     public virtual Good? Good { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual Seller Seller { get; set; } = null!;
 }

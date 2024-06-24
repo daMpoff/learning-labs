@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyMarketplaceProject.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MyMarketplaceProject.Controllers
 {
@@ -17,6 +18,8 @@ namespace MyMarketplaceProject.Controllers
 
         // GET: Categories
         [HttpGet]
+        [SwaggerOperation(Summary = "Получение всех категорий", Description = "Получение всех категорий товаров")
+        [SwaggerResponse(200, "Успешно")]
         public async Task<IActionResult> Categories()
         {
             var categories = await context.Categories.Include(c => c.Subcategories).ToListAsync();

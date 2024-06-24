@@ -1,16 +1,23 @@
-﻿namespace MyMarketplaceProject.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MyMarketplaceProject.Models;
 
 public partial class User
 {
     public int UserId { get; set; }
 
-    public string FullName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string Patronum { get; set; } = null!;
 
-    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
+    public string Surname { get; set; } = null!;
 
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public sbyte IsModerator { get; set; }
 
-    public virtual ICollection<Shop> Shops { get; set; } = new List<Shop>();
+    public virtual Account? Account { get; set; }
+
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+
+    public virtual ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 }

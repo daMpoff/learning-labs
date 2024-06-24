@@ -7,7 +7,6 @@ namespace MyMarketplaceProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
             builder.Services.AddCors(options =>
             {
@@ -38,7 +37,6 @@ namespace MyMarketplaceProject
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAllOrigins");
-
             app.UseAuthorization();
 
             app.MapControllers();
