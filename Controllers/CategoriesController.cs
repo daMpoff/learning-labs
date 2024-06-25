@@ -18,7 +18,7 @@ namespace MyMarketplaceProject.Controllers
 
         // GET: Categories
         [HttpGet]
-        [SwaggerOperation(Summary = "Получение всех категорий", Description = "Получение всех категорий товаров")
+        [SwaggerOperation(Summary = "Получение всех категорий", Description = "Получение всех категорий товаров")]
         [SwaggerResponse(200, "Успешно")]
         public async Task<IActionResult> Categories()
         {

@@ -11,5 +11,7 @@ public partial class Account
 
     public string Password { get; set; } = null!;
 
+    public int VerificationCode { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

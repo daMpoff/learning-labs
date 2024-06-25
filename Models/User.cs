@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyMarketplaceProject.Models;
+﻿namespace MyMarketplaceProject.Models;
 
 public partial class User
 {
@@ -9,9 +6,11 @@ public partial class User
 
     public string Name { get; set; } = null!;
 
-    public string Patronum { get; set; } = null!;
+    public string? Patronum { get; set; }
 
     public string Surname { get; set; } = null!;
+
+    public DateTime DateOfBirth { get; set; }
 
     public sbyte IsModerator { get; set; }
 
