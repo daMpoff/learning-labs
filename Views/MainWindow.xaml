@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:SLAE"
         xmlns:vm="clr-namespace:SLAE.ViewModels"
         mc:Ignorable="d"
-        Title="Решение систем алгебраических линейных уравнений" Height="450" Width="800">
+        Title="Решение систем алгебраических линейных уравнений"
+        Style="{StaticResource MaterialDesignWindow}" 
+        Height="600" 
+        Width="1200">
     <Window.DataContext>
         <vm:ViewModel></vm:ViewModel>
     </Window.DataContext>
