@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="DarkBackgroundColor" Color="#2c2c2c"/>
+            <!-- Подключение шрифта VKSansDisplay -->
+            <FontFamily x:Key="vkFont">pack://application:,,,/SLAE;component/Fonts/VKSansDisplay.ttf#VKSansDisplay</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
