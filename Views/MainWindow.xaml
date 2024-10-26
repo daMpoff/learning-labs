@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLAE"
-        xmlns:vm="clr-namespace:SLAE.ViewModels"
+        xmlns:vm="clr-namespace:SLAE.ViewModels" 
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Решение систем алгебраических линейных уравнений"
         Style="{StaticResource MaterialDesignWindow}" 
@@ -14,11 +15,52 @@
         <vm:ViewModel></vm:ViewModel>
     </Window.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Background="{StaticResource DarkBackgroundColor}"></StackPanel>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource DarkBackgroundColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Padding="20,0" Text="Количество уравнений:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="20" Background="White" Grid.Column="1" SelectedItem="0" Padding="10,0">
+                <sys:Int32>1</sys:Int32>
+                <sys:Int32>2</sys:Int32>
+                <sys:Int32>3</sys:Int32>
+                <sys:Int32>4</sys:Int32>
+                <sys:Int32>5</sys:Int32>
+                <sys:Int32>6</sys:Int32>
+                <sys:Int32>7</sys:Int32>
+                <sys:Int32>8</sys:Int32>
+                <sys:Int32>9</sys:Int32>
+                <sys:Int32>10</sys:Int32>
+            </ComboBox>
+            <TextBlock Grid.Column="2" Padding="20,0" Text="Количество Неизвестных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="20" Background="White" Grid.Column="3" SelectedItem="0" Padding="10,0">
+                <sys:Int32>1</sys:Int32>
+                <sys:Int32>2</sys:Int32>
+                <sys:Int32>3</sys:Int32>
+                <sys:Int32>4</sys:Int32>
+                <sys:Int32>5</sys:Int32>
+                <sys:Int32>6</sys:Int32>
+                <sys:Int32>7</sys:Int32>
+                <sys:Int32>8</sys:Int32>
+                <sys:Int32>9</sys:Int32>
+                <sys:Int32>10</sys:Int32>
+            </ComboBox>
+            <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="200" Background="Green">Решить</Button>
+        </Grid>
     </Grid>
 </Window>
