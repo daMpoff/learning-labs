@@ -8,8 +8,8 @@
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Решение систем алгебраических линейных уравнений"
-        Style="{StaticResource MaterialDesignWindow}" 
-        Height="600" 
+        Style="{StaticResource MaterialDesignWindow}"
+        Height="600"
         Width="1200">
     <Window.DataContext>
         <vm:ViewModel></vm:ViewModel>
@@ -35,30 +35,24 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Padding="20,0" Text="Количество уравнений:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="20" Background="White" Grid.Column="1" SelectedItem="0" Padding="10,0">
-                <sys:Int32>1</sys:Int32>
-                <sys:Int32>2</sys:Int32>
-                <sys:Int32>3</sys:Int32>
-                <sys:Int32>4</sys:Int32>
-                <sys:Int32>5</sys:Int32>
-                <sys:Int32>6</sys:Int32>
-                <sys:Int32>7</sys:Int32>
-                <sys:Int32>8</sys:Int32>
-                <sys:Int32>9</sys:Int32>
-                <sys:Int32>10</sys:Int32>
+            <ComboBox 
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                ItemsSource="{Binding Numbers}"
+                SelectedItem="{Binding EquationsCount}"
+                FontSize="20"
+                Background="White"
+                Grid.Column="1"
+                Padding="10,0">
             </ComboBox>
             <TextBlock Grid.Column="2" Padding="20,0" Text="Количество Неизвестных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
-            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="20" Background="White" Grid.Column="3" SelectedItem="0" Padding="10,0">
-                <sys:Int32>1</sys:Int32>
-                <sys:Int32>2</sys:Int32>
-                <sys:Int32>3</sys:Int32>
-                <sys:Int32>4</sys:Int32>
-                <sys:Int32>5</sys:Int32>
-                <sys:Int32>6</sys:Int32>
-                <sys:Int32>7</sys:Int32>
-                <sys:Int32>8</sys:Int32>
-                <sys:Int32>9</sys:Int32>
-                <sys:Int32>10</sys:Int32>
+            <ComboBox 
+                ItemsSource="{Binding Numbers}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                SelectedItem="{Binding VariablesCount}"
+                FontSize="20"
+                Background="White"
+                Grid.Column="3"
+                Padding="10,0">
             </ComboBox>
             <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="200" Background="Green">Решить</Button>
         </Grid>
