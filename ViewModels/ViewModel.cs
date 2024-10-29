@@ -5,8 +5,8 @@ namespace SLAE.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private int equationsCount = 1;
-        private int variablesCount = 1;
+        private int equationsCount = 2;
+        private int variablesCount = 2;
         private ObservableCollection<Equation> equations;
         public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 2 до 10
 
@@ -54,7 +54,14 @@ namespace SLAE.ViewModels
             Equations.Clear();
             for (int i = 0; i < EquationsCount; i++)
             {
-                Equations.Add(new Equation(VariablesCount)); // Создаем уравнения с переменным количеством переменных
+                var equation = new Equation(VariablesCount);
+                // Устанавливаем IsLast для каждого коэффициента
+                for (int j = 0; j < equation.CoefficientVariablePairs.Count; j++)
+                {
+                    equation.CoefficientVariablePairs[j].IsLast = (j == equation.CoefficientVariablePairs.Count - 1);
+                }
+
+                Equations.Add(equation);
             }
         }
 
