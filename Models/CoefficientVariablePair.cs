@@ -6,6 +6,7 @@ namespace SLAE.ViewModels
     {
         private Coefficient coefficient;
         private string variable;
+        public bool IsLast { get; set; }
 
         public Coefficient Coefficient
         {

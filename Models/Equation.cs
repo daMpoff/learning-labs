@@ -11,7 +11,7 @@
             for (int i = 0; i < variablesCount; i++)
             {
                 var coefficient = new Coefficient(); // Создаем коэффициент
-                var variable = $"x_{i + 1}"; // Создаем переменную
+                var variable = $"x_{{{i + 1}}}";
                 CoefficientVariablePairs.Add(new CoefficientVariablePair(coefficient, variable)); // Создаем пару и добавляем в список
             }
         }
