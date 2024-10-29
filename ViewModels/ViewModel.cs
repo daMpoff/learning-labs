@@ -1,55 +1,66 @@
-﻿namespace SLAE.ViewModels
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace SLAE.ViewModels
 {
-    public class ViewModel
+    public class ViewModel : INotifyPropertyChanged
     {
         private int equationsCount = 1;
         private int variablesCount = 1;
+        private ObservableCollection<Equation> equations;
+        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 2 до 10
 
-        /// <summary>
-        /// Количество уравнений СЛАУ
-        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int EquationsCount
         {
-            get
-            {
-                return equationsCount;
-            }
+            get => equationsCount;
             set
             {
                 equationsCount = value;
+                OnPropertyChanged(nameof(EquationsCount));
+                UpdateEquations();
             }
         }
 
-        /// <summary>
-        /// Количество переменных СЛАУ
-        /// </summary>
         public int VariablesCount
         {
-            get
-            {
-                return variablesCount;
-            }
+            get => variablesCount;
             set
             {
                 variablesCount = value;
+                OnPropertyChanged(nameof(VariablesCount));
+                UpdateEquations(); // Обновляем уравнения, если изменилось количество переменных
             }
         }
 
-        /// <summary>
-        /// Служебное свойство, которое является источником данных для combobox
-        /// </summary>
-        /// <remarks>
-        /// Это свойство используется для того, чтобы заполнить элементы ComboBox, которые
-        /// позволяют выбрать количество уравнений и количество переменных
-        /// </remarks>
-        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
-
-        /// <summary>
-        /// Инициализурует новый экземпляр <see cref="ViewModel"/>
-        /// </summary>
+        public ObservableCollection<Equation> Equations
+        {
+            get => equations;
+            private set
+            {
+                equations = value;
+                OnPropertyChanged(nameof(Equations));
+            }
+        }
         public ViewModel()
         {
+            Equations = new ObservableCollection<Equation>();
+            UpdateEquations();
+        }
 
+        private void UpdateEquations()
+        {
+            Equations.Clear();
+            for (int i = 0; i < EquationsCount; i++)
+            {
+                Equations.Add(new Equation(VariablesCount)); // Создаем уравнения с переменным количеством переменных
+            }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

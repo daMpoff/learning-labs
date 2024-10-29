@@ -13,7 +13,7 @@
         Height="600"
         Width="1200">
     <Window.DataContext>
-        <vm:ViewModel></vm:ViewModel>
+        <vm:ViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -58,76 +58,37 @@
             </ComboBox>
             <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="150" Background="Green">Решить</Button>
         </Grid>
-        <Grid
-            Grid.Row="1"
-            Grid.ColumnSpan="2">
-            <Grid Margin="10" HorizontalAlignment="Left">
-                <!-- Определение строк и столбцов -->
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!-- Уравнение 1 -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Коэффициент перед x1 -->
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_1" FontSize="24" VerticalAlignment="Center"/>
-
-                    <!-- "+" между переменными -->
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-
-                    <!-- Коэффициент перед x2 -->
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_2" FontSize="24" VerticalAlignment="Center"/>
-
-                    <!-- "+" между переменными -->
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-
-                    <!-- Коэффициент перед x3 -->
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_3" FontSize="24" VerticalAlignment="Center"/>
-
-                    <!-- "=" и поле для ввода результата -->
-                    <TextBlock Text=" = " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="60" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                </StackPanel>
-                <!-- Уравнение 2 -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_1" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_2" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_3" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" = " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="60" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                </StackPanel>
-                <!-- Уравнение 3 -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_1" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_2" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" + " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                    <wm:FormulaControl Formula="x_3" FontSize="24" VerticalAlignment="Center"/>
-
-                    <TextBlock Text=" = " FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox Width="60" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
+        <ItemsControl Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Equations}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ItemsControl ItemsSource="{Binding CoefficientVariablePairs}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                    <!-- Здесь задаем горизонтальную ориентацию -->
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <!-- Обязательно задаем горизонтальную ориентацию для каждого элемента -->
+                                        <TextBox Width="40" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0" Text="{Binding Coefficient.Value, Mode=TwoWay}"/>
+                                        <wm:FormulaControl Formula="{Binding Variable}" FontSize="24" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text=" = " FontSize="24" VerticalAlignment="Center"/>
+                        <TextBox Width="60" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0" Text="{Binding Result, Mode=TwoWay}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
