@@ -50,7 +50,7 @@
                 Grid.Column="1"
                 Padding="15,0">
             </ComboBox>
-            <TextBlock Grid.Column="2" Padding="20,0" Text="Количество Неизвестных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="2" Padding="20,0" Text="Количество переменных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
             <ComboBox 
                 ItemsSource="{Binding Numbers}"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
