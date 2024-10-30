@@ -14,22 +14,6 @@
         Height="650"
         Width="1400">
     <Window.Resources>
-        <DrawingBrush x:Key="DashedBrush">
-            <DrawingBrush.Drawing>
-                <GeometryDrawing>
-                    <GeometryDrawing.Pen>
-                        <Pen Brush="LightGray" Thickness="2">
-                            <Pen.DashStyle>
-                                <DashStyle Dashes="2,8"/>
-                            </Pen.DashStyle>
-                        </Pen>
-                    </GeometryDrawing.Pen>
-                    <GeometryDrawing.Geometry>
-                        <RectangleGeometry Rect="0,0,1,1"/>
-                    </GeometryDrawing.Geometry>
-                </GeometryDrawing>
-            </DrawingBrush.Drawing>
-        </DrawingBrush>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Window.DataContext>
