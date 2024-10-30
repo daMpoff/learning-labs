@@ -6,16 +6,38 @@
         xmlns:local="clr-namespace:SLAE"
         xmlns:vm="clr-namespace:SLAE.ViewModels" 
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:wm="clr-namespace:WpfMath.Controls;assembly=WpfMath" 
+        xmlns:converters="clr-namespace:SLAE.Converters"
         mc:Ignorable="d"
         Title="Решение систем алгебраических линейных уравнений"
         Style="{StaticResource MaterialDesignWindow}"
-        Height="600"
-        Width="1200">
+        Height="650"
+        Width="1400">
+    <Window.Resources>
+        <DrawingBrush x:Key="DashedBrush">
+            <DrawingBrush.Drawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="LightGray" Thickness="2">
+                            <Pen.DashStyle>
+                                <DashStyle Dashes="2,8"/>
+                            </Pen.DashStyle>
+                        </Pen>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,1,1"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Window.DataContext>
-        <vm:ViewModel></vm:ViewModel>
+        <vm:ViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -23,7 +45,7 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource DarkBackgroundColor}">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource DarkBackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -39,22 +61,56 @@
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 ItemsSource="{Binding Numbers}"
                 SelectedItem="{Binding EquationsCount}"
-                FontSize="20"
+                FontSize="16"
                 Background="White"
                 Grid.Column="1"
-                Padding="10,0">
+                Padding="15,0">
             </ComboBox>
-            <TextBlock Grid.Column="2" Padding="20,0" Text="Количество Неизвестных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="2" Padding="20,0" Text="Количество переменных:" FontFamily="{StaticResource vkFont}" Foreground="White" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
             <ComboBox 
                 ItemsSource="{Binding Numbers}"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 SelectedItem="{Binding VariablesCount}"
-                FontSize="20"
+                FontSize="16"
                 Background="White"
                 Grid.Column="3"
                 Padding="10,0">
             </ComboBox>
-            <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="200" Background="Green">Решить</Button>
+            <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="150" Background="Green">Решить</Button>
         </Grid>
+        <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,3,0">
+            <ItemsControl ItemsSource="{Binding Equations}" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                            <ItemsControl ItemsSource="{Binding CoefficientVariablePairs}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Padding="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" BorderBrush="LightGray" Width="40" Height="40" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Coefficient.Value, Mode=TwoWay}"/>
+                                            <wm:FormulaControl Formula="{Binding Variable}" Margin="3,5,0,0" VerticalAlignment="Center"/>
+                                            <!-- Знак + отображается только если это не последний элемент -->
+                                            <TextBlock Text=" + " FontSize="20" Margin="0,0,0,5" VerticalAlignment="Center" Visibility="{Binding IsLast, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock Text=" = " FontSize="20" VerticalAlignment="Center"/>
+                            <TextBox BorderBrush="LightGray" Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="40" Height="40" Padding="0" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Result, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
     </Grid>
 </Window>
