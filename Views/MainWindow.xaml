@@ -62,6 +62,7 @@
             </ComboBox>
             <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="150" Background="Green">Решить</Button>
         </Grid>
+
         <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,3,0">
             <ItemsControl ItemsSource="{Binding Equations}" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>
@@ -96,5 +97,33 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
+
+        <!-- Новый StackPanel для кнопок -->
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Content="Метод 1" Width="200" Margin="10" Grid.Row="0" Grid.Column="0"/>
+                <Button Content="Метод 2" Width="200" Margin="10" Grid.Row="0" Grid.Column="1"/>
+                <Button Content="Метод 3" Width="200" Margin="10" Grid.Row="1" Grid.Column="0"/>
+                <Button Content="Метод 4" Width="200" Margin="10" Grid.Row="1" Grid.Column="1"/>
+                <Button Content="Метод 5" Width="200" Margin="10" Grid.Row="2" Grid.Column="0"/>
+                <Button Content="Метод 6" Width="200" Margin="10" Grid.Row="2" Grid.Column="1"/>
+                <Button Content="Метод 7" Width="200" Margin="10" Grid.Row="3" Grid.Column="0"/>
+                <Button Content="Метод 8" Width="200" Margin="10" Grid.Row="3" Grid.Column="1"/>
+                <Button Content="Метод 9" Width="200" Margin="10" Grid.Row="4" Grid.Column="0"/>
+                <Button Content="Метод 10" Width="200" Margin="10" Grid.Row="4" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>
