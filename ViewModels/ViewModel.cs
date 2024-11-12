@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using SLAE.Interfaces;
+using SLAE.Solvers;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace SLAE.ViewModels
@@ -10,7 +12,7 @@ namespace SLAE.ViewModels
         private bool isAllSelected;
         private ObservableCollection<Equation> equations;
         // Коллекция для состояния каждого CheckBox
-        public ObservableCollection<bool> Methods { get; } = new ObservableCollection<bool>();
+        public ObservableCollection<ISLAESolver> Methods { get; set; }
         public List<int> Numbers { get; } = Enumerable.Range(1, 100).ToList(); // Устанавливаем диапазон от 2 до 10
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,7 +51,7 @@ namespace SLAE.ViewModels
                     // Устанавливаем состояние всех CheckBox в Methods
                     for (int i = 0; i < Methods.Count; i++)
                     {
-                        Methods[i] = isAllSelected;
+                        Methods[i].IsEnable = isAllSelected;
                     }
                 }
             }
@@ -68,11 +70,14 @@ namespace SLAE.ViewModels
         {
             Equations = new ObservableCollection<Equation>();
             UpdateEquations();
-            // Инициализация коллекции с состоянием для каждого CheckBox
-            for (int i = 0; i < 9; i++)
+            InitializeSolvers();
+        }
+        private void InitializeSolvers()
+        {
+            Methods = new ObservableCollection<ISLAESolver>()
             {
-                Methods.Add(false); // Изначально все элементы не выбраны
-            }
+                new GaussianSolver()
+            };
         }
 
         private void UpdateEquations()
