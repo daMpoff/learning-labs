@@ -7,8 +7,11 @@ namespace SLAE.ViewModels
     {
         private int equationsCount = 2;
         private int variablesCount = 2;
+        private bool isAllSelected;
         private ObservableCollection<Equation> equations;
-        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 2 до 10
+        // Коллекция для состояния каждого CheckBox
+        public ObservableCollection<bool> Methods { get; } = new ObservableCollection<bool>();
+        public List<int> Numbers { get; } = Enumerable.Range(1, 100).ToList(); // Устанавливаем диапазон от 2 до 10
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,6 +36,24 @@ namespace SLAE.ViewModels
                 UpdateEquations(); // Обновляем уравнения, если изменилось количество переменных
             }
         }
+        // Свойство для управления выбором всех CheckBox
+        public bool IsAllSelected
+        {
+            get => isAllSelected;
+            set
+            {
+                if (isAllSelected != value)
+                {
+                    isAllSelected = value;
+                    OnPropertyChanged(nameof(IsAllSelected));
+                    // Устанавливаем состояние всех CheckBox в Methods
+                    for (int i = 0; i < Methods.Count; i++)
+                    {
+                        Methods[i] = isAllSelected;
+                    }
+                }
+            }
+        }
 
         public ObservableCollection<Equation> Equations
         {
@@ -47,6 +68,11 @@ namespace SLAE.ViewModels
         {
             Equations = new ObservableCollection<Equation>();
             UpdateEquations();
+            // Инициализация коллекции с состоянием для каждого CheckBox
+            for (int i = 0; i < 9; i++)
+            {
+                Methods.Add(false); // Изначально все элементы не выбраны
+            }
         }
 
         private void UpdateEquations()
