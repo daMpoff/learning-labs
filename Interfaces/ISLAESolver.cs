@@ -7,11 +7,11 @@ namespace SLAE.Interfaces
         /// <summary>
         /// Название метода, который используется при решении СЛАУ
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
         /// <summary>
         /// Свойство которое показывает, включён ли метод при решении СЛАУ
         /// </summary>
-        bool isEnable { get; set; }
+        bool IsEnable { get; set; }
         /// <summary>
         /// Решает систему линейных алгебраических уравнений (СЛАУ) с использованием реализованного алгоритма.
         /// </summary>
