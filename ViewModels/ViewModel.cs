@@ -1,7 +1,10 @@
-﻿using SLAE.Interfaces;
+﻿using SLAE.Commands;
+using SLAE.Interfaces;
 using SLAE.Solvers;
+using SLAE.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace SLAE.ViewModels
 {
@@ -11,6 +14,7 @@ namespace SLAE.ViewModels
         private int variablesCount = 2;
         private bool isAllSelected;
         private ObservableCollection<Equation> equations;
+        public ICommand GetResultCommand { get; }
         // Коллекция для состояния каждого CheckBox
         public ObservableCollection<ISLAESolver> Methods { get; set; }
         public List<int> Numbers { get; } = Enumerable.Range(1, 100).ToList(); // Устанавливаем диапазон от 2 до 10
@@ -71,6 +75,7 @@ namespace SLAE.ViewModels
             Equations = new ObservableCollection<Equation>();
             UpdateEquations();
             InitializeSolvers();
+            GetResultCommand = new RelayCommand(ShowResult);
         }
         private void InitializeSolvers()
         {
@@ -78,6 +83,11 @@ namespace SLAE.ViewModels
             {
                 new GaussianSolver()
             };
+        }
+        private void ShowResult()
+        {
+            ResultWindow resultWindow = new ResultWindow();
+            resultWindow.Show();
         }
 
         private void UpdateEquations()

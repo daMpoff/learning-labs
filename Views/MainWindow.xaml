@@ -60,7 +60,7 @@
                 Grid.Column="3"
                 Padding="10,0">
             </ComboBox>
-            <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="150" Background="Green" Command="{Binding }">Решить</Button>
+            <Button Grid.Column="4" Margin="10,0,0,0" FontSize="20" Width="150" Background="Green" Command="{Binding GetResultCommand}">Решить</Button>
         </Grid>
         <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,3,0">
             <ItemsControl ItemsSource="{Binding Equations}" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
