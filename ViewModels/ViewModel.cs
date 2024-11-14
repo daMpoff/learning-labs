@@ -86,7 +86,10 @@ namespace SLAE.ViewModels
         }
         private void ShowResult()
         {
-            ResultWindow resultWindow = new ResultWindow();
+            var resultWindow = new ResultWindow
+            {
+                DataContext = new ResultViewModel()
+            };
             resultWindow.Show();
         }
 
