@@ -10,10 +10,6 @@ namespace socketchat
 {
     public class DBCRUD
     {
-        const string SERVER = "localhost";
-        const string DB = "petrachenkovdb;";
-        const string PASSWORD = "[REDACTED]";
-        const string USER = "petrachenkov;";
         static readonly string connStr = $"server={SERVER} database={DB} user={USER} password={PASSWORD}";
         static readonly MySqlConnection conn = new MySqlConnection(connStr);
 
