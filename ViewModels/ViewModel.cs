@@ -1,9 +1,11 @@
 ﻿using SLAE.Commands;
 using SLAE.Interfaces;
+using SLAE.Models;
 using SLAE.Solvers;
 using SLAE.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SLAE.ViewModels
@@ -15,11 +17,12 @@ namespace SLAE.ViewModels
         private bool isAllSelected;
         private ObservableCollection<Equation> equations;
         public ICommand GetResultCommand { get; }
-        // Коллекция для состояния каждого CheckBox
         public ObservableCollection<ISLAESolver> Methods { get; set; }
-        public List<int> Numbers { get; } = Enumerable.Range(1, 100).ToList(); // Устанавливаем диапазон от 2 до 10
+        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 1 до 10
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<RootResult> Results { get; set; } = new ObservableCollection<RootResult> { };
+        public SLAEModel SLAEModel { get; set; }
 
         public int EquationsCount
         {
@@ -28,7 +31,7 @@ namespace SLAE.ViewModels
             {
                 equationsCount = value;
                 OnPropertyChanged(nameof(EquationsCount));
-                UpdateEquations();
+                UpdateEquations(); // Обновляем уравнения, если изменилось количество уравнений
             }
         }
 
@@ -73,24 +76,63 @@ namespace SLAE.ViewModels
         public ViewModel()
         {
             Equations = new ObservableCollection<Equation>();
-            UpdateEquations();
             InitializeSolvers();
-            GetResultCommand = new RelayCommand(ShowResult);
+            UpdateEquations();
+            GetResultCommand = new RelayCommand(GetResult);
         }
         private void InitializeSolvers()
         {
             Methods = new ObservableCollection<ISLAESolver>()
             {
-                new GaussianSolver()
+                new MatrixSolver(),
+                new GaussianSolver(),
+                new SeidelSolver(),
             };
         }
-        private void ShowResult()
+        private void GetResult()
         {
-            var resultWindow = new ResultWindow
+            if (Results.Any())
             {
-                DataContext = new ResultViewModel()
-            };
+                Results.Clear();
+            }
+            foreach (var method in Methods)
+            {
+                CastVariablesToSLAEModel();
+                if (method.IsEnable)
+                {
+                    try
+                    {
+                        RootResult rootResult = new RootResult()
+                        {
+                            Roots = new ObservableCollection<double>(method.Solve(SLAEModel).Select(d => d)),
+                            MethodName = method.Name,
+                        };
+                        Results.Add(rootResult);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{method.Name}: Возникла ошибка\n{ex.Message}");
+                    }
+                }
+            }
+            ResultViewModel resultViewModel = new ResultViewModel(Results);
+            ResultWindow resultWindow = new ResultWindow() { DataContext = resultViewModel };
             resultWindow.Show();
+        }
+
+        private void CastVariablesToSLAEModel()
+        {
+            SLAEModel = new SLAEModel(equationsCount, variablesCount);
+            for (int i = 0; i < equations.Count; i++)
+            {
+                Equation equation = equations[i];
+                for (int j = 0; j < equation.CoefficientVariablePairs.Count; j++)
+                {
+                    CoefficientVariablePair pair = equation.CoefficientVariablePairs[j];
+                    SLAEModel.Coefficients[i, j] = pair.Coefficient.Value;
+                }
+                SLAEModel.Constants[i] = equation.Result;
+            }
         }
 
         private void UpdateEquations()
@@ -104,7 +146,6 @@ namespace SLAE.ViewModels
                 {
                     equation.CoefficientVariablePairs[j].IsLast = (j == equation.CoefficientVariablePairs.Count - 1);
                 }
-
                 Equations.Add(equation);
             }
         }

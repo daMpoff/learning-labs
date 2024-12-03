@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using SLAE.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace SLAE.ViewModels
@@ -9,37 +10,14 @@ namespace SLAE.ViewModels
 
         public ObservableCollection<RootResult> Results { get; set; }
 
-        public ResultViewModel()
+        public ResultViewModel(ObservableCollection<RootResult> results)
         {
-            // Тестовые данные
-            Results = new ObservableCollection<RootResult>
-            {
-                new RootResult
-                {
-                    MethodName = "Метод Гаусса",
-                    Roots = new ObservableCollection<double> { 1.5, 2.3, 4.1 }
-                },
-                new RootResult
-                {
-                    MethodName = "Метод Якоби",
-                    Roots = new ObservableCollection<double> { 1.7, 2.6, 3.8, 4.9 }
-                },
-                new RootResult
-                {
-                    MethodName = "Метод Зейделя",
-                    Roots = new ObservableCollection<double> { 0.9, 1.1 }
-                }
-            };
+            Results = results;
         }
 
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-    public class RootResult
-    {
-        public string MethodName { get; set; } // Название метода
-        public ObservableCollection<double> Roots { get; set; } // Список корней
     }
 }

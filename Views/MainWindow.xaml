@@ -114,9 +114,9 @@
                 <!-- CheckBox элементы -->
                 <CheckBox Content="{Binding Methods[0].Name}" Margin="10" Grid.Row="0" Grid.Column="0"
                   IsChecked="{Binding Methods[0].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод Крамера" Margin="10" Grid.Row="0" Grid.Column="1"
+                <CheckBox Content="{Binding Methods[1].Name}" Margin="10" Grid.Row="0" Grid.Column="1"
                   IsChecked="{Binding Methods[1].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод Гаусса" Margin="10" Grid.Row="1" Grid.Column="0"
+                <CheckBox Content="{Binding Methods[2].Name}" Margin="10" Grid.Row="1" Grid.Column="0"
                   IsChecked="{Binding Methods[2].IsEnable, Mode=TwoWay}" />
                 <CheckBox Content="Метод Гаусса-Жордано" Margin="10" Grid.Row="1" Grid.Column="1"
                   IsChecked="{Binding Methods[3].IsEnable, Mode=TwoWay}" />
