@@ -14,7 +14,7 @@ namespace SLAE.Solvers
             double[] values = new double[slae.VariablesCount];
             double fault; // погрешность
 
-            fault = 0.0001;
+            fault = 0.001;
 
             // Попытка перестановки строк для получения диагонально доминирующей матрицы
             if (!EnsureDiagonalDominance(slae.Coefficients, slae.RowsCount, slae.VariablesCount))

@@ -87,6 +87,9 @@ namespace SLAE.ViewModels
                 new MatrixSolver(),
                 new GaussianSolver(),
                 new SeidelSolver(),
+                new TridiagonalSolver(),
+                new SimpleIterationSolver(),
+                new CramerSolver()
             };
         }
         private void GetResult()

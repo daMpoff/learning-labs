@@ -118,17 +118,17 @@
                   IsChecked="{Binding Methods[1].IsEnable, Mode=TwoWay}" />
                 <CheckBox Content="{Binding Methods[2].Name}" Margin="10" Grid.Row="1" Grid.Column="0"
                   IsChecked="{Binding Methods[2].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод Гаусса-Жордано" Margin="10" Grid.Row="1" Grid.Column="1"
+                <CheckBox Content="{Binding Methods[3].Name}" Margin="10" Grid.Row="1" Grid.Column="1"
                   IsChecked="{Binding Methods[3].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод прогонки" Margin="10" Grid.Row="2" Grid.Column="0"
+                <CheckBox Content="{Binding Methods[4].Name}" Margin="10" Grid.Row="2" Grid.Column="0"
                   IsChecked="{Binding Methods[4].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод LU-разложения" Margin="10" Grid.Row="2" Grid.Column="1"
+                <CheckBox Content="{Binding Methods[5].Name}" Margin="10" Grid.Row="2" Grid.Column="1"
                   IsChecked="{Binding Methods[5].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод квадратных корней" Margin="10" Grid.Row="3" Grid.Column="0"
+                <CheckBox Content="{Binding Methods[6].Name}" Margin="10" Grid.Row="3" Grid.Column="0"
                   IsChecked="{Binding Methods[6].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод простых итераций" Margin="10" Grid.Row="3" Grid.Column="1"
+                <CheckBox Content="{Binding Methods[7].Name}" Margin="10" Grid.Row="3" Grid.Column="1"
                   IsChecked="{Binding Methods[7].IsEnable, Mode=TwoWay}" />
-                <CheckBox Content="Метод Зейделя" Margin="10" Grid.Row="4" Grid.Column="0"
+                <CheckBox Content="{Binding Methods[8].Name}" Margin="10" Grid.Row="4" Grid.Column="0"
                   IsChecked="{Binding Methods[8].IsEnable, Mode=TwoWay}" />
                 <!-- CheckBox для выбора/снятия всех -->
                 <CheckBox Content="Выбрать всё" Grid.Row="4" Grid.Column="1" Margin="10"

@@ -53,7 +53,7 @@ namespace SLAE.Views
             // Создаем шаблон ячейки с TextBlock, привязанным к указанному пути
             var xamlTemplate = $@"
         <DataTemplate xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>
-            <TextBlock Text='{{Binding {bindingPath}}}'/>
+            <TextBlock Text='{{Binding {bindingPath}, StringFormat=F6}}'/>
         </DataTemplate>";
 
             return (DataTemplate)System.Windows.Markup.XamlReader.Parse(xamlTemplate);
