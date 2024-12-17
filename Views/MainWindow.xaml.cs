@@ -53,7 +53,7 @@ namespace SNE.Views
 
             FormulaControl formulaBlock = new FormulaControl
             {
-                Formula = $"x_{{{mode1Counter}}} = ",
+                //Formula = $"x_{{{mode1Counter}}} = ",
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 5, 0)
             };
@@ -67,7 +67,7 @@ namespace SNE.Views
             row.Children.Add(textBox);
 
             DynamicPanel.Children.Add(row);
-            mode1Counter++;
+            //mode1Counter++;
         }
 
         private void AddMode2Row()
@@ -78,9 +78,9 @@ namespace SNE.Views
                 Margin = new Thickness(0, 0, 0, 5)
             };
 
-            FormulaControl formalaBlock = new FormulaControl
+            FormulaControl formulaBlock = new FormulaControl
             {
-                Formula = $"f_{{{mode2Counter}}}(x) = ",
+                //Formula = $"f_{{{mode2Counter}}}(x) = ",
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 5, 0)
             };
@@ -90,15 +90,15 @@ namespace SNE.Views
                 Width = 200
             };
 
-            row.Children.Add(formalaBlock);
+            row.Children.Add(formulaBlock);
             row.Children.Add(textBox);
 
             DynamicPanel.Children.Add(row);
-            mode2Counter++;
+            //mode2Counter++;
         }
         private void SolveButton_Click(object sender, RoutedEventArgs e)
         {
-            ResultTextBox.Text = "Результаты:\n";
+            //ResultTextBox.Text = "Результаты:\n";
 
             foreach (var row in DynamicPanel.Children)
             {
@@ -108,7 +108,7 @@ namespace SNE.Views
                     {
                         if (child is TextBox textBox)
                         {
-                            ResultTextBox.Text += textBox.Text + "\n";
+                            // ResultTextBox.Text += textBox.Text + "\n";
                         }
                     }
                 }

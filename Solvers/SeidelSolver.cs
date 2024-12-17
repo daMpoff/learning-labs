@@ -1,15 +1,19 @@
 using MathNet.Symbolics;
 using SNE.Interfaces;
+using SNE.Utils;
 
 namespace SNE.Solvers;
 
 public class SeidelSolver : IIterativeMethod
 {
     public string Name => "Метод Зейделя";
-
+    public bool IsTwoFormNeed { get; set; } = true;
     public Dictionary<string, FloatingPoint> Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
-        
+        if (!Checker.CheckNormMatrix(equations, initialValues))
+        {
+            throw new InvalidOperationException("Условие сходимости не выполняется, норма матрицы больше 1!");
+        };
         var variables = equations.First().CollectVariables();
         var currentValues = new Dictionary<string, FloatingPoint>(initialValues);
 
@@ -44,7 +48,6 @@ public class SeidelSolver : IIterativeMethod
             }
         }
 
-        Console.WriteLine("Метод не сошелся за указанное количество итераций.");
-        return null; // Возвращаем null, если метод не сошелся
+        throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 }

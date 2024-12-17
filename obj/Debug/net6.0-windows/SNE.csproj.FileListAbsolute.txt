@@ -40,3 +40,9 @@ C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\ru\FSharp.Core.resource
 C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\tr\FSharp.Core.resources.dll
 C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\zh-Hans\FSharp.Core.resources.dll
 C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\zh-Hant\FSharp.Core.resources.dll
+C:\Users\11pro\source\repos\SNE\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\11pro\source\repos\SNE\obj\Debug\net6.0-windows\SNE_MarkupCompile.lref
+C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\MaterialDesignColors.dll
+C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\MaterialDesignThemes.Wpf.dll
+C:\Users\11pro\source\repos\SNE\bin\Debug\net6.0-windows\Microsoft.Xaml.Behaviors.dll
+C:\Users\11pro\source\repos\SNE\obj\Debug\net6.0-windows\App.baml

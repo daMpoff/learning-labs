@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
     <PackageReference Include="WpfMath" Version="2.1.0" />
   </ItemGroup>
