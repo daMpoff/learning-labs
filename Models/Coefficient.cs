@@ -5,7 +5,7 @@ namespace SLAE.ViewModels
     public class Coefficient : INotifyPropertyChanged
     {
         private double value;
-        private string formula; // Добавлено свойство для формулы
+        private string formula;
 
         public double Value
         {
