@@ -35,18 +35,18 @@ namespace SLAE.Solvers
         public List<double> Calculation(double[,] matrix)
         {
             List<double> result = new List<double>();
-            double[,] matrix_det = new double[matrix.GetLength(0), matrix.GetLength(0)];
+            double[,] matrixDet = new double[matrix.GetLength(0), matrix.GetLength(0)];
 
             // Создаем матрицу коэффициентов
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(0); j++)
                 {
-                    matrix_det[i, j] = matrix[i, j];
+                    matrixDet[i, j] = matrix[i, j];
                 }
             }
 
-            double det = Determinant(matrix_det);
+            double det = Determinant(matrixDet);
 
             for (int m = 0; m < matrix.GetLength(0); m++)
             {
@@ -54,11 +54,11 @@ namespace SLAE.Solvers
                 {
                     for (int j = 0; j < matrix.GetLength(0); j++)
                     {
-                        if (m == j) matrix_det[i, j] = matrix[i, matrix.GetLength(1) - 1];
-                        else matrix_det[i, j] = matrix[i, j];
+                        if (m == j) matrixDet[i, j] = matrix[i, matrix.GetLength(1) - 1];
+                        else matrixDet[i, j] = matrix[i, j];
                     }
                 }
-                result.Add(Determinant(matrix_det) / det);
+                result.Add(Determinant(matrixDet) / det);
             }
 
             return result;
