@@ -11,10 +11,10 @@ namespace SLAE.Solvers
 
         public double[] Solve(SLAEModel slae)
         {
-            return SolveSLAU(slae.Coefficients, slae.Constants);
+            return SolveSLAE(slae.Coefficients, slae.Constants);
         }
 
-        private double[] SolveSLAU(double[,] A, double[] B)
+        private double[] SolveSLAE(double[,] A, double[] B)
         {
             int n = B.Length;
 
