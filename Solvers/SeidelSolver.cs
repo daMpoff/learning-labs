@@ -1,13 +1,27 @@
-﻿using SLAE.Interfaces;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using SLAE.Interfaces;
 using SLAE.Models;
 using System.Windows;
 
 namespace SLAE.Solvers
 {
-    public class SeidelSolver : ISLAESolver
+    public class SeidelSolver : ISLAESolver, INotifyPropertyChanged
     {
+        private bool isEnable;
         public string Name => "Метод Зейделя";
-        public bool IsEnable { get; set; }
+        public bool IsEnable
+        {
+            get => isEnable;
+            set
+            {
+                if (isEnable != value)
+                {
+                    isEnable = value;
+                    OnPropertyChanged(nameof(IsEnable));
+                }
+            }
+        }
 
         public double[] Solve(SLAEModel slae)
         {
@@ -131,6 +145,12 @@ namespace SLAE.Solvers
                 matrix[row1, j] = matrix[row2, j];
                 matrix[row2, j] = temp;
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

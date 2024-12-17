@@ -1,12 +1,26 @@
-﻿using SLAE.Interfaces;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using SLAE.Interfaces;
 using SLAE.Models;
 
 namespace SLAE.Solvers
 {
-    public class TridiagonalSolver : ISLAESolver
+    public class TridiagonalSolver : ISLAESolver, INotifyPropertyChanged
     {
+        private bool isEnable;
         public string Name => "Метод прогонки";
-        public bool IsEnable { get; set; }
+        public bool IsEnable
+        {
+            get => isEnable;
+            set
+            {
+                if (isEnable != value)
+                {
+                    isEnable = value;
+                    OnPropertyChanged(nameof(IsEnable));
+                }
+            }
+        }
         public double[] Solve(SLAEModel slae)
         {
             int n = slae.RowsCount;
@@ -65,6 +79,12 @@ namespace SLAE.Solvers
             }
 
             return x;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

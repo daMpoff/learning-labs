@@ -1,13 +1,27 @@
-﻿using SLAE.Interfaces;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using SLAE.Interfaces;
 using SLAE.Models;
 
 namespace SLAE.Solvers
 {
-    public class CramerSolver : ISLAESolver
+    public class CramerSolver : ISLAESolver, INotifyPropertyChanged
     {
+        private bool isEnable;
         public string Name => "Метод Крамера";
 
-        public bool IsEnable { get; set; }
+        public bool IsEnable
+        {
+            get => isEnable;
+            set
+            {
+                if (isEnable != value)
+                {
+                    isEnable = value;
+                    OnPropertyChanged(nameof(IsEnable));
+                }
+            }
+        }
 
         public double[] Solve(SLAEModel slae)
         {
@@ -90,6 +104,12 @@ namespace SLAE.Solvers
                 det += matrixDet[0, i] * Determinant(minor) * (i % 2 == 0 ? 1 : -1);
             }
             return det;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
