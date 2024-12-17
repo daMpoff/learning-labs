@@ -65,29 +65,29 @@ namespace SLAE.Solvers
         }
 
         // Метод Determinant из класса CramerSolver
-        public double Determinant(double[,] matrix_det)
+        public double Determinant(double[,] matrixDet)
         {
-            if (matrix_det.GetLength(0) == 2)
+            if (matrixDet.GetLength(0) == 2)
             {
-                return matrix_det[0, 0] * matrix_det[1, 1] - matrix_det[1, 0] * matrix_det[0, 1];
+                return matrixDet[0, 0] * matrixDet[1, 1] - matrixDet[1, 0] * matrixDet[0, 1];
             }
 
             double det = 0;
-            double[,] minor = new double[matrix_det.GetLength(0) - 1, matrix_det.GetLength(0) - 1];
+            double[,] minor = new double[matrixDet.GetLength(0) - 1, matrixDet.GetLength(0) - 1];
 
-            for (int i = 0; i < matrix_det.GetLength(0); i++)
+            for (int i = 0; i < matrixDet.GetLength(0); i++)
             {
                 int minorIndex = 0;
-                for (int m = 1; m < matrix_det.GetLength(0); m++)
+                for (int m = 1; m < matrixDet.GetLength(0); m++)
                 {
                     minorIndex = 0;
-                    for (int n = 0; n < matrix_det.GetLength(0); n++)
+                    for (int n = 0; n < matrixDet.GetLength(0); n++)
                     {
                         if (n == i) continue;
-                        minor[m - 1, minorIndex++] = matrix_det[m, n];
+                        minor[m - 1, minorIndex++] = matrixDet[m, n];
                     }
                 }
-                det += matrix_det[0, i] * Determinant(minor) * (i % 2 == 0 ? 1 : -1);
+                det += matrixDet[0, i] * Determinant(minor) * (i % 2 == 0 ? 1 : -1);
             }
             return det;
         }
