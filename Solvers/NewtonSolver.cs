@@ -28,7 +28,7 @@ public class NewtonSolver : IIterativeMethod
             }
 
             // Решаем систему линейных уравнений J * delta = -F
-            double[] delta = SolveLinearSystem(jacobiMatrix, functionValues);
+            double[] delta = LinearSystemSolver.SolveLinearSystem(jacobiMatrix, functionValues);
 
             // Обновляем значения переменных
             for (int i = 0; i < variables.Count(); i++)
@@ -55,41 +55,5 @@ public class NewtonSolver : IIterativeMethod
             }
         }
         throw new Exception("Метод не сошелся за указанное количество итераций.");
-    }
-
-    private static double[] SolveLinearSystem(SquareMatrix matrix, double[] b)
-    {
-        int n = matrix.Size;
-        double[,] a = matrix.Data;
-        double[] x = new double[n];
-
-        // Прямой ход метода Гаусса
-        for (int k = 0; k < n; k++)
-        {
-            for (int i = k + 1; i < n; i++)
-            {
-                double factor = a[i, k] / a[k, k];
-                for (int j = k; j < n; j++)
-                {
-                    a[i, j] -= factor * a[k, j];
-                }
-
-                b[i] -= factor * b[k];
-            }
-        }
-
-        // Обратный ход метода Гаусса
-        for (int k = n - 1; k >= 0; k--)
-        {
-            double sum = 0;
-            for (int j = k + 1; j < n; j++)
-            {
-                sum += a[k, j] * x[j];
-            }
-
-            x[k] = (b[k] - sum) / a[k, k];
-        }
-
-        return x;
     }
 }
