@@ -62,7 +62,7 @@ public class SecantSolver : IIterativeMethod
         throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 
-    private static void UpdateSecantMatrix(SquareMatrix matrix, IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> currentValues, Dictionary<string, FloatingPoint> previousValues, double[] delta)
+    private void UpdateSecantMatrix(SquareMatrix matrix, IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> currentValues, Dictionary<string, FloatingPoint> previousValues, double[] delta)
     {
         var variables = equations.First().CollectVariables();
         int n = variables.Count();
