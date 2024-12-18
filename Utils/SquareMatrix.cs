@@ -5,6 +5,8 @@ namespace SNE.Utils
     public class SquareMatrix
     {
         private double[,] data;
+
+        public double[,] Data => data;
         public int Size { get; set; }
         public double this[int row, int col]
         {
