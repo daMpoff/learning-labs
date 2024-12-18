@@ -20,8 +20,8 @@ namespace SNE.ViewModels
         private IIterativeMethod selectedMethod;
         private ObservableCollection<Expression> expressions = new ObservableCollection<Expression>();
 
-        public ObservableCollection<InitialValue> InitialValues { get; set; } =
-            new ObservableCollection<InitialValue>();
+        public ObservableCollection<VariableValuePair> InitialValues { get; set; } =
+            new ObservableCollection<VariableValuePair>();
 
         public ObservableCollection<IIterativeMethod> SolvingMethods { get; set; } =
             new ObservableCollection<IIterativeMethod>();
@@ -152,7 +152,7 @@ namespace SNE.ViewModels
             InitialValues.Clear();
             for (int i = 0; i < Expressions.Count(); i++)
             {
-                InitialValues.Add(new InitialValue()
+                InitialValues.Add(new VariableValuePair()
                     { VariableName = $"x_{i + 1}", Value = 0.0, DisplayVariableName = $"x_{{{i + 1}}} = " });
             }
         }

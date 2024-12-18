@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace SNE.Models;
 
-public class InitialValue : INotifyPropertyChanged
+public class VariableValuePair : INotifyPropertyChanged
 {
     private string variableName;
     private double value;
