@@ -8,38 +8,23 @@ using MathNet.Symbolics;
 using SNE.Commands;
 using SNE.Interfaces;
 using SNE.Models;
+using SNE.Views;
 using Expression = SNE.Models.Expression;
 
 namespace SNE.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private int expressionCount = 0;
         private bool isTwoFormNeed = false;
         private double tolerance = 0.001; // Значение точности по умолчанию
         private IIterativeMethod selectedMethod;
-        private ObservableCollection<Expression> expressions = new ObservableCollection<Expression>();
+        public ObservableCollection<VariableValuePair> InitialValues { get; set; } = new ObservableCollection<VariableValuePair>();
 
-        public ObservableCollection<VariableValuePair> InitialValues { get; set; } =
-            new ObservableCollection<VariableValuePair>();
-
-        public ObservableCollection<IIterativeMethod> SolvingMethods { get; set; } =
-            new ObservableCollection<IIterativeMethod>();
+        public ObservableCollection<IIterativeMethod> SolvingMethods { get; set; } = new ObservableCollection<IIterativeMethod>();
 
         private Dictionary<string, FloatingPoint> initialValues = new Dictionary<string, FloatingPoint>();
 
-        public ObservableCollection<Expression> Expressions
-        {
-            get => expressions;
-            set
-            {
-                if (expressions != value)
-                {
-                    expressions = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public ObservableCollection<Expression> Expressions {get; set; }
 
         public IIterativeMethod SelectedMethod
         {
@@ -96,6 +81,7 @@ namespace SNE.ViewModels
         private void Initialize()
         {
             BuildSolvers();
+            Expressions = new ObservableCollection<Expression>();
             SolveCommand = new RelayCommand(Solve);
             ComboBoxSelectionChangedCommand = new RelayCommand(OnMethodComboBoxSelectionChanged);
             AddEquationCommand = new RelayCommand(AddExpression);
@@ -152,8 +138,7 @@ namespace SNE.ViewModels
             InitialValues.Clear();
             for (int i = 0; i < Expressions.Count(); i++)
             {
-                InitialValues.Add(new VariableValuePair()
-                    { VariableName = $"x_{i + 1}", Value = 0.0, DisplayVariableName = $"x_{{{i + 1}}} = " });
+                InitialValues.Add(new VariableValuePair() { VariableName = $"x_{i + 1}", Value = 0.0, DisplayVariableName = $"x_{{{i + 1}}} = " });
             }
         }
 
@@ -167,14 +152,11 @@ namespace SNE.ViewModels
             try
             {
                 initialValues = ConvertInitialValues();
-                SystemNonLinearEquations systemNonLinearEquations =
-                    new SystemNonLinearEquations(expressions.Select(p => p.Value).ToList());
+                SystemNonLinearEquations systemNonLinearEquations = new SystemNonLinearEquations(Expressions.Select(p => p.Value).ToList());
                 var (results, iterationsCount) = SelectedMethod.Solve(systemNonLinearEquations.SymbolicExpressions, initialValues, tolerance, 10000);
-                MessageBox.Show($"{iterationsCount}");
-                foreach (var result in results)
-                {
-                    MessageBox.Show($"{result.Key}: {result.Value.RealValue:F6}");
-                }
+                ResultsViewModel resultsViewModel = new ResultsViewModel(results, iterationsCount, SelectedMethod.Name);
+                ResultsWindow resultsWindow = new ResultsWindow() { DataContext = resultsViewModel };
+                resultsWindow.ShowDialog();
             }
             catch (Exception ex)
             {

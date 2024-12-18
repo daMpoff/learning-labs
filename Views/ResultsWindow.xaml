@@ -1,0 +1,27 @@
+﻿<Window x:Class="SNE.Views.ResultsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SNE.Views"
+        mc:Ignorable="d"
+        Title="Результаты решения" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Results}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Переменная" Binding="{Binding DisplayVariableName}" />
+                <DataGridTextColumn Header="Значение" Binding="{Binding Value,StringFormat=F6}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding IterationsCount, StringFormat='Количество итераций: {0}'}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MethodName, StringFormat='Метод решения: {0}'}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+    </Grid>
+</Window>
