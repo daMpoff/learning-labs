@@ -1,46 +1,45 @@
-﻿using MathNet.Symbolics;
+﻿using System.Windows;
+using MathNet.Symbolics;
 
 namespace SNE.Models
 {
     public class SystemNonLinearEquations
     {
-        public SystemNonLinearEquations(IEnumerable<string> functions)
+        public SystemNonLinearEquations(IEnumerable<string> expressions)
         {
-            ValidateFunctions(functions);
-
-            Functions = functions;
-            FunctionExpressions = functions
-                .Select(function =>
+            ValidateExpressions(expressions);
+            Expressions = expressions;
+            SymbolicExpressions = expressions
+                .Select(expression =>
                 {
-                    if (string.IsNullOrEmpty(function) || string.IsNullOrWhiteSpace(function))
-                    {
-                        throw new ArgumentNullException(nameof(function), "Выражение не может быть пустым, либо состоять из пробелов!");
-                    }
-                    return SymbolicExpression.Parse(function);
+                    return SymbolicExpression.Parse(expression);
                 })
                 .ToList();
-            CorrectCheck();
+            //CorrectCheck();
         }
 
-        public IEnumerable<string> Functions { get; set; }
-        public List<SymbolicExpression> FunctionExpressions { get; set; }
+        public IEnumerable<string> Expressions { get; set; }
+        public IEnumerable<SymbolicExpression> SymbolicExpressions { get; set; }
 
         private void CorrectCheck()
         {
-
-        }
-        private void ValidateFunctions(IEnumerable<string> functions)
-        {
-            if (functions == null)
+            if (SymbolicExpressions.Any(expression => expression.CollectVariables().Count() != SymbolicExpressions.Count()))
             {
-                throw new ArgumentNullException(nameof(functions), "Выражения не были инициализированы!");
+                throw new InvalidOperationException("Все уравнения должны содержать одинаковое количество переменных!");
+            }
+        }
+        private void ValidateExpressions(IEnumerable<string> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression), "Выражения не были инициализированы!");
             }
 
-            foreach (var function in functions)
+            foreach (var function in expression)
             {
                 if (string.IsNullOrEmpty(function) || string.IsNullOrWhiteSpace(function))
                 {
-                    throw new ArgumentNullException(nameof(function), "Выражение не может быть пустым, либо состоять из пробелов!");
+                    throw new ArgumentException(nameof(function), "Выражение не может быть пустым, либо состоять из пробелов!");
                 }
             }
         }

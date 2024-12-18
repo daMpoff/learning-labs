@@ -6,6 +6,6 @@ namespace SNE.Interfaces
     {
         string Name { get; }
         bool IsTwoFormNeed { get; set; }
-        Dictionary<string, FloatingPoint> Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations);
+        (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations);
     }
 }

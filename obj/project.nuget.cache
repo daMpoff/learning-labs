@@ -1,19 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "QyvpQ7SqBIM=",
+  "dgSpecHash": "KJ7pjtRneAo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\11pro\\source\\repos\\SNE\\SNE.csproj",
+  "projectFilePath": "C:\\Users\\danya\\RiderProjects\\SNE\\SNE.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\11pro\\.nuget\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\fsharp.core\\8.0.100\\fsharp.core.8.0.100.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\materialdesignthemes\\5.1.0\\materialdesignthemes.5.1.0.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\mathnet.numerics\\6.0.0-beta1\\mathnet.numerics.6.0.0-beta1.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\mathnet.numerics.fsharp\\6.0.0-beta1\\mathnet.numerics.fsharp.6.0.0-beta1.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\mathnet.symbolics\\0.25.0\\mathnet.symbolics.0.25.0.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\wpfmath\\2.1.0\\wpfmath.2.1.0.nupkg.sha512",
-    "C:\\Users\\11pro\\.nuget\\packages\\xamlmath.shared\\2.1.0\\xamlmath.shared.2.1.0.nupkg.sha512"
+    "C:\\Users\\danya\\.nuget\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\fsharp.core\\8.0.100\\fsharp.core.8.0.100.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\materialdesignthemes\\5.1.0\\materialdesignthemes.5.1.0.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\mathnet.numerics\\6.0.0-beta1\\mathnet.numerics.6.0.0-beta1.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\mathnet.numerics.fsharp\\6.0.0-beta1\\mathnet.numerics.fsharp.6.0.0-beta1.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\mathnet.symbolics\\0.25.0\\mathnet.symbolics.0.25.0.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\wpfmath\\2.1.0\\wpfmath.2.1.0.nupkg.sha512",
+    "C:\\Users\\danya\\.nuget\\packages\\xamlmath.shared\\2.1.0\\xamlmath.shared.2.1.0.nupkg.sha512"
   ],
   "logs": []
 }

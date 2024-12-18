@@ -1,3 +1,4 @@
+using System.Windows;
 using MathNet.Symbolics;
 using SNE.Interfaces;
 using SNE.Utils;
@@ -8,7 +9,7 @@ public class SeidelSolver : IIterativeMethod
 {
     public string Name => "Метод Зейделя";
     public bool IsTwoFormNeed { get; set; } = true;
-    public Dictionary<string, FloatingPoint> Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
+    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
         if (!Checker.CheckNormMatrix(equations, initialValues))
         {
@@ -43,8 +44,7 @@ public class SeidelSolver : IIterativeMethod
             }
             if (converged)
             {
-                //Console.WriteLine($"Сходимость достигнута за {iter + 1} итераций.");
-                return currentValues;
+                return (currentValues, iteration+1);
             }
         }
 
