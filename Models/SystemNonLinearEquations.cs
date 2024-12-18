@@ -15,31 +15,23 @@ namespace SNE.Models
                     return SymbolicExpression.Parse(expression);
                 })
                 .ToList();
-            //CorrectCheck();
         }
 
         public IEnumerable<string> Expressions { get; set; }
         public IEnumerable<SymbolicExpression> SymbolicExpressions { get; set; }
-
-        private void CorrectCheck()
+        
+        private void ValidateExpressions(IEnumerable<string> expressions)
         {
-            if (SymbolicExpressions.Any(expression => expression.CollectVariables().Count() != SymbolicExpressions.Count()))
+            if (expressions == null)
             {
-                throw new InvalidOperationException("Все уравнения должны содержать одинаковое количество переменных!");
-            }
-        }
-        private void ValidateExpressions(IEnumerable<string> expression)
-        {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression), "Выражения не были инициализированы!");
+                throw new ArgumentNullException("Выражения не были инициализированы!");
             }
 
-            foreach (var function in expression)
+            foreach (var expression in expressions)
             {
-                if (string.IsNullOrEmpty(function) || string.IsNullOrWhiteSpace(function))
+                if (string.IsNullOrEmpty(expression) || string.IsNullOrWhiteSpace(expression))
                 {
-                    throw new ArgumentException(nameof(function), "Выражение не может быть пустым, либо состоять из пробелов!");
+                    throw new ArgumentException("Одно не может быть пустым, либо состоять из пробелов!");
                 }
             }
         }
