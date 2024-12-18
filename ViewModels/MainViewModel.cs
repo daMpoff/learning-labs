@@ -169,6 +169,11 @@ namespace SNE.ViewModels
                 SystemNonLinearEquations systemNonLinearEquations =
                     new SystemNonLinearEquations(expressions.Select(p => p.Value).ToList());
                 var (results, iterationsCount) = SelectedMethod.Solve(systemNonLinearEquations.SymbolicExpressions, initialValues, tolerance, 10000);
+                MessageBox.Show($"{iterationsCount}");
+                foreach (var result in results)
+                {
+                    MessageBox.Show($"{result.Key}: {result.Value.ToString()}");
+                }
             }
             catch (Exception ex)
             {
