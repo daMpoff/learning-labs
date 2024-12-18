@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -172,7 +173,7 @@ namespace SNE.ViewModels
                 MessageBox.Show($"{iterationsCount}");
                 foreach (var result in results)
                 {
-                    MessageBox.Show($"{result.Key}: {result.Value.ToString()}");
+                    MessageBox.Show($"{result.Key}: {result.Value.RealValue:F6}");
                 }
             }
             catch (Exception ex)
