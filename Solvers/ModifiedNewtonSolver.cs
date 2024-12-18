@@ -4,7 +4,7 @@ using SNE.Utils;
 
 namespace SNE.Solvers;
 
-public class ModifiedNewton : IIterativeMethod
+public class ModifiedNewtonSolver : IIterativeMethod
 {
     public string Name { get; } = "Модифицированный метод Ньютона";
     public bool IsTwoFormNeed { get; set; } = false;
