@@ -47,7 +47,6 @@ public class SeidelSolver : IIterativeMethod
                 return (currentValues, iteration+1);
             }
         }
-
         throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 }
