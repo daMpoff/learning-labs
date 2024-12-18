@@ -1,5 +1,6 @@
 ﻿using MathNet.Symbolics;
 using SNE.Interfaces;
+using SNE.Utils;
 
 namespace SNE.Solvers;
 
@@ -9,6 +10,10 @@ public class SimpleIterationSolver : IIterativeMethod
     public bool IsTwoFormNeed { get; set; } = true;
     public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
+        if (!Checker.CheckNormMatrix(equations, initialValues))
+        {
+            throw new InvalidOperationException("Условие сходимости не выполняется, норма матрицы больше 1!");
+        };
         // Получаем переменные из первого уравнения
         var variables = equations.First().CollectVariables();
 
