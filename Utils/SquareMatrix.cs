@@ -61,5 +61,24 @@ namespace SNE.Utils
             }
             return max;
         }
+        public static double VectorDotProduct(double[,] a, double[,] b)
+        {
+            double result = 0;
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                result += a[i, 0] * b[i, 0];
+            }
+            return result;
+        }
+ 
+        public static double MatrixVectorMultiply(SquareMatrix matrix, double[,] vector, int row)
+        {
+            double result = 0;
+            for (int j = 0; j < matrix.Size; j++)
+            {
+                result += matrix[row, j] * vector[j, 0];
+            }
+            return result;
+        }
     }
 }
