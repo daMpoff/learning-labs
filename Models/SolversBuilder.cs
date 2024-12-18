@@ -7,7 +7,7 @@ public static class SolversBuilder
 {
     public static List<IIterativeMethod> BuildSolvers()
     {
-        var solvers = new List<IIterativeMethod> { new SeidelSolver()};
+        var solvers = new List<IIterativeMethod> { new SeidelSolver(), new NewtonSolver()};
         return solvers;
     }
 }
