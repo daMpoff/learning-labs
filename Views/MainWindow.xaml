@@ -35,7 +35,7 @@
         <ItemsControl ItemsSource="{Binding Expressions}" Grid.Row="2" Grid.Column="0" Margin="20">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="3">
                         <wm:FormulaControl Formula="{Binding DisplayFormula}" VerticalContentAlignment="Center" Margin="3,5,5,0"/>
                         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Padding="2" MinWidth="200" FontSize="16" VerticalContentAlignment="Center" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
@@ -48,7 +48,7 @@
                 <ItemsControl ItemsSource="{Binding InitialValues}" Margin="20">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="3">
                                 <wm:FormulaControl Formula="{Binding DisplayVariableName}" VerticalContentAlignment="Center" Margin="3,5,5,0"/>
                                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Padding="2" FontSize="16" MinWidth="100" VerticalContentAlignment="Center" Text="{Binding Value}"/>
                             </StackPanel>
