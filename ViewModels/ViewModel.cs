@@ -19,8 +19,6 @@ namespace SLAE.ViewModels
         public ICommand GetResultCommand { get; }
         public ObservableCollection<ISLAESolver> Methods { get; set; }
         public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 1 до 10
-
-        public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<RootResult> Results { get; set; } = new ObservableCollection<RootResult> { };
         public SLAEModel SLAEModel { get; set; }
 
@@ -152,7 +150,7 @@ namespace SLAE.ViewModels
                 Equations.Add(equation);
             }
         }
-
+        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
