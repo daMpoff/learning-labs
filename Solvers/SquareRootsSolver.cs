@@ -29,6 +29,12 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
         double[,] A = slae.Coefficients;
         double[] b = slae.Constants;
 
+        // Проверка симметричности матрицы
+        if (!IsSymmetric(A, n))
+        {
+            throw new InvalidOperationException("Матрица не является симметричной.");
+        }
+
         // Шаг 1: Разложение матрицы A на U^T * U
         double[,] U = new double[n, n];
         for (int i = 0; i < n; i++)
@@ -42,7 +48,12 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
                     {
                         sum += Math.Pow(U[k, i], 2);
                     }
+
                     U[i, i] = Math.Sqrt(A[i, i] - sum);
+                    if (double.IsNaN(U[i, i]) || U[i, i] == 0)
+                    {
+                        throw new InvalidOperationException("Матрица не является положительно определенной.");
+                    }
                 }
                 else
                 {
@@ -50,6 +61,7 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
                     {
                         sum += U[k, i] * U[k, j];
                     }
+
                     U[i, j] = (A[i, j] - sum) / U[i, i];
                 }
             }
@@ -64,6 +76,7 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
             {
                 sum += U[j, i] * y[j];
             }
+
             y[i] = (b[i] - sum) / U[i, i];
         }
 
@@ -76,10 +89,27 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
             {
                 sum += U[i, j] * x[j];
             }
+
             x[i] = (y[i] - sum) / U[i, i];
         }
 
         return x;
+    }
+
+    private bool IsSymmetric(double[,] A, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (A[i, j] != A[j, i])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
