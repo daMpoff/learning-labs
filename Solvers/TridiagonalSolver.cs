@@ -24,11 +24,13 @@ namespace SLAE.Solvers
         public double[] Solve(SLAEModel slae)
         {
             int n = slae.RowsCount;
-            //if (slae.VariablesCount < 3)
-            //{
-            //    throw new ArgumentException("Метод прогонки применим только к трёхдиагональным системам.");
-            //}
-
+            
+            // Проверка, что матрица является трёхдиагональной и диагональные элементы не равны нулю
+            if (!IsTridiagonalMatrix(slae.Coefficients, n))
+            {
+                throw new InvalidOperationException("Матрица не является трёхдиагональной или содержит нули на диагонали.");
+            }
+            
             double[] a = new double[n];   // нижняя диагональ (a_0 не используется)
             double[] b = new double[n];   // главная диагональ
             double[] c = new double[n];   // верхняя диагональ (c_n не используется)
@@ -79,6 +81,30 @@ namespace SLAE.Solvers
             }
 
             return x;
+        }
+        // Проверка, что матрица является трёхдиагональной и диагональные элементы не равны нулю
+        private static bool IsTridiagonalMatrix(double[,] matrix, int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                // Проверка, что элементы вне трёх диагоналей равны нулю
+                for (int j = 0; j < n; j++)
+                {
+                    if (i != j && i != j - 1 && i != j + 1)
+                    {
+                        if (matrix[i, j] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                // Проверка, что диагональные элементы не равны нулю
+                if (matrix[i, i] == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
