@@ -25,69 +25,91 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
 
     public double[] Solve(SLAEModel slae)
     {
-        double sum = 0;
-        List<double> results = new List<double>();
-        double[,] upperTriangularMatrix = new double[slae.VariablesCount, slae.VariablesCount];
+        int n = slae.VariablesCount;
+        double[,] A = slae.Coefficients;
+        double[] b = slae.Constants;
 
-        for (int i = 0; i < slae.VariablesCount; i++)
+        // Проверка симметричности матрицы
+        if (!IsSymmetric(A, n))
         {
-            for (int j = 0; j < slae.VariablesCount; j++)
+            throw new InvalidOperationException("Матрица не является симметричной.");
+        }
+
+        // Шаг 1: Разложение матрицы A на U^T * U
+        double[,] U = new double[n, n];
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
             {
-                sum = 0;
-                if (i > j) upperTriangularMatrix[i, j] = 0;
-                else if (i == j)
+                double sum = 0;
+                if (j == i)
                 {
                     for (int k = 0; k < i; k++)
                     {
-                        sum += Math.Pow(upperTriangularMatrix[k, i], 2);
+                        sum += Math.Pow(U[k, i], 2);
                     }
 
-                    upperTriangularMatrix[i, i] = Math.Sqrt(slae.Coefficients[i, i] - sum);
+                    U[i, i] = Math.Sqrt(A[i, i] - sum);
+                    if (double.IsNaN(U[i, i]) || U[i, i] == 0)
+                    {
+                        throw new InvalidOperationException("Матрица не является положительно определенной.");
+                    }
                 }
                 else
                 {
                     for (int k = 0; k < i; k++)
                     {
-                        sum += upperTriangularMatrix[k, i] * upperTriangularMatrix[k, j];
+                        sum += U[k, i] * U[k, j];
                     }
 
-                    upperTriangularMatrix[i, j] = (slae.Coefficients[i, j] - sum) / upperTriangularMatrix[i, i];
+                    U[i, j] = (A[i, j] - sum) / U[i, i];
                 }
             }
         }
 
-        double[,] transposedUpperTriangularMatrix = new double[slae.VariablesCount, slae.VariablesCount];
-        for (int i = 0; i < slae.VariablesCount; i++)
+        // Шаг 2: Решение системы U^T * y = b
+        double[] y = new double[n];
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < slae.VariablesCount; j++)
+            double sum = 0;
+            for (int j = 0; j < i; j++)
             {
-                transposedUpperTriangularMatrix[j, i] = upperTriangularMatrix[i, j];
+                sum += U[j, i] * y[j];
+            }
+
+            y[i] = (b[i] - sum) / U[i, i];
+        }
+
+        // Шаг 3: Решение системы U * x = y
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--)
+        {
+            double sum = 0;
+            for (int j = i + 1; j < n; j++)
+            {
+                sum += U[i, j] * x[j];
+            }
+
+            x[i] = (y[i] - sum) / U[i, i];
+        }
+
+        return x;
+    }
+
+    private bool IsSymmetric(double[,] A, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (A[i, j] != A[j, i])
+                {
+                    return false;
+                }
             }
         }
 
-        for (int i = 0; i < slae.VariablesCount; i++)
-        {
-            sum = 0;
-            for (int j = 0; j < slae.VariablesCount; j++)
-            {
-                if (i > j) sum += transposedUpperTriangularMatrix[i, j] * results[j];
-            }
-
-            results.Add((slae.Constants[i] - sum) / transposedUpperTriangularMatrix[i, i]);
-        }
-
-        for (int i = slae.VariablesCount - 1; i >= 0; i--)
-        {
-            sum = 0;
-            for (int j = slae.VariablesCount - 1; j >= 0; j--)
-            {
-                if (i < j) sum += upperTriangularMatrix[i, j] * results[j];
-            }
-
-            results[i] = (results[i] - sum) / upperTriangularMatrix[i, i];
-        }
-
-        return results.ToArray();
+        return true;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
