@@ -108,7 +108,7 @@ namespace SLAE.ViewModels
                     {
                         RootResult rootResult = new RootResult()
                         {
-                            Roots = new ObservableCollection<double>(method.Solve(SLAEModel).Select(d => d)),
+                            Roots = new ObservableCollection<double>(method.Solve(SLAEModel)),
                             MethodName = method.Name,
                         };
                         Results.Add(rootResult);
