@@ -25,69 +25,61 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
 
     public double[] Solve(SLAEModel slae)
     {
-        double sum = 0;
-        List<double> results = new List<double>();
-        double[,] upperTriangularMatrix = new double[slae.VariablesCount, slae.VariablesCount];
+        int n = slae.VariablesCount;
+        double[,] A = slae.Coefficients;
+        double[] b = slae.Constants;
 
-        for (int i = 0; i < slae.VariablesCount; i++)
+        // Шаг 1: Разложение матрицы A на U^T * U
+        double[,] U = new double[n, n];
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < slae.VariablesCount; j++)
+            for (int j = i; j < n; j++)
             {
-                sum = 0;
-                if (i > j) upperTriangularMatrix[i, j] = 0;
-                else if (i == j)
+                double sum = 0;
+                if (j == i)
                 {
                     for (int k = 0; k < i; k++)
                     {
-                        sum += Math.Pow(upperTriangularMatrix[k, i], 2);
+                        sum += Math.Pow(U[k, i], 2);
                     }
-
-                    upperTriangularMatrix[i, i] = Math.Sqrt(slae.Coefficients[i, i] - sum);
+                    U[i, i] = Math.Sqrt(A[i, i] - sum);
                 }
                 else
                 {
                     for (int k = 0; k < i; k++)
                     {
-                        sum += upperTriangularMatrix[k, i] * upperTriangularMatrix[k, j];
+                        sum += U[k, i] * U[k, j];
                     }
-
-                    upperTriangularMatrix[i, j] = (slae.Coefficients[i, j] - sum) / upperTriangularMatrix[i, i];
+                    U[i, j] = (A[i, j] - sum) / U[i, i];
                 }
             }
         }
 
-        double[,] transposedUpperTriangularMatrix = new double[slae.VariablesCount, slae.VariablesCount];
-        for (int i = 0; i < slae.VariablesCount; i++)
+        // Шаг 2: Решение системы U^T * y = b
+        double[] y = new double[n];
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < slae.VariablesCount; j++)
+            double sum = 0;
+            for (int j = 0; j < i; j++)
             {
-                transposedUpperTriangularMatrix[j, i] = upperTriangularMatrix[i, j];
+                sum += U[j, i] * y[j];
             }
+            y[i] = (b[i] - sum) / U[i, i];
         }
 
-        for (int i = 0; i < slae.VariablesCount; i++)
+        // Шаг 3: Решение системы U * x = y
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--)
         {
-            sum = 0;
-            for (int j = 0; j < slae.VariablesCount; j++)
+            double sum = 0;
+            for (int j = i + 1; j < n; j++)
             {
-                if (i > j) sum += transposedUpperTriangularMatrix[i, j] * results[j];
+                sum += U[i, j] * x[j];
             }
-
-            results.Add((slae.Constants[i] - sum) / transposedUpperTriangularMatrix[i, i]);
+            x[i] = (y[i] - sum) / U[i, i];
         }
 
-        for (int i = slae.VariablesCount - 1; i >= 0; i--)
-        {
-            sum = 0;
-            for (int j = slae.VariablesCount - 1; j >= 0; j--)
-            {
-                if (i < j) sum += upperTriangularMatrix[i, j] * results[j];
-            }
-
-            results[i] = (results[i] - sum) / upperTriangularMatrix[i, i];
-        }
-
-        return results.ToArray();
+        return x;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
