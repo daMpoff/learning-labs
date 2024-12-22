@@ -83,12 +83,13 @@ namespace SLAE.ViewModels
             Methods = new ObservableCollection<ISLAESolver>()
             {
                 new MatrixSolver(),
-                new GaussianSolver(),
-                new SeidelSolver(),
-                new TridiagonalSolver(),
-                new SimpleIterationSolver(),
                 new CramerSolver(),
-                new SquareRootsSolver()
+                new GaussianSolver(),
+                new TridiagonalSolver(),
+                new LUDecompositionSolver(),
+                new SquareRootsSolver(),
+                new SimpleIterationSolver(),
+                new SeidelSolver(),
             };
         }
         private void GetResult()
