@@ -10,7 +10,7 @@ namespace SLAE.Interfaces
         string Name { get; }
 
         /// <summary>
-        /// Свойство которое показывает, включён ли метод при решении СЛАУ
+        /// Свойство, которое показывает, включён ли метод при решении СЛАУ
         /// </summary>
         bool IsEnable { get; set; }
 
