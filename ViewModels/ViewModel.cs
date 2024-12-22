@@ -85,6 +85,7 @@ namespace SLAE.ViewModels
                 new MatrixSolver(),
                 new CramerSolver(),
                 new GaussianSolver(),
+                new GaussJordanSolver(),
                 new TridiagonalSolver(),
                 new LUDecompositionSolver(),
                 new SquareRootsSolver(),
