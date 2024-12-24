@@ -81,7 +81,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBox Padding="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" BorderBrush="LightGray" Width="40" Height="40" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Coefficient.Value, Mode=TwoWay}"/>
+                                            <TextBox Padding="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" BorderBrush="LightGray" Width="40" Height="40" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Value, Mode=TwoWay}"/>
                                             <wm:FormulaControl Formula="{Binding Variable}" Margin="3,5,0,0" VerticalAlignment="Center"/>
                                             <!-- Знак + отображается только если это не последний элемент -->
                                             <TextBlock Text=" + " FontSize="20" Margin="0,0,0,5" VerticalAlignment="Center" Visibility="{Binding IsLast, Converter={StaticResource BooleanToVisibilityConverter}}"/>

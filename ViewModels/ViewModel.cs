@@ -133,7 +133,7 @@ namespace SLAE.ViewModels
                 for (int j = 0; j < equation.CoefficientVariablePairs.Count; j++)
                 {
                     CoefficientVariablePair pair = equation.CoefficientVariablePairs[j];
-                    SLAEModel.Coefficients[i, j] = pair.Coefficient.Value;
+                    SLAEModel.Coefficients[i, j] = pair.Value;
                 }
                 SLAEModel.Constants[i] = equation.Result;
             }

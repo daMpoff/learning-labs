@@ -4,17 +4,17 @@ namespace SLAE.ViewModels
 {
     public class CoefficientVariablePair : INotifyPropertyChanged
     {
-        private Coefficient coefficient;
+        private double value;
         private string variable;
         public bool IsLast { get; set; }
 
-        public Coefficient Coefficient
+        public double Value
         {
-            get => coefficient;
+            get => value;
             set
             {
-                coefficient = value;
-                OnPropertyChanged(nameof(Coefficient));
+                this.value = value;
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -35,9 +35,9 @@ namespace SLAE.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public CoefficientVariablePair(Coefficient coefficient, string variable)
+        public CoefficientVariablePair(double value, string variable)
         {
-            Coefficient = coefficient;
+            Value = value;
             Variable = variable;
         }
     }
