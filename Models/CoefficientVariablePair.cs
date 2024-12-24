@@ -27,18 +27,17 @@ namespace SLAE.ViewModels
                 OnPropertyChanged(nameof(Variable));
             }
         }
+        public CoefficientVariablePair(double value, string variable)
+        {
+            Value = value;
+            Variable = variable;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public CoefficientVariablePair(double value, string variable)
-        {
-            Value = value;
-            Variable = variable;
         }
     }
 }
