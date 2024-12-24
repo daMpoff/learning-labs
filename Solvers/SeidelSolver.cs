@@ -9,12 +9,16 @@ public class SeidelSolver : IIterativeMethod
 {
     public string Name => "Метод Зейделя";
     public bool IsTwoFormNeed { get; set; } = true;
-    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
+
+    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations,
+        Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
         if (!Checker.CheckNormMatrix(equations, initialValues))
         {
             throw new InvalidOperationException("Условие сходимости не выполняется, норма матрицы больше 1!");
-        };
+        }
+
+        ;
         var variables = equations.First().CollectVariables();
         var currentValues = new Dictionary<string, FloatingPoint>(initialValues);
 
@@ -42,11 +46,13 @@ public class SeidelSolver : IIterativeMethod
                     break;
                 }
             }
+
             if (converged)
             {
-                return (currentValues, iteration+1);
+                return (currentValues, iteration + 1);
             }
         }
+
         throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 }

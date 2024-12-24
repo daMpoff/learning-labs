@@ -45,6 +45,7 @@ public class ResultsViewModel : INotifyPropertyChanged
         MethodName = methodName;
         LoadData(results);
     }
+
     private void LoadData(Dictionary<string, FloatingPoint> resultValues)
     {
         foreach (var result in resultValues)
@@ -56,6 +57,7 @@ public class ResultsViewModel : INotifyPropertyChanged
             });
         }
     }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

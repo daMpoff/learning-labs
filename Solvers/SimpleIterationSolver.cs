@@ -8,12 +8,16 @@ public class SimpleIterationSolver : IIterativeMethod
 {
     public string Name { get; } = "Метод простых итераций";
     public bool IsTwoFormNeed { get; set; } = true;
-    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
+
+    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations,
+        Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
         if (!Checker.CheckNormMatrix(equations, initialValues))
         {
             throw new InvalidOperationException("Условие сходимости не выполняется, норма матрицы больше 1!");
-        };
+        }
+
+        ;
         // Получаем переменные из первого уравнения
         var variables = equations.First().CollectVariables();
 
@@ -60,6 +64,7 @@ public class SimpleIterationSolver : IIterativeMethod
             {
                 return (nextValues, iter + 1);
             }
+
             // Обновляем текущие значения переменных для следующей итерации
             currentValues = new Dictionary<string, FloatingPoint>(nextValues);
         }

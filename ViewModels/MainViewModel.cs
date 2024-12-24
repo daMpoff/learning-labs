@@ -18,13 +18,15 @@ namespace SNE.ViewModels
         private bool isTwoFormNeed = false;
         private double tolerance = 0.001; // Значение точности по умолчанию
         private IIterativeMethod selectedMethod;
-        public ObservableCollection<VariableValuePair> InitialValues { get; set; } = new ObservableCollection<VariableValuePair>();
 
-        public ObservableCollection<IIterativeMethod> SolvingMethods { get; set; } = new ObservableCollection<IIterativeMethod>();
+        public ObservableCollection<VariableValuePair> InitialValues { get; set; } =
+            new ObservableCollection<VariableValuePair>();
+
+        public ObservableCollection<IIterativeMethod> SolvingMethods { get; set; } =
+            new ObservableCollection<IIterativeMethod>();
 
         private Dictionary<string, FloatingPoint> initialValues = new Dictionary<string, FloatingPoint>();
-
-        public ObservableCollection<Expression> Expressions {get; set; }
+        public ObservableCollection<Expression> Expressions { get; set; }
 
         public IIterativeMethod SelectedMethod
         {
@@ -138,7 +140,8 @@ namespace SNE.ViewModels
             InitialValues.Clear();
             for (int i = 0; i < Expressions.Count(); i++)
             {
-                InitialValues.Add(new VariableValuePair() { VariableName = $"x_{i + 1}", Value = 0.0, DisplayVariableName = $"x_{{{i + 1}}} = " });
+                InitialValues.Add(new VariableValuePair()
+                    { VariableName = $"x_{i + 1}", Value = 0.0, DisplayVariableName = $"x_{{{i + 1}}} = " });
             }
         }
 
@@ -152,8 +155,10 @@ namespace SNE.ViewModels
             try
             {
                 initialValues = ConvertInitialValues();
-                SystemNonLinearEquations systemNonLinearEquations = new SystemNonLinearEquations(Expressions.Select(p => p.Value).ToList());
-                var (results, iterationsCount) = SelectedMethod.Solve(systemNonLinearEquations.SymbolicExpressions, initialValues, tolerance, 10000);
+                SystemNonLinearEquations systemNonLinearEquations =
+                    new SystemNonLinearEquations(Expressions.Select(p => p.Value).ToList());
+                var (results, iterationsCount) = SelectedMethod.Solve(systemNonLinearEquations.SymbolicExpressions,
+                    initialValues, tolerance, 10000);
                 ResultsViewModel resultsViewModel = new ResultsViewModel(results, iterationsCount, SelectedMethod.Name);
                 ResultsWindow resultsWindow = new ResultsWindow() { DataContext = resultsViewModel };
                 resultsWindow.ShowDialog();
@@ -167,10 +172,11 @@ namespace SNE.ViewModels
         private Dictionary<string, FloatingPoint> ConvertInitialValues()
         {
             Dictionary<string, FloatingPoint> values = new Dictionary<string, FloatingPoint>();
-            for(int i = 0; i < InitialValues.Count();i++)
+            for (int i = 0; i < InitialValues.Count(); i++)
             {
                 values.Add(InitialValues[i].VariableName, InitialValues[i].Value);
             }
+
             return values;
         }
 

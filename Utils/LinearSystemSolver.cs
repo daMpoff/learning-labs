@@ -18,6 +18,7 @@ public class LinearSystemSolver
                 {
                     a[i, j] -= factor * a[k, j];
                 }
+
                 b[i] -= factor * b[k];
             }
         }
@@ -30,6 +31,7 @@ public class LinearSystemSolver
             {
                 sum += a[k, j] * x[j];
             }
+
             x[k] = (b[k] - sum) / a[k, k];
         }
 

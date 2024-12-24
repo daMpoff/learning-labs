@@ -56,9 +56,10 @@ public class ModifiedNewtonSolver : IIterativeMethod
 
             if (converged)
             {
-                return (currentValues, iter+1);
+                return (currentValues, iter + 1);
             }
         }
+
         throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 }

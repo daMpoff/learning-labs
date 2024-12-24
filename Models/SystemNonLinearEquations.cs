@@ -10,16 +10,13 @@ namespace SNE.Models
             ValidateExpressions(expressions);
             Expressions = expressions;
             SymbolicExpressions = expressions
-                .Select(expression =>
-                {
-                    return SymbolicExpression.Parse(expression);
-                })
+                .Select(expression => { return SymbolicExpression.Parse(expression); })
                 .ToList();
         }
 
         public IEnumerable<string> Expressions { get; set; }
         public IEnumerable<SymbolicExpression> SymbolicExpressions { get; set; }
-        
+
         private void ValidateExpressions(IEnumerable<string> expressions)
         {
             if (expressions == null)

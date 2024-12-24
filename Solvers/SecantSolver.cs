@@ -10,7 +10,8 @@ public class SecantSolver : IIterativeMethod
     public string Name { get; } = "Метод секущих";
     public bool IsTwoFormNeed { get; set; } = false;
 
-    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
+    public (Dictionary<string, FloatingPoint>, int) Solve(IEnumerable<SymbolicExpression> equations,
+        Dictionary<string, FloatingPoint> initialValues, double tolerance, int maxIterations)
     {
         var variables = equations.First().CollectVariables();
         var currentValues = new Dictionary<string, FloatingPoint>(initialValues);
@@ -52,35 +53,42 @@ public class SecantSolver : IIterativeMethod
                     break;
                 }
             }
+
             if (converged)
             {
                 return (currentValues, iter + 1);
             }
+
             // Обновляем матрицу секущих
             UpdateSecantMatrix(jacobiMatrix, equations, currentValues, previousValues, delta);
         }
+
         throw new Exception("Метод не сошелся за указанное количество итераций.");
     }
 
-    private void UpdateSecantMatrix(SquareMatrix matrix, IEnumerable<SymbolicExpression> equations, Dictionary<string, FloatingPoint> currentValues, Dictionary<string, FloatingPoint> previousValues, double[] delta)
+    private void UpdateSecantMatrix(SquareMatrix matrix, IEnumerable<SymbolicExpression> equations,
+        Dictionary<string, FloatingPoint> currentValues, Dictionary<string, FloatingPoint> previousValues,
+        double[] delta)
     {
         var variables = equations.First().CollectVariables();
         int n = variables.Count();
         double[,] y = new double[n, 1];
         double[,] s = new double[n, 1];
- 
+
         for (int i = 0; i < n; i++)
         {
             string variableName = variables.ElementAt(i).ToString();
             s[i, 0] = currentValues[variableName].RealValue - previousValues[variableName].RealValue;
-            y[i, 0] = equations.ElementAt(i).Evaluate(currentValues).RealValue - equations.ElementAt(i).Evaluate(previousValues).RealValue;
+            y[i, 0] = equations.ElementAt(i).Evaluate(currentValues).RealValue -
+                      equations.ElementAt(i).Evaluate(previousValues).RealValue;
         }
- 
+
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                matrix[i, j] += (y[i, 0] - SquareMatrix.MatrixVectorMultiply(matrix, s, i)) * delta[j] / SquareMatrix.VectorDotProduct(s, s);
+                matrix[i, j] += (y[i, 0] - SquareMatrix.MatrixVectorMultiply(matrix, s, i)) * delta[j] /
+                                SquareMatrix.VectorDotProduct(s, s);
             }
         }
     }
