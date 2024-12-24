@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using SLAE.Interfaces;
+﻿using SLAE.Interfaces;
 using SLAE.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace SLAE.Solvers
@@ -78,7 +78,7 @@ namespace SLAE.Solvers
                 // Обновление старых значений переменных
                 Array.Copy(newValues, oldValues, n);
             }
-            MessageBox.Show($"Решение сходится до заданной точности за {iteration} итераций.");
+            MessageBox.Show($"{Name}\nРешение сходится до заданной точности за {iteration} итераций.");
             return newValues;
         }
 

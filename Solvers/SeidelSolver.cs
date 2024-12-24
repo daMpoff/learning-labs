@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using SLAE.Interfaces;
+﻿using SLAE.Interfaces;
 using SLAE.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace SLAE.Solvers
@@ -67,7 +67,7 @@ namespace SLAE.Solvers
             }
 
             // Вывод результатов
-            MessageBox.Show($"Решение сходится до заданной точности за {iteration} итераций.");
+            MessageBox.Show($"{Name}\nРешение сходится до заданной точности за {iteration} итераций.");
             return values;
         }
 
