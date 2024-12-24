@@ -43,6 +43,7 @@ namespace SLAE.ViewModels
                 UpdateEquations(); // Обновляем уравнения, если изменилось количество переменных
             }
         }
+
         // Свойство для управления выбором всех CheckBox
         public bool IsAllSelected
         {
@@ -71,13 +72,7 @@ namespace SLAE.ViewModels
                 OnPropertyChanged(nameof(Equations));
             }
         }
-        public ViewModel()
-        {
-            Equations = new ObservableCollection<Equation>();
-            InitializeSolvers();
-            UpdateEquations();
-            GetResultCommand = new RelayCommand(GetResult);
-        }
+
         private void InitializeSolvers()
         {
             Methods = new ObservableCollection<ISLAESolver>()
@@ -93,12 +88,14 @@ namespace SLAE.ViewModels
                 new SeidelSolver(),
             };
         }
+
         private void GetResult()
         {
             if (Results.Any())
             {
                 Results.Clear();
             }
+
             foreach (var method in Methods)
             {
                 CastVariablesToSLAEModel();
@@ -119,6 +116,7 @@ namespace SLAE.ViewModels
                     }
                 }
             }
+
             ResultViewModel resultViewModel = new ResultViewModel(Results);
             ResultWindow resultWindow = new ResultWindow() { DataContext = resultViewModel };
             resultWindow.Show();
@@ -135,6 +133,7 @@ namespace SLAE.ViewModels
                     CoefficientVariablePair pair = equation.CoefficientVariablePairs[j];
                     SLAEModel.Coefficients[i, j] = pair.Value;
                 }
+
                 SLAEModel.Constants[i] = equation.Result;
             }
         }
@@ -150,10 +149,21 @@ namespace SLAE.ViewModels
                 {
                     equation.CoefficientVariablePairs[j].IsLast = (j == equation.CoefficientVariablePairs.Count - 1);
                 }
+
                 Equations.Add(equation);
             }
         }
+
+        public ViewModel()
+        {
+            Equations = new ObservableCollection<Equation>();
+            InitializeSolvers();
+            UpdateEquations();
+            GetResultCommand = new RelayCommand(GetResult);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

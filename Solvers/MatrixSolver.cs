@@ -41,6 +41,7 @@ namespace SLAE.Solvers
                     {
                         A[i, j] -= factor * A[k, j];
                     }
+
                     B[i] -= factor * B[k];
                 }
             }
@@ -53,11 +54,13 @@ namespace SLAE.Solvers
                 {
                     X[i] -= A[i, j] * X[j];
                 }
+
                 X[i] /= A[i, i];
             }
 
             return X;
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

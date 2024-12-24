@@ -10,6 +10,7 @@ namespace SLAE.Solvers
     {
         private bool isEnable;
         public string Name => "Метод Зейделя";
+
         public bool IsEnable
         {
             get => isEnable;
@@ -55,6 +56,7 @@ namespace SLAE.Solvers
                             sum -= slae.Coefficients[i, j] * values[j];
                         }
                     }
+
                     double newValue = sum / slae.Coefficients[i, i];
 
                     if (Math.Abs(newValue - values[i]) > fault)
@@ -84,11 +86,13 @@ namespace SLAE.Solvers
                         sum += Math.Abs(matrix[i, j]);
                     }
                 }
+
                 if (Math.Abs(matrix[i, i]) < sum)
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -110,15 +114,18 @@ namespace SLAE.Solvers
                             found = true;
                             break;
                         }
+
                         // Если перестановка не помогла, возвращаем строки на место
                         SwapRows(matrix, i, k, n + 1);
                     }
+
                     if (!found)
                     {
                         return false; // Не удалось обеспечить диагональную доминантность
                     }
                 }
             }
+
             return true;
         }
 
@@ -133,6 +140,7 @@ namespace SLAE.Solvers
                     sum += Math.Abs(matrix[i, j]);
                 }
             }
+
             return Math.Abs(matrix[i, i]) >= sum;
         }
 
@@ -146,6 +154,7 @@ namespace SLAE.Solvers
                 matrix[row2, j] = temp;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

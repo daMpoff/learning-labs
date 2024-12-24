@@ -27,6 +27,7 @@ namespace SLAE.Models
                 OnPropertyChanged(nameof(Variable));
             }
         }
+
         public CoefficientVariablePair(double value, string variable)
         {
             Value = value;

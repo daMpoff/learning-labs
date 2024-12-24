@@ -10,6 +10,7 @@ namespace SLAE.Solvers
     {
         private bool isEnable;
         public string Name => "Метод простых итераций";
+
         public bool IsEnable
         {
             get => isEnable;
@@ -38,13 +39,16 @@ namespace SLAE.Solvers
                 {
                     matrix[i, j] = slae.Coefficients[i, j];
                 }
+
                 matrix[i, n] = slae.Constants[i];
             }
+
             // Попытка перестановки строк для получения диагонально доминирующей матрицы
             if (!EnsureDiagonalDominance(matrix, m, n))
             {
                 throw new Exception("Матрица не является диагонально доминирующей. Преобразование системы невозможно.");
             }
+
             // Ввод допустимой погрешности (можно задать по умолчанию или передать как параметр)
             fault = 0.0001;
             int iteration = 0;
@@ -64,8 +68,10 @@ namespace SLAE.Solvers
                             sum -= matrix[i, j] * oldValues[j];
                         }
                     }
+
                     newValues[i] = sum / matrix[i, i];
                 }
+
                 // Проверка сходимости
                 for (int i = 0; i < n; i++)
                 {
@@ -75,9 +81,11 @@ namespace SLAE.Solvers
                         break;
                     }
                 }
+
                 // Обновление старых значений переменных
                 Array.Copy(newValues, oldValues, n);
             }
+
             MessageBox.Show($"{Name}\nРешение сходится до заданной точности за {iteration} итераций.");
             return newValues;
         }
@@ -95,13 +103,16 @@ namespace SLAE.Solvers
                         sum += Math.Abs(matrix[i, j]);
                     }
                 }
+
                 if (Math.Abs(matrix[i, i]) <= sum)
                 {
                     return false;
                 }
             }
+
             return true;
         }
+
         // Метод для обеспечения диагональной доминантности матрицы
         private static bool EnsureDiagonalDominance(double[,] matrix, int m, int n)
         {
@@ -118,14 +129,17 @@ namespace SLAE.Solvers
                             found = true;
                             break;
                         }
+
                         SwapRows(matrix, i, k, n + 1);
                     }
+
                     if (!found)
                     {
                         return false;
                     }
                 }
             }
+
             return true;
         }
 
@@ -140,8 +154,10 @@ namespace SLAE.Solvers
                     sum += Math.Abs(matrix[i, j]);
                 }
             }
+
             return Math.Abs(matrix[i, i]) > sum;
         }
+
         // Метод для обмена строк в матрице
         private static void SwapRows(double[,] matrix, int row1, int row2, int columns)
         {
@@ -152,6 +168,7 @@ namespace SLAE.Solvers
                 matrix[row2, j] = temp;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

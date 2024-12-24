@@ -13,6 +13,7 @@ namespace SLAE.Views
         {
             InitializeComponent();
         }
+
         private void ResultWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ResultsDataGrid.Columns.Clear();

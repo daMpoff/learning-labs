@@ -29,6 +29,7 @@ namespace SLAE.Solvers
             {
                 throw new Exception("Количество уравнений не равно количеству переменных!");
             }
+
             // Создаем расширенную матрицу
             double[,] augmentedMatrix = new double[slae.RowsCount, slae.VariablesCount + 1];
             for (int i = 0; i < slae.RowsCount; i++)
@@ -37,6 +38,7 @@ namespace SLAE.Solvers
                 {
                     augmentedMatrix[i, j] = slae.Coefficients[i, j];
                 }
+
                 augmentedMatrix[i, slae.VariablesCount] = slae.Constants[i];
             }
 
@@ -46,6 +48,7 @@ namespace SLAE.Solvers
             // Преобразуем результат в массив
             return result.ToArray();
         }
+
         public List<double> Calculation(double[,] matrix)
         {
             List<double> result = new List<double>();
@@ -72,6 +75,7 @@ namespace SLAE.Solvers
                         else matrixDet[i, j] = matrix[i, j];
                     }
                 }
+
                 result.Add(Determinant(matrixDet) / det);
             }
 
@@ -101,10 +105,13 @@ namespace SLAE.Solvers
                         minor[m - 1, minorIndex++] = matrixDet[m, n];
                     }
                 }
+
                 det += matrixDet[0, i] * Determinant(minor) * (i % 2 == 0 ? 1 : -1);
             }
+
             return det;
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

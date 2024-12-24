@@ -8,7 +8,12 @@ namespace SLAE.Solvers
     public class GaussianSolver : ISLAESolver, INotifyPropertyChanged
     {
         private bool isEnable;
-        public string Name { get => "Метод Гаусса"; }
+
+        public string Name
+        {
+            get => "Метод Гаусса";
+        }
+
         public bool IsEnable
         {
             get => isEnable;
@@ -46,6 +51,7 @@ namespace SLAE.Solvers
                     slae.Coefficients[maxRow, k] = slae.Coefficients[i, k];
                     slae.Coefficients[i, k] = temp;
                 }
+
                 double tempRight = slae.Constants[maxRow];
                 slae.Constants[maxRow] = slae.Constants[i];
                 slae.Constants[i] = tempRight;
@@ -56,6 +62,7 @@ namespace SLAE.Solvers
                 {
                     slae.Coefficients[i, j] /= divisor;
                 }
+
                 slae.Constants[i] /= divisor;
 
                 // Прямой ход (зануление элементов ниже главной диагонали)
@@ -66,6 +73,7 @@ namespace SLAE.Solvers
                     {
                         slae.Coefficients[k, j] -= factor * slae.Coefficients[i, j];
                     }
+
                     slae.Constants[k] -= factor * slae.Constants[i];
                 }
             }
@@ -83,6 +91,7 @@ namespace SLAE.Solvers
 
             return result;
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

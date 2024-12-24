@@ -9,6 +9,7 @@ namespace SLAE.Solvers
     {
         private bool isEnable;
         public string Name => "Метод прогонки";
+
         public bool IsEnable
         {
             get => isEnable;
@@ -21,20 +22,22 @@ namespace SLAE.Solvers
                 }
             }
         }
+
         public double[] Solve(SLAEModel slae)
         {
             int n = slae.RowsCount;
-            
+
             // Проверка, что матрица является трёхдиагональной и диагональные элементы не равны нулю
             if (!IsTridiagonalMatrix(slae.Coefficients, n))
             {
-                throw new InvalidOperationException("Матрица не является трёхдиагональной или содержит нули на диагонали.");
+                throw new InvalidOperationException(
+                    "Матрица не является трёхдиагональной или содержит нули на диагонали.");
             }
-            
-            double[] a = new double[n];   // нижняя диагональ (a_0 не используется)
-            double[] b = new double[n];   // главная диагональ
-            double[] c = new double[n];   // верхняя диагональ (c_n не используется)
-            double[] d = new double[n];   // правая часть
+
+            double[] a = new double[n]; // нижняя диагональ (a_0 не используется)
+            double[] b = new double[n]; // главная диагональ
+            double[] c = new double[n]; // верхняя диагональ (c_n не используется)
+            double[] d = new double[n]; // правая часть
 
             // Заполнение массивов a, b, c и d из матрицы коэффициентов и вектора свободных членов
             for (int i = 0; i < n; i++)
@@ -43,11 +46,13 @@ namespace SLAE.Solvers
                 {
                     a[i] = slae.Coefficients[i, i - 1];
                 }
+
                 b[i] = slae.Coefficients[i, i];
                 if (i < n - 1)
                 {
                     c[i] = slae.Coefficients[i, i + 1];
                 }
+
                 d[i] = slae.Constants[i];
             }
 
@@ -82,6 +87,7 @@ namespace SLAE.Solvers
 
             return x;
         }
+
         // Проверка, что матрица является трёхдиагональной и диагональные элементы не равны нулю
         private static bool IsTridiagonalMatrix(double[,] matrix, int n)
         {
@@ -98,14 +104,17 @@ namespace SLAE.Solvers
                         }
                     }
                 }
+
                 // Проверка, что диагональные элементы не равны нулю
                 if (matrix[i, i] == 0)
                 {
                     return false;
                 }
             }
+
             return true;
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

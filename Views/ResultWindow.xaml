@@ -10,6 +10,6 @@
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   IsReadOnly="True"
-                  AutoGenerateColumns="False"/>
+                  AutoGenerateColumns="False" />
     </Grid>
 </Window>
