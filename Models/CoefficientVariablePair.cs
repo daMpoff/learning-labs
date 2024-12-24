@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SLAE.ViewModels
+namespace SLAE.Models
 {
     public class CoefficientVariablePair : INotifyPropertyChanged
     {

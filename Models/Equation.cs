@@ -1,4 +1,4 @@
-﻿namespace SLAE.ViewModels
+﻿namespace SLAE.Models
 {
     public class Equation
     {
