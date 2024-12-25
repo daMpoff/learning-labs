@@ -18,8 +18,8 @@ namespace SLAE.ViewModels
         private ObservableCollection<Equation> equations;
         public ICommand GetResultCommand { get; }
         public ObservableCollection<ISLAESolver> Methods { get; set; }
-        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList(); // Устанавливаем диапазон от 1 до 10
-        public ObservableCollection<RootResult> Results { get; set; } = new ObservableCollection<RootResult> { };
+        public ObservableCollection<RootResult> Results { get; set; }
+        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
         public SLAEModel SLAEModel { get; set; }
 
         public int EquationsCount
@@ -157,6 +157,7 @@ namespace SLAE.ViewModels
         public ViewModel()
         {
             Equations = new ObservableCollection<Equation>();
+            Results = new ObservableCollection<RootResult>();
             InitializeSolvers();
             UpdateEquations();
             GetResultCommand = new RelayCommand(GetResult);
