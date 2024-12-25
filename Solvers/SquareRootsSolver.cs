@@ -35,7 +35,7 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
             throw new InvalidOperationException("Матрица не является симметричной.");
         }
 
-        // Шаг 1: Разложение матрицы A на U^T * U
+        // Разложение матрицы A на U^T * U
         double[,] U = new double[n, n];
         for (int i = 0; i < n; i++)
         {
@@ -67,7 +67,7 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
             }
         }
 
-        // Шаг 2: Решение системы U^T * y = b
+        // Решение системы U^T * y = b
         double[] y = new double[n];
         for (int i = 0; i < n; i++)
         {
@@ -80,7 +80,7 @@ public class SquareRootsSolver : ISLAESolver, INotifyPropertyChanged
             y[i] = (b[i] - sum) / U[i, i];
         }
 
-        // Шаг 3: Решение системы U * x = y
+        // Решение системы U * x = y
         double[] x = new double[n];
         for (int i = n - 1; i >= 0; i--)
         {

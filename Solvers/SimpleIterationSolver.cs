@@ -31,8 +31,8 @@ namespace SLAE.Solvers
             double[,] matrix = new double[m, n + 1];
             double[] oldValues = new double[n];
             double[] newValues = new double[n];
-            double fault; // погрешность
-            // Копируем коэффициенты и свободные члены в матрицу
+            double fault = 0.001; ; // Погрешность
+            // Заполняем коэффициентами и свободными членами матрицу, значениями из модели
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -44,13 +44,11 @@ namespace SLAE.Solvers
             }
 
             // Попытка перестановки строк для получения диагонально доминирующей матрицы
-            if (!EnsureDiagonalDominance(matrix, m, n))
+            if (!IsDiagonallyDominant(matrix, m, n))
             {
                 throw new Exception("Матрица не является диагонально доминирующей. Преобразование системы невозможно.");
             }
 
-            // Ввод допустимой погрешности (можно задать по умолчанию или передать как параметр)
-            fault = 0.0001;
             int iteration = 0;
             bool hasConvergence = false;
             // Итерационный процесс до достижения необходимой точности
@@ -72,7 +70,6 @@ namespace SLAE.Solvers
                     newValues[i] = sum / matrix[i, i];
                 }
 
-                // Проверка сходимости
                 for (int i = 0; i < n; i++)
                 {
                     if (Math.Abs(newValues[i] - oldValues[i]) > fault)
@@ -90,31 +87,8 @@ namespace SLAE.Solvers
             return newValues;
         }
 
-        // Метод проверки, является ли матрица диагонально доминирующей
-        private static bool IsDiagonallyDominant(double[,] matrix, int m, int n)
-        {
-            for (int i = 0; i < m; i++)
-            {
-                double sum = 0;
-                for (int j = 0; j < n; j++)
-                {
-                    if (i != j)
-                    {
-                        sum += Math.Abs(matrix[i, j]);
-                    }
-                }
-
-                if (Math.Abs(matrix[i, i]) <= sum)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         // Метод для обеспечения диагональной доминантности матрицы
-        private static bool EnsureDiagonalDominance(double[,] matrix, int m, int n)
+        private static bool IsDiagonallyDominant(double[,] matrix, int m, int n)
         {
             for (int i = 0; i < m; i++)
             {

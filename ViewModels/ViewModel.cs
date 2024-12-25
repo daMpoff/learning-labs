@@ -15,11 +15,10 @@ namespace SLAE.ViewModels
         private int equationsCount = 2;
         private int variablesCount = 2;
         private bool isAllSelected;
-        private ObservableCollection<Equation> equations;
         public ICommand GetResultCommand { get; }
         public ObservableCollection<ISLAESolver> Methods { get; set; }
         public ObservableCollection<RootResult> Results { get; set; }
-        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
+        //public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
         public SLAEModel SLAEModel { get; set; }
 
         public int EquationsCount
@@ -54,7 +53,6 @@ namespace SLAE.ViewModels
                 {
                     isAllSelected = value;
                     OnPropertyChanged(nameof(IsAllSelected));
-                    // Устанавливаем состояние всех CheckBox в Methods
                     for (int i = 0; i < Methods.Count; i++)
                     {
                         Methods[i].IsEnable = isAllSelected;
@@ -63,15 +61,7 @@ namespace SLAE.ViewModels
             }
         }
 
-        public ObservableCollection<Equation> Equations
-        {
-            get => equations;
-            private set
-            {
-                equations = value;
-                OnPropertyChanged(nameof(Equations));
-            }
-        }
+        public ObservableCollection<Equation> Equations { get; set; }
 
         private void InitializeSolvers()
         {
@@ -125,9 +115,9 @@ namespace SLAE.ViewModels
         private void CastVariablesToSLAEModel()
         {
             SLAEModel = new SLAEModel(equationsCount, variablesCount);
-            for (int i = 0; i < equations.Count; i++)
+            for (int i = 0; i < Equations.Count; i++)
             {
-                Equation equation = equations[i];
+                Equation equation = Equations[i];
                 for (int j = 0; j < equation.CoefficientVariablePairs.Count; j++)
                 {
                     CoefficientVariablePair pair = equation.CoefficientVariablePairs[j];

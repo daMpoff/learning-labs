@@ -59,7 +59,7 @@ namespace SLAE.Solvers
             return TridiagonalSolve(a, b, c, d);
         }
 
-        // Метод прогонки (метод Томаса) для решения трёхдиагональной системы
+        // Метод прогонки для решения трёхдиагональной системы
         private static double[] TridiagonalSolve(double[] a, double[] b, double[] c, double[] d)
         {
             int n = b.Length;
