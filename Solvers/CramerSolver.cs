@@ -49,7 +49,7 @@ namespace SLAE.Solvers
             return result.ToArray();
         }
 
-        public List<double> Calculation(double[,] matrix)
+        private List<double> Calculation(double[,] matrix)
         {
             List<double> result = new List<double>();
             double[,] matrixDet = new double[matrix.GetLength(0), matrix.GetLength(0)];
@@ -83,7 +83,7 @@ namespace SLAE.Solvers
         }
 
         // Метод Determinant из класса CramerSolver
-        public double Determinant(double[,] matrixDet)
+        private double Determinant(double[,] matrixDet)
         {
             if (matrixDet.GetLength(0) == 2)
             {
