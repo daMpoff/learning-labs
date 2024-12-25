@@ -39,11 +39,7 @@ public class LUDecompositionSolver : ISLAESolver, INotifyPropertyChanged
             matrix[i, n] = slae.Constants[i];
         }
 
-        // Вызов метода Calculation для решения системы
-        List<double> results = Calculation(matrix);
-
-        // Преобразование List<double> в массив
-        return results.ToArray();
+        return Calculation(matrix).ToArray();
     }
 
     private List<double> Calculation(double[,] matrix)

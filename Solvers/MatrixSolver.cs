@@ -25,11 +25,8 @@ namespace SLAE.Solvers
 
         public double[] Solve(SLAEModel slae)
         {
-            return SolveSLAE(slae.Coefficients, slae.Constants);
-        }
-
-        private double[] SolveSLAE(double[,] A, double[] B)
-        {
+            double[,] A = slae.Coefficients;
+            double[] B = slae.Constants;
             int n = B.Length;
 
             for (int k = 0; k < n; k++)
