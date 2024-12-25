@@ -42,11 +42,7 @@ namespace SLAE.Solvers
                 augmentedMatrix[i, slae.VariablesCount] = slae.Constants[i];
             }
 
-            // Используем метод Крамера для решения СЛАУ
-            List<double> result = Calculation(augmentedMatrix);
-
-            // Преобразуем результат в массив
-            return result.ToArray();
+            return Calculation(augmentedMatrix).ToArray();
         }
 
         private List<double> Calculation(double[,] matrix)
@@ -54,7 +50,6 @@ namespace SLAE.Solvers
             List<double> result = new List<double>();
             double[,] matrixDet = new double[matrix.GetLength(0), matrix.GetLength(0)];
 
-            // Создаем матрицу коэффициентов
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(0); j++)
@@ -82,7 +77,6 @@ namespace SLAE.Solvers
             return result;
         }
 
-        // Метод Determinant из класса CramerSolver
         private double Determinant(double[,] matrixDet)
         {
             if (matrixDet.GetLength(0) == 2)
