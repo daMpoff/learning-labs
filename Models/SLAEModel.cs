@@ -2,10 +2,10 @@
 {
     public class SLAEModel
     {
-        public double[,] Coefficients { get; set; } // Матрица коэффициентов (rows x columns)
-        public double[] Constants { get; set; } // Вектор свободных членов (rows)
-        public int RowsCount { get; set; } // Количество уравнений (строк)
-        public int VariablesCount { get; set; } // Количество переменных (столбцов)
+        public double[,] Coefficients { get; set; }
+        public double[] Constants { get; set; }
+        public int RowsCount { get; set; }
+        public int VariablesCount { get; set; }
 
         public SLAEModel(int rowsCount, int variablesCount)
         {
