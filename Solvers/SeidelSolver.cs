@@ -27,9 +27,7 @@ namespace SLAE.Solvers
         public double[] Solve(SLAEModel slae)
         {
             double[] values = new double[slae.VariablesCount];
-            double fault; // погрешность
-
-            fault = 0.001;
+            double fault = 0.001; // Погрешность
 
             // Попытка перестановки строк для получения диагонально доминирующей матрицы
             if (!EnsureDiagonalDominance(slae.Coefficients, slae.RowsCount, slae.VariablesCount))
@@ -39,7 +37,7 @@ namespace SLAE.Solvers
 
             // Итерационный метод Зейделя
             int iteration = 0;
-            bool hasConvergence = false; // имеет сходимость
+            bool hasConvergence = false; // Имеет сходимость
 
             while (!hasConvergence)
             {
@@ -48,7 +46,7 @@ namespace SLAE.Solvers
 
                 for (int i = 0; i < slae.VariablesCount; i++)
                 {
-                    double sum = slae.Constants[i]; // свободный член
+                    double sum = slae.Constants[i]; // Свободный член
                     for (int j = 0; j < slae.VariablesCount; j++)
                     {
                         if (j != i)
@@ -68,32 +66,8 @@ namespace SLAE.Solvers
                 }
             }
 
-            // Вывод результатов
             MessageBox.Show($"{Name}\nРешение сходится до заданной точности за {iteration} итераций.");
             return values;
-        }
-
-        // Метод проверки диагональной доминантности
-        private static bool IsDiagonallyDominant(double[,] matrix, int m, int n)
-        {
-            for (int i = 0; i < m; i++)
-            {
-                double sum = 0;
-                for (int j = 0; j < n; j++)
-                {
-                    if (i != j)
-                    {
-                        sum += Math.Abs(matrix[i, j]);
-                    }
-                }
-
-                if (Math.Abs(matrix[i, i]) < sum)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         // Метод для перестановки строк и обеспечения диагональной доминантности
