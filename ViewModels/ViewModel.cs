@@ -18,7 +18,7 @@ namespace SLAE.ViewModels
         public ICommand GetResultCommand { get; }
         public ObservableCollection<ISLAESolver> Methods { get; set; }
         public ObservableCollection<RootResult> Results { get; set; }
-        //public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
+        public List<int> Numbers { get; } = Enumerable.Range(1, 10).ToList();
         public SLAEModel SLAEModel { get; set; }
 
         public int EquationsCount
