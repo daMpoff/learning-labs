@@ -18,7 +18,6 @@ public class SeidelSolver : IIterativeMethod
             throw new InvalidOperationException("Условие сходимости не выполняется, норма матрицы больше 1!");
         }
 
-        ;
         var variables = equations.First().CollectVariables();
         var currentValues = new Dictionary<string, FloatingPoint>(initialValues);
 
