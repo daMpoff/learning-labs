@@ -12,7 +12,7 @@
             {
                 var value = 0;
                 var variable = $"x_{{{i + 1}}}";
-                CoefficientVariablePairs.Add(new CoefficientVariablePair(value, variable)); // Создаем пару и добавляем в список
+                CoefficientVariablePairs.Add(new CoefficientVariablePair(value, variable));
             }
         }
     }
