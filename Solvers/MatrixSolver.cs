@@ -29,6 +29,7 @@ namespace SLAE.Solvers
             {
                 throw new InvalidOperationException("Количество уравнений и переменных не совпадает!");
             }
+
             // Находим обратную матрицу A
             double[,] A = slae.Coefficients;
             double[,] inverseMatrix = InverseMatrix(A);
@@ -43,83 +44,53 @@ namespace SLAE.Solvers
         private double[,] InverseMatrix(double[,] matrix)
         {
             int n = matrix.GetLength(0);
-            double[,] result = new double[n, n];
-            double det = Determinant(matrix);
+            double[,] augmentedMatrix = new double[n, 2 * n];
 
-            if (Math.Abs(det) < 0.0000001)
-            {
-                throw new InvalidOperationException("Матрица вырожденная, обратной матрицы не существует.");
-            }
-
-            double[,] adjugateMatrix = AdjugateMatrix(matrix);
+            // Создаем расширенную матрицу
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    result[i, j] = adjugateMatrix[i, j] / det;
+                    augmentedMatrix[i, j] = matrix[i, j];
                 }
+                augmentedMatrix[i, i + n] = 1;
             }
 
-            return result;
-        }
-
-        private double Determinant(double[,] matrix)
-        {
-            int n = matrix.GetLength(0);
-            if (n == 1)
+            // Приводим левую часть к единичной матрице
+            for (int i = 0; i < n; i++)
             {
-                return matrix[0, 0];
-            }
-            else if (n == 2)
-            {
-                return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
-            }
-
-            double det = 0;
-            for (int j = 0; j < n; j++)
-            {
-                double[,] minor = Minor(matrix, 0, j);
-                det += Math.Pow(-1, j) * matrix[0, j] * Determinant(minor);
-            }
-
-            return det;
-        }
-
-        private double[,] Minor(double[,] matrix, int row, int col)
-        {
-            int n = matrix.GetLength(0);
-            double[,] minor = new double[n - 1, n - 1];
-
-            for (int i = 0, r = 0; i < n; i++)
-            {
-                if (i == row) continue;
-                for (int j = 0, c = 0; j < n; j++)
+                // Делаем диагональный элемент равным 1
+                double factor = 1.0 / augmentedMatrix[i, i];
+                for (int j = 0; j < 2 * n; j++)
                 {
-                    if (j == col) continue;
-                    minor[r, c] = matrix[i, j];
-                    c++;
+                    augmentedMatrix[i, j] *= factor;
                 }
-                r++;
+
+                // Обнуляем элементы ниже и выше диагонали
+                for (int k = 0; k < n; k++)
+                {
+                    if (k != i)
+                    {
+                        factor = augmentedMatrix[k, i];
+                        for (int j = 0; j < 2 * n; j++)
+                        {
+                            augmentedMatrix[k, j] -= factor * augmentedMatrix[i, j];
+                        }
+                    }
+                }
             }
 
-            return minor;
-        }
-
-        private double[,] AdjugateMatrix(double[,] matrix)
-        {
-            int n = matrix.GetLength(0);
-            double[,] adjugate = new double[n, n];
-
+            // Правая часть матрицы теперь содержит обратную матрицу
+            double[,] inverseMatrix = new double[n, n];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    double[,] minor = Minor(matrix, i, j);
-                    adjugate[j, i] = Math.Pow(-1, i + j) * Determinant(minor);
+                    inverseMatrix[i, j] = augmentedMatrix[i, j + n];
                 }
             }
 
-            return adjugate;
+            return inverseMatrix;
         }
 
         private double[] MatrixVectorMultiply(double[,] matrix, double[] vector)
