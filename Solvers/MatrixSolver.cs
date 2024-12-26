@@ -25,37 +25,118 @@ namespace SLAE.Solvers
 
         public double[] Solve(SLAEModel slae)
         {
+            if (slae.VariablesCount != slae.RowsCount)
+            {
+                throw new InvalidOperationException("Количество уравнений и переменных не совпадает!");
+            }
+            // Находим обратную матрицу A
             double[,] A = slae.Coefficients;
+            double[,] inverseMatrix = InverseMatrix(A);
+
+            // Умножаем обратную матрицу на вектор B
             double[] B = slae.Constants;
-            int n = B.Length;
+            double[] x = MatrixVectorMultiply(inverseMatrix, B);
 
-            for (int k = 0; k < n; k++)
+            return x;
+        }
+
+        private double[,] InverseMatrix(double[,] matrix)
+        {
+            int n = matrix.GetLength(0);
+            double[,] result = new double[n, n];
+            double det = Determinant(matrix);
+
+            if (Math.Abs(det) < 0.0000001)
             {
-                for (int i = k + 1; i < n; i++)
-                {
-                    double factor = A[i, k] / A[k, k];
-                    for (int j = k; j < n; j++)
-                    {
-                        A[i, j] -= factor * A[k, j];
-                    }
+                throw new InvalidOperationException("Матрица вырожденная, обратной матрицы не существует.");
+            }
 
-                    B[i] -= factor * B[k];
+            double[,] adjugateMatrix = AdjugateMatrix(matrix);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    result[i, j] = adjugateMatrix[i, j] / det;
                 }
             }
 
-            double[] X = new double[n];
-            for (int i = n - 1; i >= 0; i--)
-            {
-                X[i] = B[i];
-                for (int j = i + 1; j < n; j++)
-                {
-                    X[i] -= A[i, j] * X[j];
-                }
+            return result;
+        }
 
-                X[i] /= A[i, i];
+        private double Determinant(double[,] matrix)
+        {
+            int n = matrix.GetLength(0);
+            if (n == 1)
+            {
+                return matrix[0, 0];
+            }
+            else if (n == 2)
+            {
+                return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
             }
 
-            return X;
+            double det = 0;
+            for (int j = 0; j < n; j++)
+            {
+                double[,] minor = Minor(matrix, 0, j);
+                det += Math.Pow(-1, j) * matrix[0, j] * Determinant(minor);
+            }
+
+            return det;
+        }
+
+        private double[,] Minor(double[,] matrix, int row, int col)
+        {
+            int n = matrix.GetLength(0);
+            double[,] minor = new double[n - 1, n - 1];
+
+            for (int i = 0, r = 0; i < n; i++)
+            {
+                if (i == row) continue;
+                for (int j = 0, c = 0; j < n; j++)
+                {
+                    if (j == col) continue;
+                    minor[r, c] = matrix[i, j];
+                    c++;
+                }
+                r++;
+            }
+
+            return minor;
+        }
+
+        private double[,] AdjugateMatrix(double[,] matrix)
+        {
+            int n = matrix.GetLength(0);
+            double[,] adjugate = new double[n, n];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    double[,] minor = Minor(matrix, i, j);
+                    adjugate[j, i] = Math.Pow(-1, i + j) * Determinant(minor);
+                }
+            }
+
+            return adjugate;
+        }
+
+        private double[] MatrixVectorMultiply(double[,] matrix, double[] vector)
+        {
+            int n = matrix.GetLength(0);
+            double[] result = new double[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                result[i] = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    result[i] += matrix[i, j] * vector[j];
+                }
+            }
+
+            return result;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
