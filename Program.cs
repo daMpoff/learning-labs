@@ -4,31 +4,93 @@ class Program
 {
     static void Main()
     {
-        Console.Write("Введите количество вершин: ");
-        int vertexCount = int.Parse(Console.ReadLine());
-
-        GraphManager graphManager = GraphManager.GetInstance(vertexCount);
-        graphManager.AddEdgeFromConsole();
-
-        Console.Write("Введите начальную вершину: ");
-        int startVertex = int.Parse(Console.ReadLine());
-
-        Console.Write("Введите алгоритм (1 - Алгоритм Дейкстры, \n2 - Алгоритм A*, \n3 - Алгоритм Ли): ");
-        string algorithm = Console.ReadLine();
-
-        int goalVertex = -1;
-        if ((!string.IsNullOrEmpty(algorithm) && algorithm.ToLower() == "2"))
+        if (TryInitGraph(out GraphManager graphManager))
         {
-            Console.Write("Введите конечную вершину: ");
-            goalVertex = int.Parse(Console.ReadLine());
+            int startVertex = GetStartVertex();
+            string algorithm = GetAlgorithmChoice();
+            int goalVertex = GetGoalVertexIfNeeded(algorithm);
+
+            try
+            {
+                var distances = graphManager.GetShortestPath(startVertex, algorithm, goalVertex);
+                PrintDistances(startVertex, distances);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+        }
+    }
+
+    static bool TryInitGraph(out GraphManager graphManager)
+    {
+        graphManager = null;
+        Console.Write("Введите количество вершин: ");
+        try
+        {
+            int vertexCount = int.Parse(Console.ReadLine());
+            if (vertexCount > 0)
+            {
+                graphManager = GraphManager.GetInstance(vertexCount);
+                graphManager.AddEdgeFromConsole();
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Количество вершин должно быть больше нуля.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Возникла ошибка! Повторите попытку. Ошибка: {ex.Message}");
         }
 
-        var distances = graphManager.GetShortestPath(startVertex, algorithm, goalVertex);
+        return false;
+    }
 
-        Console.WriteLine("Кратчайшие расстояния от вершины " + startVertex + ":");
-        for (int i = 0; i < distances.Count; i++)
+    static int GetStartVertex()
+    {
+        Console.Write("Введите начальную вершину: ");
+        try
         {
-            Console.WriteLine("Вершина " + (i + 1) + ": " + distances[i]);
+            return int.Parse(Console.ReadLine());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка ввода начальной вершины. Ошибка: {ex.Message}");
+            return -1;
+        }
+    }
+
+    static string GetAlgorithmChoice()
+    {
+        Console.Write("Введите алгоритм (1 - Алгоритм Дейкстры, 2 - Алгоритм A*, 3 - Алгоритм Ли): ");
+        return Console.ReadLine();
+    }
+
+    static int GetGoalVertexIfNeeded(string algorithm)
+    {
+        if (!string.IsNullOrEmpty(algorithm) && algorithm.ToLower() == "2")
+        {
+            Console.Write("Введите конечную вершину: ");
+            try
+            {
+                return int.Parse(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка ввода конечной вершины. Ошибка: {ex.Message}");
+            }
+        }
+        return -1;
+    }
+
+    static void PrintDistances(int startVertex, Dictionary<int, int> distances)
+    {
+        Console.WriteLine("Кратчайшие расстояния от вершины " + startVertex + ":");
+        foreach (var kvp in distances)
+        {
+            Console.WriteLine("Вершина " + (kvp.Key + 1) + ": " + kvp.Value);
         }
     }
 }
