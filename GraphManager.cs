@@ -37,7 +37,7 @@ public class GraphManager
 
     public Dictionary<int, int> GetShortestPath(int startVertex, string algorithm, int goalVertex = -1)
     {
-        switch (algorithm.ToLower())
+        switch (algorithm)
         {
             case "1":
                 return Dijkstra.ShortestPath(graph, startVertex - 1);
