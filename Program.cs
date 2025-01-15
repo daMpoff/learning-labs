@@ -13,7 +13,7 @@ class Program
         Console.Write("Введите начальную вершину: ");
         int startVertex = int.Parse(Console.ReadLine());
 
-        Console.Write("Введите алгоритм (1 - Алгоритм Дейкстры\n, 2 - Алгоритм A*\n, 3 - Алгоритм Ли): ");
+        Console.Write("Введите алгоритм (1 - Алгоритм Дейкстры, \n2 - Алгоритм A*, \n3 - Алгоритм Ли): ");
         string algorithm = Console.ReadLine();
 
         int goalVertex = -1;
