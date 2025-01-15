@@ -2,7 +2,7 @@
 
 class Program
 {
-    static void Main()
+    private static void Main()
     {
         if (TryInitGraph(out GraphManager graphManager))
         {
@@ -22,7 +22,7 @@ class Program
         }
     }
 
-    static bool TryInitGraph(out GraphManager graphManager)
+    private static bool TryInitGraph(out GraphManager graphManager)
     {
         graphManager = null;
         Console.Write("Введите количество вершин: ");
@@ -48,7 +48,7 @@ class Program
         return false;
     }
 
-    static int GetStartVertex()
+    private static int GetStartVertex()
     {
         Console.Write("Введите начальную вершину: ");
         try
@@ -62,13 +62,13 @@ class Program
         }
     }
 
-    static string GetAlgorithmChoice()
+    private static string GetAlgorithmChoice()
     {
         Console.Write("Введите алгоритм (1 - Алгоритм Дейкстры, 2 - Алгоритм A*, 3 - Алгоритм Ли): ");
         return Console.ReadLine();
     }
 
-    static int GetGoalVertexIfNeeded(string algorithm)
+    private static int GetGoalVertexIfNeeded(string algorithm)
     {
         if (!string.IsNullOrEmpty(algorithm) && algorithm.ToLower() == "2")
         {
@@ -82,10 +82,11 @@ class Program
                 Console.WriteLine($"Ошибка ввода конечной вершины. Ошибка: {ex.Message}");
             }
         }
+
         return -1;
     }
 
-    static void PrintDistances(int startVertex, Dictionary<int, int> distances)
+    private static void PrintDistances(int startVertex, Dictionary<int, int> distances)
     {
         Console.WriteLine("Кратчайшие расстояния от вершины " + startVertex + ":");
         foreach (var kvp in distances)
