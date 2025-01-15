@@ -2,7 +2,7 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         Console.Write("Введите количество вершин: ");
         int vertexCount = int.Parse(Console.ReadLine());
