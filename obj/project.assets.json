@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\danya\\.nuget\\packages\\": {},
-    "D:\\Visual Tools\\NuGetPackages": {}
+    "C:\\Users\\11pro\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danya\\RiderProjects\\MaximumFlow\\MaximumFlow.csproj",
+      "projectUniqueName": "C:\\Users\\11pro\\RiderProjects\\MaximumFlow\\MaximumFlow.csproj",
       "projectName": "MaximumFlow",
-      "projectPath": "C:\\Users\\danya\\RiderProjects\\MaximumFlow\\MaximumFlow.csproj",
-      "packagesPath": "C:\\Users\\danya\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danya\\RiderProjects\\MaximumFlow\\obj\\",
+      "projectPath": "C:\\Users\\11pro\\RiderProjects\\MaximumFlow\\MaximumFlow.csproj",
+      "packagesPath": "C:\\Users\\11pro\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\11pro\\RiderProjects\\MaximumFlow\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Visual Tools\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\danya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\11pro\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

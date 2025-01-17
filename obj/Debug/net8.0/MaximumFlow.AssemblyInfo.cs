@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaximumFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0f22814a2e89f25ada25ccac70693036c153a4c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaximumFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaximumFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
