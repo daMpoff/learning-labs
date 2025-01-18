@@ -11,36 +11,31 @@ class Program
             { 18, 15, 24, 16 },
             { 12, 19, 23, 13 }
         };
-        (double value, int strategy) result;
 
-        WaldCriterion wald = new WaldCriterion(matrix);
-        result = wald.FindOptimalStrategy();
-        Console.WriteLine("Минимаксный критерий Вальда");
-        Console.WriteLine($"Оптимальное значение V: {result.value}");
-        Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
-        
-        MaximalCriterion maximalCriterion = new MaximalCriterion(matrix);
-        result = maximalCriterion.FindOptimalStrategy();
-        Console.WriteLine("Максимаксный критерий");
-        Console.WriteLine($"Оптимальное значение V: {result.value}");
-        Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
-        
-        HurwitzСriterion hurwitzСriterion = new HurwitzСriterion(matrix,0.5);
-        result = hurwitzСriterion.FindOptimalStrategy();
-        Console.WriteLine("Критерий Гурвица");
-        Console.WriteLine($"Оптимальное значение V: {result.value}");
-        Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
-        
-        SavageCriterion savageCriterion = new SavageCriterion(matrix);
-        result = savageCriterion.FindOptimalStrategy();
-        Console.WriteLine("Критерий Сэвиджа");
-        Console.WriteLine($"Оптимальное значение V: {result.value}");
-        Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
-        
-        LaplaceCriterion laplaceCriterion = new LaplaceCriterion(matrix);
-        result = laplaceCriterion.FindOptimalStrategy();
-        Console.WriteLine("Критерий Лапласа");
-        Console.WriteLine($"Оптимальное значение V: {result.value}");
-        Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
+        ICriterion[] criterials = new ICriterion[]
+        {
+            new WaldCriterion(matrix),
+            new MaximalCriterion(matrix),
+            new HurwitzCriterion(matrix, 0.5),
+            new SavageCriterion(matrix),
+            new LaplaceCriterion(matrix)
+        };
+
+        string[] criterionNames = new string[]
+        {
+            "Минимаксный критерий Вальда",
+            "Максимаксный критерий",
+            "Критерий Гурвица",
+            "Критерий Сэвиджа",
+            "Критерий Лапласа"
+        };
+
+        for (int i = 0; i < criterials.Length; i++)
+        {
+            var result = criterials[i].FindOptimalStrategy();
+            Console.WriteLine(criterionNames[i]);
+            Console.WriteLine($"Оптимальное значение V: {result.value}");
+            Console.WriteLine($"Оптимальная стратегия: {result.strategy}\n");
+        }
     }
 }

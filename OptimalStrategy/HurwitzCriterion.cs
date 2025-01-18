@@ -1,11 +1,11 @@
 ﻿namespace OptimalStrategy;
 
-public class HurwitzСriterion : ICriterion
+public class HurwitzCriterion : ICriterion
 {
     private int[,] matrix;
     private double alpha;
 
-    public HurwitzСriterion(int[,] matrix, double alpha)
+    public HurwitzCriterion(int[,] matrix, double alpha)
     {
         this.matrix = matrix;
         this.alpha = alpha;
