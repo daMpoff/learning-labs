@@ -2,9 +2,8 @@
 
 static class Program
 {
-    static void Main(string[] args)
+    public static void Main()
     {
-        // TODO Поменять названия для переменных, вес на пропускную способность
         Console.Write("Введите количество вершин: ");
         int vertexCount = int.Parse(Console.ReadLine());
 
@@ -17,9 +16,20 @@ static class Program
         Console.Write("Введите сток: ");
         int sink = int.Parse(Console.ReadLine()) - 1;
 
-        IMaximumFlowSolve solver = new FordFalkersonAlgorithm();
-        double maxFlow = solver.GetMaximumFlow(graphManager.Graph, source, sink);
+        Console.Write("Выберите алгоритм (1 - Линейный алгоритм, 2 - Алгоритм Форда-Фалкерсона): ");
+        int algorithmChoice = int.Parse(Console.ReadLine());
 
-        Console.WriteLine($"Максимальный возможный поток {maxFlow}");
+        IMaximumFlowSolve solver;
+        if (algorithmChoice == 1)
+        {
+            solver = new LinearAlgorithm();
+        }
+        else
+        {
+            solver = new FordFalkersonAlgorithm();
+        }
+
+        double maxFlow = solver.GetMaximumFlow(graphManager.Graph, source, sink);
+        Console.WriteLine($"Максимальный возможный поток: {maxFlow}");
     }
 }

@@ -8,6 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Reference Include="ArtificialBasisMethod">
+        <HintPath>libs\ArtificialBasisMethod.dll</HintPath>
+      </Reference>
       <Reference Include="SimplexMethod">
         <HintPath>libs\SimplexMethod.dll</HintPath>
       </Reference>
