@@ -1,6 +1,6 @@
 ﻿namespace OptimalStrategy;
 
-public class MaximalCriterion
+public class MaximalCriterion : ICriterion
 {
     private int[,] matrix;
 
@@ -9,7 +9,7 @@ public class MaximalCriterion
         this.matrix = matrix;
     }
 
-    public (int value, int strategy) FindMaximalStrategy()
+    public (double value, int strategy) FindOptimalStrategy()
     {
         int rows = matrix.GetLength(0);
         int cols = matrix.GetLength(1);
@@ -26,6 +26,7 @@ public class MaximalCriterion
                     max = matrix[i, j];
                 }
             }
+
             rowMaxima[i] = max;
         }
 

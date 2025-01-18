@@ -1,6 +1,6 @@
 ﻿namespace OptimalStrategy;
 
-public class WaldCriterion
+public class WaldCriterion : ICriterion
 {
     private int[,] matrix;
 
@@ -9,7 +9,7 @@ public class WaldCriterion
         matrix = inputMatrix;
     }
 
-    public (int value, int strategy) FindOptimalStrategy()
+    public (double value, int strategy) FindOptimalStrategy()
     {
         int rows = matrix.GetLength(0);
         int cols = matrix.GetLength(1);
@@ -26,6 +26,7 @@ public class WaldCriterion
                     min = matrix[i, j];
                 }
             }
+
             rowMinimal[i] = min;
         }
 

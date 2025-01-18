@@ -1,15 +1,17 @@
 ﻿namespace OptimalStrategy;
 
-public class HurwitzСriterion
+public class HurwitzСriterion : ICriterion
 {
     private int[,] matrix;
+    private double alpha;
 
-    public HurwitzСriterion(int[,] inputMatrix)
+    public HurwitzСriterion(int[,] matrix, double alpha)
     {
-        matrix = inputMatrix;
+        this.matrix = matrix;
+        this.alpha = alpha;
     }
 
-    public (double value, int strategy) FindHurwiczStrategy(double alpha)
+    public (double value, int strategy) FindOptimalStrategy()
     {
         int rows = matrix.GetLength(0);
         int cols = matrix.GetLength(1);

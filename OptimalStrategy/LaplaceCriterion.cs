@@ -1,6 +1,6 @@
 ﻿namespace OptimalStrategy;
 
-public class LaplaceCriterion
+public class LaplaceCriterion : ICriterion
 {
     private int[,] matrix;
 
@@ -23,6 +23,7 @@ public class LaplaceCriterion
             {
                 sum += matrix[i, j];
             }
+
             rowAverages[i] = sum / cols;
         }
 

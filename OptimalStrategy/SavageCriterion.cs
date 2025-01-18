@@ -1,6 +1,6 @@
 ﻿namespace OptimalStrategy;
 
-public class SavageCriterion
+public class SavageCriterion : ICriterion
 {
     private int[,] matrix;
 
@@ -41,7 +41,7 @@ public class SavageCriterion
         return riskMatrix;
     }
 
-    public (int value, int strategy) FindOptimalStrategy()
+    public (double value, int strategy) FindOptimalStrategy()
     {
         int[,] riskMatrix = CalculateRiskMatrix();
         int rows = riskMatrix.GetLength(0);
