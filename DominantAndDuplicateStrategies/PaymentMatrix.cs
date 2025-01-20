@@ -333,23 +333,20 @@
             int rows = matrix.GetLength(0);
             int columns = matrix.GetLength(1);
 
-            Console.WriteLine($"Платежная матрица:\n" +
-                              $"Размер: {rows} x {columns}");
-            Console.Write("|  |");
+            Console.WriteLine($"\nПлатежная матрица:\n" +
+                              $"Размер: {rows} x {columns}\n");
             for (int temp = 0; temp < matrix.GetLength(1); temp++)
             {
-                Console.Write($" B{temp}|");
+                Console.Write($" B{temp} ");
             }
-
             Console.WriteLine();
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                Console.Write($"|A{i}|");
+                Console.Write($" A{i} ");
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.Write($" {matrix[i, j]} |");
+                    Console.Write($" {matrix[i, j]}");
                 }
-
                 Console.WriteLine();
             }
         }
