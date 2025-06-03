@@ -75,9 +75,7 @@ namespace Differentiation
                 var solver = (IODESolver)MethodComboBox.SelectedItem;
 
                 solver.Solve(order, start, end, step, init, rhs, out var tList, out var yLists);
-
-                // Очистить график
-                Graphic.Plot.Clear();
+                
                 for (int i = 0; i < order; i++)
                 {
                     var curve = Graphic.Plot.Add.Markers(
