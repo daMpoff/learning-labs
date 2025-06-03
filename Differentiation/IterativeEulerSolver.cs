@@ -13,13 +13,13 @@ public class IterativeEulerSolver : IODESolver
         double step,
         List<double> init,
         MathNet.Symbolics.SymbolicExpression rhs,
-        out List<double> tList,
+        out List<double> xList,
         out List<List<double>> yLists
     )
     {
         // Количество шагов сетки
         int N = (int)Math.Ceiling((end - start) / step) + 1;
-        tList = new List<double>(N) { start };    // Массив t (x)
+        xList = new List<double>(N) { start };    // Массив x
         yLists = new List<List<double>>();
         // Создаём списки значений для каждой переменной y0, y1, ...
         for (int i = 0; i < order; i++)
@@ -27,9 +27,8 @@ public class IterativeEulerSolver : IODESolver
 
         double[] y = new double[order];           // Значения yi на текущем шаге
         init.CopyTo(y);
-        double t = start;
+        double x = start;
 
-        var vars = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
         int numIterations = 4; // Обычно делают 3-4 итерации (см. презентацию)
 
         // Основной цикл по шагам сетки
@@ -42,8 +41,10 @@ public class IterativeEulerSolver : IODESolver
                 yIter[i] = y[i] + step * y[i + 1];
 
             // Для последней: yi+1^(0) = yi + h*f(xi, yi)
+            var vars = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
             for (int i = 0; i < order; i++)
                 vars[$"y{i}"] = y[i];
+            vars["x"] = x;
             double f = rhs.Evaluate(vars).RealValue;
             yIter[order - 1] = y[order - 1] + step * f;
 
@@ -57,20 +58,26 @@ public class IterativeEulerSolver : IODESolver
                     yIter[i] = y[i] + step / 2.0 * (y[i + 1] + yPrev[i + 1]);
 
                 // Для последней: среднее значение правой части f по xi, yi и xi+1, y_{i+1}^{(k-1)}
+                var varsBar = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
                 for (int i = 0; i < order; i++)
-                    vars[$"y{i}"] = yPrev[i];
-                double fBar = rhs.Evaluate(vars).RealValue; // f(x_{i+1}, y_{i+1}^{(k-1)})
+                    varsBar[$"y{i}"] = yPrev[i];
+                varsBar["x"] = x + step;
+                double fBar = rhs.Evaluate(varsBar).RealValue; // f(x_{i+1}, y_{i+1}^{(k-1)})
+
+                var varsOld = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
                 for (int i = 0; i < order; i++)
-                    vars[$"y{i}"] = y[i];
-                double fOld = rhs.Evaluate(vars).RealValue; // f(x_i, y_i)
+                    varsOld[$"y{i}"] = y[i];
+                varsOld["x"] = x;
+                double fOld = rhs.Evaluate(varsOld).RealValue; // f(x_i, y_i)
+
                 yIter[order - 1] = y[order - 1] + step / 2.0 * (fOld + fBar);
             }
 
             // ===== 3. Запись результатов и переход к следующему шагу =====
             for (int i = 0; i < order; i++)
                 yLists[i].Add(yIter[i]);
-            t += step;
-            tList.Add(t);
+            x += step;
+            xList.Add(x);
             Array.Copy(yIter, y, order); // Запоминаем текущее решение для следующего шага
         }
     }
