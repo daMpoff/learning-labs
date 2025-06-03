@@ -15,7 +15,7 @@ namespace Differentiation
             InitializeComponent();
 
             // Список всех методов (Name будет в ComboBox)
-            MethodComboBox.ItemsSource = OdeSolversRegistry.AllSolvers;
+            MethodComboBox.ItemsSource = ODESolversRegistry.AllSolvers;
             MethodComboBox.SelectedIndex = 0;
 
             GenerateInitialConditionFields();

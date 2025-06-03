@@ -2,8 +2,10 @@
 
 public class IterativeEulerSolver : IODESolver
 {
+    // Имя для ComboBox и отображения
     public string Name => "Эйлер с итерациями";
 
+    // Основной метод решения
     public void Solve(
         int order,
         double start,
@@ -15,55 +17,61 @@ public class IterativeEulerSolver : IODESolver
         out List<List<double>> yLists
     )
     {
+        // Количество шагов сетки
         int N = (int)Math.Ceiling((end - start) / step) + 1;
-        tList = new List<double>(N) { start };
+        tList = new List<double>(N) { start };    // Массив t (x)
         yLists = new List<List<double>>();
+        // Создаём списки значений для каждой переменной y0, y1, ...
         for (int i = 0; i < order; i++)
             yLists.Add(new List<double>(N) { init[i] });
 
-        double[] y = new double[order];
+        double[] y = new double[order];           // Значения yi на текущем шаге
         init.CopyTo(y);
         double t = start;
 
         var vars = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
-        int numIterations = 4; // по презентации: обычно 3-4 итерации
+        int numIterations = 4; // Обычно делают 3-4 итерации (см. презентацию)
 
+        // Основной цикл по шагам сетки
         for (int k = 1; k < N; k++)
         {
-            // --- Predictor: обычный Эйлер ---
+            // ===== 1. Первое приближение: обычный Эйлер (predictor) =====
             double[] yIter = new double[order];
+            // Для первых компонент: yi+1^(0) = yi + h*yi+1
             for (int i = 0; i < order - 1; i++)
                 yIter[i] = y[i] + step * y[i + 1];
+
+            // Для последней: yi+1^(0) = yi + h*f(xi, yi)
             for (int i = 0; i < order; i++)
                 vars[$"y{i}"] = y[i];
             double f = rhs.Evaluate(vars).RealValue;
             yIter[order - 1] = y[order - 1] + step * f;
 
-            // --- Итерационный процесс (корректор) ---
+            // ===== 2. Итерационный процесс уточнения (corrector) =====
             for (int iter = 1; iter < numIterations; iter++)
             {
-                double[] yPrev = (double[])yIter.Clone();
+                double[] yPrev = (double[])yIter.Clone(); // Сохраняем предыдущее приближение
 
-                // Для первых переменных: обычная формула Коши-Эйлера, но с yPrev
+                // Для первых компонент: уточняем как среднее (Cauchy)
                 for (int i = 0; i < order - 1; i++)
                     yIter[i] = y[i] + step / 2.0 * (y[i + 1] + yPrev[i + 1]);
 
-                // Последняя переменная: уточняем правую часть по новой yIter
+                // Для последней: среднее значение правой части f по xi, yi и xi+1, y_{i+1}^{(k-1)}
                 for (int i = 0; i < order; i++)
                     vars[$"y{i}"] = yPrev[i];
-                double fBar = rhs.Evaluate(vars).RealValue;
+                double fBar = rhs.Evaluate(vars).RealValue; // f(x_{i+1}, y_{i+1}^{(k-1)})
                 for (int i = 0; i < order; i++)
                     vars[$"y{i}"] = y[i];
-                double fOld = rhs.Evaluate(vars).RealValue;
+                double fOld = rhs.Evaluate(vars).RealValue; // f(x_i, y_i)
                 yIter[order - 1] = y[order - 1] + step / 2.0 * (fOld + fBar);
             }
 
-            // --- Финальное значение ---
+            // ===== 3. Запись результатов и переход к следующему шагу =====
             for (int i = 0; i < order; i++)
                 yLists[i].Add(yIter[i]);
             t += step;
             tList.Add(t);
-            Array.Copy(yIter, y, order);
+            Array.Copy(yIter, y, order); // Запоминаем текущее решение для следующего шага
         }
     }
 }
