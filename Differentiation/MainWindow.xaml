@@ -1,0 +1,46 @@
+﻿<Window x:Class="Differentiation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:scottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        Title="Численное решение ОДУ любого порядка" Height="560" Width="900">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Первая строка: настройки -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,6" >
+            <TextBlock Text="Порядок:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox x:Name="OrderTextBox" Width="40" Text="2" Margin="0,0,12,0"/>
+            <TextBlock Text="Прав. часть (f(y0, y1, ...)):" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox x:Name="RhsTextBox" Width="180" Text="y1-y0" Margin="0,0,12,0"/>
+            <TextBlock Text="Старт:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox x:Name="StartTextBox" Width="40" Text="0" Margin="0,0,12,0"/>
+            <TextBlock Text="Конец:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox x:Name="EndTextBox" Width="40" Text="10" Margin="0,0,12,0"/>
+            <TextBlock Text="Шаг:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox x:Name="StepTextBox" Width="40" Text="0.1" Margin="0,0,12,0"/>
+            <TextBlock Text="Метод:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <ComboBox x:Name="MethodComboBox" Width="200" SelectedIndex="0" Margin="0,0,12,0">
+                <ComboBoxItem>Эйлер</ComboBoxItem>
+                <ComboBoxItem>Эйлер-Коши</ComboBoxItem>
+                <ComboBoxItem>Эйлер итерационный</ComboBoxItem>
+                <ComboBoxItem>Улучшенный Эйлер</ComboBoxItem>
+                <ComboBoxItem>Рунге-Кутта 2</ComboBoxItem>
+                <ComboBoxItem>Рунге-Кутта 3</ComboBoxItem>
+                <ComboBoxItem>Рунге-Кутта 4</ComboBoxItem>
+                <ComboBoxItem>Адамс-Башфорт 2</ComboBoxItem>
+                <ComboBoxItem>Адамс-Башфорт 3</ComboBoxItem>
+                <ComboBoxItem>Адамс-Башфорт 4</ComboBoxItem>
+                <ComboBoxItem>Адамс-Мултон 2</ComboBoxItem>
+            </ComboBox>
+
+            <Button Content="Рассчитать" Click="SolveODE_Click" Margin="8,0,0,0"/>
+        </StackPanel>
+        <!-- Вторая строка: начальные условия, генерируется динамически -->
+        <StackPanel x:Name="InitialConditionsPanel" Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,8"/>
+        <!-- Третья строка: график -->
+        <scottPlot:WpfPlot x:Name="Graphic" Grid.Row="2" Margin="0,0,0,0"/>
+    </Grid>
+</Window>
