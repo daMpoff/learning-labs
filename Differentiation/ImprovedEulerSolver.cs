@@ -1,4 +1,6 @@
-﻿namespace Differentiation;
+﻿using MathNet.Symbolics;
+
+namespace Differentiation;
 
 public class ImprovedEulerSolver : IODESolver
 {
@@ -10,27 +12,28 @@ public class ImprovedEulerSolver : IODESolver
         double end,
         double step,
         List<double> init,
-        MathNet.Symbolics.SymbolicExpression rhs,
-        out List<double> tList,
+        SymbolicExpression rhs,
+        out List<double> xList,
         out List<List<double>> yLists
     )
     {
         int N = (int)Math.Ceiling((end - start) / step) + 1;
-        tList = new List<double>(N) { start };
+        xList = new List<double>(N) { start };
         yLists = new List<List<double>>();
         for (int i = 0; i < order; i++)
             yLists.Add(new List<double>(N) { init[i] });
 
         double[] y = new double[order];
         init.CopyTo(y);
-        double t = start;
-        var vars = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
+        double x = start;
 
         for (int k = 1; k < N; k++)
         {
             // 1. Вычисляем f(x_i, y_i)
+            var vars = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
             for (int i = 0; i < order; i++)
                 vars[$"y{i}"] = y[i];
+            vars["x"] = x;
             double f = rhs.Evaluate(vars).RealValue;
 
             // 2. y_{i+1/2} = y_i + (h/2) * f(x_i, y_i)
@@ -40,9 +43,11 @@ public class ImprovedEulerSolver : IODESolver
             y_half[order - 1] = y[order - 1] + (step / 2.0) * f;
 
             // 3. f(x_{i+1/2}, y_{i+1/2})
+            var vars_half = new Dictionary<string, MathNet.Symbolics.FloatingPoint>();
             for (int i = 0; i < order; i++)
-                vars[$"y{i}"] = y_half[i];
-            double f_half = rhs.Evaluate(vars).RealValue;
+                vars_half[$"y{i}"] = y_half[i];
+            vars_half["x"] = x + step / 2.0;
+            double f_half = rhs.Evaluate(vars_half).RealValue;
 
             // 4. y_{i+1} = y_i + h * f(x_{i+1/2}, y_{i+1/2})
             double[] y_next = new double[order];
@@ -56,8 +61,8 @@ public class ImprovedEulerSolver : IODESolver
                 y[i] = y_next[i];
                 yLists[i].Add(y[i]);
             }
-            t += step;
-            tList.Add(t);
+            x += step;
+            xList.Add(x);
         }
     }
 }
