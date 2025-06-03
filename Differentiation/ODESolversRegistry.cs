@@ -9,6 +9,8 @@ public static class ODESolversRegistry
         new IterativeEulerSolver(),
         new RungeKuttaSolver(),
         new RungeKutta3Solver(),
-        new AdamsSolver()
+        new AdamsSolver(),
+        new AdamsBashforthSolver(),
+        
     };
 }
