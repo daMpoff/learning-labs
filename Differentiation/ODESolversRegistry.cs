@@ -6,6 +6,8 @@ public static class ODESolversRegistry
     {
         new EulerSolver(),
         new EulerCauchySolver(),
-        new IterativeEulerSolver()
+        new IterativeEulerSolver(),
+        new RungeKuttaSolver(),
+        new RungeKutta3Solver()
     };
 }
