@@ -11,6 +11,6 @@ public static class ODESolversRegistry
         new RungeKutta3Solver(),
         new AdamsSolver(),
         new AdamsBashforthSolver(),
-        
+        new AdamsMoultonSolver()
     };
 }
