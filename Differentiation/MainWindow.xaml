@@ -9,7 +9,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!-- Первая строка: настройки -->
+        <!-- Настройки -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,6" >
             <TextBlock Text="Порядок:" VerticalAlignment="Center" Margin="0,0,4,0"/>
             <TextBox x:Name="OrderTextBox" Width="40" Text="2" Margin="0,0,12,0"/>
@@ -22,25 +22,13 @@
             <TextBlock Text="Шаг:" VerticalAlignment="Center" Margin="0,0,4,0"/>
             <TextBox x:Name="StepTextBox" Width="40" Text="0.1" Margin="0,0,12,0"/>
             <TextBlock Text="Метод:" VerticalAlignment="Center" Margin="0,0,4,0"/>
-            <ComboBox x:Name="MethodComboBox" Width="200" SelectedIndex="0" Margin="0,0,12,0">
-                <ComboBoxItem>Эйлер</ComboBoxItem>
-                <ComboBoxItem>Эйлер-Коши</ComboBoxItem>
-                <ComboBoxItem>Эйлер итерационный</ComboBoxItem>
-                <ComboBoxItem>Улучшенный Эйлер</ComboBoxItem>
-                <ComboBoxItem>Рунге-Кутта 2</ComboBoxItem>
-                <ComboBoxItem>Рунге-Кутта 3</ComboBoxItem>
-                <ComboBoxItem>Рунге-Кутта 4</ComboBoxItem>
-                <ComboBoxItem>Адамс-Башфорт 2</ComboBoxItem>
-                <ComboBoxItem>Адамс-Башфорт 3</ComboBoxItem>
-                <ComboBoxItem>Адамс-Башфорт 4</ComboBoxItem>
-                <ComboBoxItem>Адамс-Мултон 2</ComboBoxItem>
-            </ComboBox>
-
+            <ComboBox x:Name="MethodComboBox" Width="170" Margin="0,0,12,0"
+                      DisplayMemberPath="Name" SelectedIndex="0"/>
             <Button Content="Рассчитать" Click="SolveODE_Click" Margin="8,0,0,0"/>
         </StackPanel>
-        <!-- Вторая строка: начальные условия, генерируется динамически -->
+        <!-- Начальные условия -->
         <StackPanel x:Name="InitialConditionsPanel" Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,8"/>
-        <!-- Третья строка: график -->
+        <!-- График -->
         <scottPlot:WpfPlot x:Name="Graphic" Grid.Row="2" Margin="0,0,0,0"/>
     </Grid>
 </Window>

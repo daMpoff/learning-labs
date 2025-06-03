@@ -1,67 +1,63 @@
-using System;
-using System.Collections.Generic;
 using MathNet.Symbolics;
-using Expr = MathNet.Symbolics.SymbolicExpression;
 
 namespace Differentiation
 {
-    public static class EulerCauchySolver
+    public class EulerCauchySolver : IODESolver
     {
-        /// <summary>
-        /// Решает задачу Коши для ОДУ n-го порядка методом Эйлера.
-        /// </summary>
-        /// <param name="order">Порядок ОДУ</param>
-        /// <param name="rhs">Правая часть (SymbolicExpression)</param>
-        /// <param name="initialConditions">Начальные условия (y0, y1, ...)</param>
-        /// <param name="x0">Начальное значение x</param>
-        /// <param name="xEnd">Конечное значение x</param>
-        /// <param name="step">Шаг</param>
-        /// <returns>Словарь: имя переменной -> список значений</returns>
-        public static Dictionary<string, List<double>> Solve(
+        public string Name => "Эйлер-Коши";
+        public void Solve(
             int order,
-            Expr rhs,
-            List<double> initialConditions,
-            double x0,
-            double xEnd,
-            double step)
+            double start,
+            double end,
+            double step,
+            List<double> init,
+            SymbolicExpression rhs,
+            out List<double> tList,
+            out List<List<double>> yLists
+        )
         {
-            int steps = (int)Math.Ceiling((xEnd - x0) / step) + 1;
-            var result = new Dictionary<string, List<double>>();
+            int N = (int)Math.Ceiling((end - start) / step) + 1;
+            tList = new List<double>(N) { start };
+            yLists = new List<List<double>>();
             for (int i = 0; i < order; i++)
-                result[$"y{i}"] = new List<double>(steps) { initialConditions[i] };
-            var xList = new List<double>(steps) { x0 };
+                yLists.Add(new List<double>(N) { init[i] });
 
-            // Текущее состояние
             double[] y = new double[order];
-            initialConditions.CopyTo(y);
-            double x = x0;
+            init.CopyTo(y);
+            double t = start;
+            var vars = new Dictionary<string, FloatingPoint>();
 
-            // Подготовим переменные для подстановки
-            var variables = new Dictionary<string, FloatingPoint>();
-
-            for (int k = 1; k < steps; k++)
+            for (int k = 1; k < N; k++)
             {
-                // y0' = y1, y1' = y2, ..., y_{n-2}' = y_{n-1}, y_{n-1}' = f(x, y0, ..., y_{n-1})
-                double[] yNext = new double[order];
+                // 1. Predictor: обычный Эйлер
+                double[] yBar = new double[order];
                 for (int i = 0; i < order - 1; i++)
-                    yNext[i] = y[i] + step * y[i + 1];
+                    yBar[i] = y[i] + step * y[i + 1];
 
-                // y_{n-1}' = f(x, y0, ..., y_{n-1})
-                variables["x"] = x;
                 for (int i = 0; i < order; i++)
-                    variables[$"y{i}"] = y[i];
-                double f = rhs.Evaluate(variables).RealValue;
-                yNext[order - 1] = y[order - 1] + step * f;
+                    vars[$"y{i}"] = y[i];
+                double f = rhs.Evaluate(vars).RealValue;
+                yBar[order - 1] = y[order - 1] + step * f;
 
-                // Сохраняем значения
+                // 2. Corrector: по формуле Коши
+                double[] yNext = new double[order];
+                // для y0 ... yN-2
+                for (int i = 0; i < order - 1; i++)
+                    yNext[i] = y[i] + step / 2.0 * (y[i + 1] + yBar[i + 1]);
+                // для yN-1
+                // f(xi, y) и f(xi+1, yBar)
                 for (int i = 0; i < order; i++)
-                    result[$"y{i}"].Add(yNext[i]);
-                x += step;
-                xList.Add(x);
+                    vars[$"y{i}"] = yBar[i];
+                double fBar = rhs.Evaluate(vars).RealValue;
+                yNext[order - 1] = y[order - 1] + step / 2.0 * (f + fBar);
+
+                for (int i = 0; i < order; i++)
+                    yLists[i].Add(yNext[i]);
+                t += step;
+                tList.Add(t);
                 Array.Copy(yNext, y, order);
             }
-            result["x"] = xList;
-            return result;
         }
     }
+
 } 
