@@ -62,8 +62,8 @@ namespace Differentiation
             try
             {
                 int order = int.Parse(OrderTextBox.Text);
-                double start = double.Parse(StartTextBox.Text, CultureInfo.InvariantCulture);
-                double end = double.Parse(EndTextBox.Text, CultureInfo.InvariantCulture);
+                double xStart = double.Parse(StartTextBox.Text, CultureInfo.InvariantCulture);
+                double xEnd = double.Parse(EndTextBox.Text, CultureInfo.InvariantCulture);
                 double step = double.Parse(StepTextBox.Text, CultureInfo.InvariantCulture);
 
                 List<double> init = new();
@@ -74,17 +74,17 @@ namespace Differentiation
 
                 var solver = (IODESolver)MethodComboBox.SelectedItem;
 
-                solver.Solve(order, start, end, step, init, rhs, out var tList, out var yLists);
-                
+                solver.Solve(order, xStart, xEnd, step, init, rhs, out var xList, out var yLists);
+
                 for (int i = 0; i < order; i++)
                 {
                     var curve = Graphic.Plot.Add.Markers(
-                        tList.ToArray(),
+                        xList.ToArray(),
                         yLists[i].ToArray()
                     );
                     curve.LegendText = $"{solver.Name} y{i}";
                 }
-                Graphic.Plot.XLabel("t");
+                Graphic.Plot.XLabel("x");
                 Graphic.Plot.YLabel("y");
                 Graphic.Plot.Title("Решение ОДУ");
                 Graphic.Plot.ShowLegend();
@@ -94,6 +94,12 @@ namespace Differentiation
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
+        }
+
+        private void ClearPlot_Click(object sender, RoutedEventArgs e)
+        {
+            Graphic.Plot.Clear();
+            Graphic.Refresh();
         }
     }
 }
