@@ -1,4 +1,6 @@
-﻿namespace Differentiation;
+﻿using MathNet.Symbolics;
+
+namespace Differentiation;
 
 public class RungeKutta3Solver : IODESolver
 {
@@ -10,7 +12,7 @@ public class RungeKutta3Solver : IODESolver
         double end,
         double step,
         List<double> init,
-        MathNet.Symbolics.SymbolicExpression rhs,
+        SymbolicExpression rhs,
         out List<double> xList,
         out List<List<double>> yLists
     )
