@@ -1,0 +1,48 @@
+﻿<Window x:Class="integration.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:integration"
+        xmlns:scottplot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        mc:Ignorable="d"
+        Title="Интегрирование" Height="520" Width="950">
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Панель управления -->
+        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+            <TextBlock Text="Функция (от x):" Margin="0,0,0,5"/>
+            <TextBox x:Name="FunctionBox" Text="2*x" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="Пределы интегрирования:" Margin="0,0,0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="a:" VerticalAlignment="Center"/>
+                <TextBox x:Name="ABox" Text="0" Width="50" Margin="5,0"/>
+                <TextBlock Text="b:" VerticalAlignment="Center"/>
+                <TextBox x:Name="BBox" Text="5" Width="50" Margin="5,0"/>
+            </StackPanel>
+            
+            <TextBlock Text="Шаг (h):" Margin="0,0,0,5"/>
+            <TextBox x:Name="StepBox" Text="1" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="Метод:" Margin="0,0,0,5"/>
+            <ComboBox x:Name="MethodBox" Margin="0,0,0,10"/>
+            
+            <Button Content="Рассчитать" Height="38" Click="Calculate_Click" Margin="0,8,0,0"/>
+            
+            <Border Margin="0,15,0,0" Padding="6" BorderBrush="#aaa" BorderThickness="1" Background="#f7f7f7">
+                <StackPanel>
+                    <TextBlock Text="Результат интегрирования:" FontWeight="Bold" Margin="0,0,0,6"/>
+                    <TextBlock x:Name="ResultBlock" Text="-" FontSize="16" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        
+        <!-- График -->
+        <scottplot:WpfPlot x:Name="WpfPlot1" Grid.Column="1" Margin="0" />
+    </Grid>
+</Window>
