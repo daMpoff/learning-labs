@@ -1,5 +1,9 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using MathNet.Symbolics;
 
 namespace ApproximationInterpolation
@@ -7,15 +11,33 @@ namespace ApproximationInterpolation
     public partial class MainWindow : Window
     {
         private List<(double x, double y)> points = new();
-        private IInterpolator currentInterpolator;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            MethodComboBox.ItemsSource = InterpolatorsRegistry.AllInterpolators;
-            MethodComboBox.DisplayMemberPath = "Name";
-            MethodComboBox.SelectedIndex = 0;
+            InterpolationComboBox.ItemsSource = InterpolatorsRegistry.AllInterpolators;
+            InterpolationComboBox.SelectedIndex = 0;
+
+            ApproximationComboBox.ItemsSource = ApproximatorsRegistry.AllApproximators;
+            ApproximationComboBox.SelectedIndex = 0;
+
+            ModeComboBox.SelectionChanged += ModeComboBox_SelectionChanged;
+        }
+
+        private void ModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Показываем нужный ComboBox
+            if (ModeComboBox.SelectedIndex == 0)
+            {
+                InterpGrid.Visibility = Visibility.Visible;
+                ApproxGrid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                InterpGrid.Visibility = Visibility.Collapsed;
+                ApproxGrid.Visibility = Visibility.Visible;
+            }
         }
 
         private void AddPoints_Click(object sender, RoutedEventArgs e)
@@ -54,20 +76,18 @@ namespace ApproximationInterpolation
                 return;
             }
 
-            currentInterpolator = (IInterpolator)MethodComboBox.SelectedItem;
-            currentInterpolator.SetPoints(points);
+            if (!int.TryParse(DegreeBox.Text, out int degree) || degree < 1)
+            {
+                MessageBox.Show("Степень полинома должна быть положительным числом.");
+                return;
+            }
 
-            double x0 = points.First().x;
-            double x1 = points.Last().x;
-
-            // Получаем шаги
-            double funcStep, interpStep;
-            if (!double.TryParse(StepBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out funcStep) || funcStep <= 0)
+            if (!double.TryParse(StepBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double funcStep) || funcStep <= 0)
             {
                 MessageBox.Show("Некорректный шаг функции.");
                 return;
             }
-            if (!double.TryParse(InterpStepBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out interpStep) || interpStep <= 0)
+            if (!double.TryParse(InterpStepBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double interpStep) || interpStep <= 0)
             {
                 MessageBox.Show("Некорректный шаг интерполяции.");
                 return;
@@ -78,7 +98,44 @@ namespace ApproximationInterpolation
                 return;
             }
 
-            // Генерируем xs для интерполяции по мелкой сетке
+            double x0 = points.First().x, x1 = points.Last().x;
+
+            if (ModeComboBox.SelectedIndex == 0) // Интерполяция
+            {
+                var selectedInterpolator = InterpolationComboBox.SelectedItem as IInterpolator;
+                // Если выбран какой-то интерполятор, который зависит от степени — пересоздай его (например, если добавишь МНК-интерполятор)
+                var currentInterpolator = selectedInterpolator;
+                currentInterpolator.SetPoints(points);
+                DrawPlot(currentInterpolator.Interpolate, x0, x1, interpStep);
+            }
+            else // Аппроксимация
+            {
+                var selectedApproximator = ApproximationComboBox.SelectedItem as IApproximator;
+                IApproximator currentApproximator = null;
+                // Для каждого класса аппроксиматора — пересоздай с правильными параметрами
+                if (selectedApproximator is LeastSquaresPolynomialApproximator)
+                    currentApproximator = new LeastSquaresPolynomialApproximator(degree);
+                else if (selectedApproximator is TaylorApproximator)
+                    currentApproximator = new TaylorApproximator(FormulaBox.Text, degree);
+                else if (selectedApproximator is ChebyshevApproximator)
+                    currentApproximator = new ChebyshevApproximator(
+                        FormulaBox.Text,
+                        degree,
+                        double.Parse(StartXBox.Text, CultureInfo.InvariantCulture),
+                        double.Parse(EndXBox.Text, CultureInfo.InvariantCulture)
+                    );
+                else if (selectedApproximator is FourierApproximator)
+                    currentApproximator = new FourierApproximator(FormulaBox.Text, degree);
+                else
+                    currentApproximator = selectedApproximator;
+
+                currentApproximator.SetPoints(points);
+                DrawPlot(currentApproximator.Approximate, x0, x1, interpStep);
+            }
+        }
+
+        private void DrawPlot(Func<double, double> func, double x0, double x1, double interpStep)
+        {
             var xs = new List<double>();
             for (double x = x0; x <= x1 + 1e-8; x += interpStep)
                 xs.Add(x);
@@ -88,16 +145,12 @@ namespace ApproximationInterpolation
                 if (!xs.Any(xx => Math.Abs(xx - p.x) < 1e-8))
                     xs.Add(p.x);
 
-            // Сортируем xs
             xs = xs.OrderBy(v => v).ToList();
+            var ys = xs.Select(func).ToArray();
 
-            // Вычисляем значения интерполятора
-            var ys = xs.Select(currentInterpolator.Interpolate).ToArray();
-
-            // Очищаем график и рисуем заново
+            Plot.Plot.Clear();
             Plot.Plot.Add.Scatter(xs.ToArray(), ys);
-            Plot.Plot.Add.Markers(points.Select(p => p.x).ToArray(), points.Select(p => p.y).ToArray()); // маркеры узлов
-
+            Plot.Plot.Add.Markers(points.Select(p => p.x).ToArray(), points.Select(p => p.y).ToArray());
             Plot.Refresh();
         }
 
