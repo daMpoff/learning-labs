@@ -30,7 +30,10 @@
             <TextBox x:Name="StepBox" Text="1" Margin="0,0,0,10"/>
             
             <TextBlock Text="Метод:" Margin="0,0,0,5"/>
-            <ComboBox x:Name="MethodBox" Margin="0,0,0,10"/>
+            <ComboBox x:Name="MethodBox" DisplayMemberPath="Name" SelectedIndex="0" Margin="0,0,0,10" SelectionChanged="MethodBox_SelectionChanged"/>
+            
+            <TextBlock x:Name="OrderBoxLabel" Text="Порядок:" Margin="0,0,0,5" Visibility="Collapsed"/>
+            <ComboBox x:Name="OrderBox" Margin="0,0,0,10" Visibility="Collapsed"/>
             
             <Button Content="Рассчитать" Height="38" Click="Calculate_Click" Margin="0,8,0,0"/>
             

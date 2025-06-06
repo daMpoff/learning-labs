@@ -2,7 +2,7 @@
 
 public class GaussIntegrator : IIntegrator
 {
-    public string Name => $"Гаусс-Лежандр (n={Order})";
+    public string Name => $"Гаусс-Лежандр";
     public int Order { get; }
 
     public GaussIntegrator(int order = 5)

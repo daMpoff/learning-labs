@@ -12,6 +12,7 @@ public static class IntegratorsRegistry
         new CubicSplineIntegrator(),
         new MonteCarloIntegrator(),
         new MonteCarloGeometricIntegrator(),
-        new GaussIntegrator(5)
+        new GaussIntegrator(),
+        new ChebyshevIntegrator()
     };
 }
