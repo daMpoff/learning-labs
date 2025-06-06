@@ -4,7 +4,7 @@ namespace ApproximationInterpolation;
 
 public class LeastSquaresPolynomialApproximator : IApproximator
 {
-    public string Name => $"МНК-полином (ст. {Degree})";
+    public string Name => $"МНК-полином";
     public int Degree { get; private set; }
     private Vector<double> coeffs;
 
