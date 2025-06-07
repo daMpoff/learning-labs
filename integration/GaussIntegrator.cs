@@ -8,8 +8,10 @@ public class GaussIntegrator : IIntegrator
     public GaussIntegrator(int order = 5)
     {
         if (order < 2 || order > 10)
+        {
             throw new ArgumentException("Гауссов порядок должен быть в диапазоне 2-10");
-        Order = order;
+        }
+            Order = order;
     }
 
     public double Integrate(Func<double, double> f, double a, double b, double h)
@@ -32,7 +34,7 @@ public class GaussIntegrator : IIntegrator
                 ti = tiPrev - pn / pn1;
                 iter++;
                 if (iter > maxIter)
-                    throw new Exception("Ошибка вычисления корней: метод Ньютона не сошёлся.");
+                { throw new Exception("Ошибка вычисления корней: метод Ньютона не сошёлся."); }
             } while (Math.Abs(ti - tiPrev) > 1e-14);
 
             t[i] = ti;
@@ -102,7 +104,7 @@ public class GaussIntegrator : IIntegrator
                 ti = tiPrev - pn / pn1;
                 iter++;
                 if (iter > maxIter)
-                    throw new Exception("Ошибка вычисления корней: метод Ньютона не сошёлся.");
+                { throw new Exception("Ошибка вычисления корней: метод Ньютона не сошёлся."); }
             } while (Math.Abs(ti - tiPrev) > 1e-14);
 
             t[i] = ti;

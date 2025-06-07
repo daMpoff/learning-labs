@@ -9,8 +9,7 @@ public class SimpsonIntegrator : IIntegrator
         int N = (int)Math.Round((b - a) / h);
 
         // Симпсон требует четное число шагов!
-        if (N % 2 != 0)
-            N++;
+        if (N % 2 != 0) { N++; }
 
         h = (b - a) / N;
 
@@ -27,8 +26,7 @@ public class SimpsonIntegrator : IIntegrator
     public void Visualize(ScottPlot.Plot plot, Func<double, double> f, double a, double b, double h)
     {
         int N = (int)Math.Ceiling((b - a) / h);
-        if (N % 2 == 1)
-            N++;
+        if (N % 2 == 1) { N++; }
         double realH = (b - a) / N;
 
         for (int i = 0; i < N; i += 2)
@@ -36,7 +34,7 @@ public class SimpsonIntegrator : IIntegrator
             double x0 = a + i * realH;
             double x1 = x0 + realH;
             double x2 = x0 + 2 * realH;
-            if (x2 > b) x2 = b;
+            if (x2 > b) { x2 = b; }
 
             double y0 = f(x0);
             double y1 = f(x1);
