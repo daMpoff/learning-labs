@@ -23,7 +23,7 @@ namespace Differentiation
             xList = new List<double>(N) { start };
             yLists = new List<List<double>>();
             for (int i = 0; i < order; i++)
-                yLists.Add(new List<double>(N) { init[i] });
+            { yLists.Add(new List<double>(N) { init[i] }); }
 
             // Храним значения y и f (правых частей) на 5 последних шагах
             var yPrev = new List<double[]>();
@@ -39,16 +39,24 @@ namespace Differentiation
                 double[] k2 = RK4Step(y, order, rhs, x, step, 0.5, k1);
                 double[] k3 = RK4Step(y, order, rhs, x, step, 0.5, k2);
                 double[] k4 = RK4Step(y, order, rhs, x, step, 1.0, k3);
-
+                // Основной шаг метода Рунге-Кутта (RK4)
                 for (int i = 0; i < order; i++)
+                {
                     y[i] += step / 6.0 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
+                }
 
+                // Сохраняем предыдущее значение y
                 yPrev.Add(y.ToArray());
 
+                // Увеличиваем x и сохраняем его
                 x += step;
                 xList.Add(x);
+
+                // Сохраняем значения y для каждого уравнения
                 for (int i = 0; i < order; i++)
+                {
                     yLists[i].Add(y[i]);
+                }
             }
 
             // Инициализируем fPrev (5 последних точек)
@@ -100,7 +108,7 @@ namespace Differentiation
 
                 xList.Add(xNew);
                 for (int i = 0; i < order; i++)
-                    yLists[i].Add(yNew[i]);
+                { yLists[i].Add(yNew[i]); }
             }
         }
 
@@ -111,12 +119,16 @@ namespace Differentiation
         {
             var vars = new Dictionary<string, FloatingPoint>();
             for (int i = 0; i < order; i++)
+            {
                 vars[$"y{i}"] = y[i];
-            vars["x"] = x;
+                vars["x"] = x;
+            }
             double[] f = new double[order];
             for (int i = 0; i < order - 1; i++)
+            {
                 f[i] = y[i + 1];
-            f[order - 1] = rhs.Evaluate(vars).RealValue;
+                f[order - 1] = rhs.Evaluate(vars).RealValue;
+            }
             return f;
         }
 
@@ -129,22 +141,26 @@ namespace Differentiation
             if (prevK == null)
             {
                 for (int i = 0; i < order; i++)
-                    yTemp[i] = y[i];
+                { yTemp[i] = y[i]; }
             }
             else
             {
                 for (int i = 0; i < order; i++)
-                    yTemp[i] = y[i] + a * step * prevK[i];
+                { yTemp[i] = y[i] + a * step * prevK[i]; }
             }
 
             var vars = new Dictionary<string, FloatingPoint>();
             for (int i = 0; i < order; i++)
+            {
                 vars[$"y{i}"] = yTemp[i];
-            vars["x"] = x + a * step;
+                vars["x"] = x + a * step;
+            }
             double[] k = new double[order];
             for (int i = 0; i < order - 1; i++)
+            {
                 k[i] = yTemp[i + 1];
-            k[order - 1] = rhs.Evaluate(vars).RealValue;
+                k[order - 1] = rhs.Evaluate(vars).RealValue;
+            }
             return k;
         }
     }
