@@ -28,14 +28,19 @@ public class NewtonForwardInterpolator : IInterpolator
         // Таблица конечных разностей: строки — точки, столбцы — порядок разности
         diffTable = new double[n, n];
         for (int i = 0; i < n; i++)
+        {
             diffTable[i, 0] = this.points[i].y;
+        }
 
         // Строим все конечные разности (см. слайд 33)
         for (int j = 1; j < n; j++)
-        for (int i = 0; i < n - j; i++)
-            diffTable[i, j] = diffTable[i + 1, j - 1] - diffTable[i, j - 1];
+        {
+            for (int i = 0; i < n - j; i++)
+            {
+                diffTable[i, j] = diffTable[i + 1, j - 1] - diffTable[i, j - 1];
+            }
+        }
     }
-
     public double Interpolate(double x)
     {
         int n = points.Count;
@@ -55,7 +60,9 @@ public class NewtonForwardInterpolator : IInterpolator
     {
         double res = 1;
         for (int i = 2; i <= n; i++)
+        {
             res *= i;
+        }
         return res;
     }
 }

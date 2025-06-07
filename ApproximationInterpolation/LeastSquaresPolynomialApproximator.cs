@@ -26,7 +26,9 @@ public class LeastSquaresPolynomialApproximator : IApproximator
     {
         double result = 0;
         for (int j = 0; j < coeffs.Count; j++)
+        {
             result += coeffs[j] * Math.Pow(x, j);
+        }
         return result;
     }
 }

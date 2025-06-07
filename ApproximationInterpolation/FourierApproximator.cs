@@ -62,7 +62,7 @@ public class FourierApproximator : IApproximator
     {
         double sum = 0;
         for (int i = 1; i < xs.Length; i++)
-            sum += (ys[i - 1] + ys[i]) * h / 2;
+        { sum += (ys[i - 1] + ys[i]) * h / 2; }
         return sum;
     }
 
@@ -71,7 +71,9 @@ public class FourierApproximator : IApproximator
     {
         double res = a[0] / 2;
         for (int n = 1; n <= Degree; n++)
+        {
             res += a[n] * Math.Cos(n * x) + b[n] * Math.Sin(n * x);
+        }
         return res;
     }
 }

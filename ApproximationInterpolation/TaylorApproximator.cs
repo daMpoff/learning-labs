@@ -27,7 +27,10 @@ namespace ApproximationInterpolation
             {
                 var val = deriv.Evaluate(new Dictionary<string, FloatingPoint> { { "x", 0.0 } }).RealValue;
                 coeffs[k] = val / Factorial(k);
-                if (k < degree) deriv = deriv.Differentiate("x").Expand();
+                if (k < degree)
+                {
+                    deriv = deriv.Differentiate("x").Expand();
+                }
             }
             return coeffs;
         }
@@ -38,7 +41,9 @@ namespace ApproximationInterpolation
         {
             double sum = 0;
             for (int k = 0; k <= Degree; k++)
+            {
                 sum += coeffs[k] * Math.Pow(x, k);
+            }
             return sum;
         }
 

@@ -55,8 +55,11 @@ public class ChebyshevApproximator : IApproximator
         double xx = ToChebyshevX(x);
         double sum = 0;
         for (int i = 0; i < Degree; i++)
+        {
             sum += Coeffs[i] * Math.Cos(i * Math.Acos(xx));
-        sum -= Coeffs[0] / 2.0;
+            sum -= Coeffs[0] / 2.0;
+        }
+            
         return sum;
     }
 }

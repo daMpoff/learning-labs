@@ -20,12 +20,16 @@ public class CubicSplineInterpolator : IInterpolator
         d = new double[n];
 
         for (int i = 0; i <= n; i++)
+        {
             a[i] = this.points[i].y;
+        }
 
         // Шаги между x
         double[] h = new double[n];
         for (int i = 0; i < n; i++)
+        {
             h[i] = x[i + 1] - x[i];
+        }
 
         // Система уравнений на c (трёхдиагональная матрица)
         double[] alpha = new double[n];
@@ -60,8 +64,11 @@ public class CubicSplineInterpolator : IInterpolator
         // 4. Обратный ход
         c[n] = 0; // естественный сплайн, крайнее условие
         for (int i = n - 1; i >= 1; i--)
+        {
             c[i] = beta[i] - alpha[i] * c[i + 1];
-        c[0] = 0; // естественный сплайн, крайнее условие
+            c[0] = 0;
+        } // естественный сплайн, крайнее условие
+
 
         // 5. Остальные коэффициенты
         for (int i = 0; i < n; i++)
