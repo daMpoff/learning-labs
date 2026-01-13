@@ -1,0 +1,34 @@
+# FastAPI - легковесный и быстрый API фреймворк
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# CORS
+python-multipart>=0.0.6
+
+# Database
+sqlalchemy>=2.0.0
+# psycopg2-binary>=2.9.0  # Только если используете PostgreSQL
+alembic>=1.12.0  # Для миграций (опционально)
+
+# Async tasks (опционально, можно использовать встроенный BackgroundTasks)
+# celery>=5.3.0
+# redis>=5.0.0
+
+# Parsing
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+httpx>=0.25.0  # Асинхронные HTTP запросы для ускорения парсинга
+lxml>=4.9.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Colored output
+colorama>=0.4.6
+
