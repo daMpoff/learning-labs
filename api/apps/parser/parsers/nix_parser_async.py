@@ -50,20 +50,32 @@ class NixParserAsync:
         self.max_concurrent = max_concurrent
         self.semaphore = asyncio.Semaphore(max_concurrent)
     
-    def build_list_url(self, page='all', smartphones_only=True) -> str:
-        """Построение URL страницы списка"""
-        params = {
-            'section': 'smartphones_mobile_phones_all',
-            'page': page,
+    def build_list_url(self, page=1, smartphones_only=True) -> str:
+        """Построение URL страницы списка
+        
+        Параметр page должен быть в якорной части URL (#), а не в query string
+        """
+        # Базовый URL с section в query string
+        base_url = f"{self.LIST_URL}?section=smartphones_mobile_phones_all"
+        
+        # Параметры в якорной части (после #)
+        anchor_params = {
+            'c_id': '368',
+            'fn': '368',
+            'g_id': '265',
+            'new_goods': '0',
+            'page': str(page),
             'sort': '+p6510+5528+5529',
+            'spoiler': '1',
             'store': 'msk-0_1721_1',
             'thumbnail_view': '2'
         }
         
         if smartphones_only:
-            params['enums[4843][]'] = '2'
+            anchor_params['enums[4843][]'] = '2'
         
-        return f"{self.LIST_URL}?{urlencode(params, doseq=True)}"
+        anchor = urlencode(anchor_params, doseq=True)
+        return f"{base_url}#{anchor}"
     
     def parse_screen_size(self, text: str) -> Optional[float]:
         """Извлечение размера экрана"""
@@ -361,11 +373,15 @@ class NixParserAsync:
         # Извлечение изображения товара
         img_url = None
         
-        # Стратегия 1: Ищем по классам и ID
-        img = (soup.find('img', {'class': re.compile(r'product|item|phone', re.I)}) or
-               soup.find('img', id=re.compile(r'product|item|phone', re.I)) or
-               soup.find('img', {'class': 'product-image'}) or
-               soup.find('img', id='product-image'))
+        # Стратегия 1: Ищем по ID main_photo (самый надежный способ для NIX.ru)
+        img = soup.find('img', id='main_photo')
+        
+        # Стратегия 2: Ищем по классам и ID
+        if not img:
+            img = (soup.find('img', {'class': re.compile(r'product|item|phone', re.I)}) or
+                   soup.find('img', id=re.compile(r'product|item|phone', re.I)) or
+                   soup.find('img', {'class': 'product-image'}) or
+                   soup.find('img', id='product-image'))
         
         # Стратегия 2: Ищем в основном блоке товара
         if not img:
@@ -398,14 +414,8 @@ class NixParserAsync:
         if img:
             img_url = img.get('src') or img.get('data-src') or img.get('data-original')
             if img_url:
-                # Очистка URL от параметров размера (если есть)
-                if '?' in img_url:
-                    base_url = img_url.split('?')[0]
-                    # Оставляем только если это не параметры размера
-                    if 'width' not in img_url.lower() and 'height' not in img_url.lower():
-                        img_url = img_url
-                    else:
-                        img_url = base_url
+                # Очищаем URL от HTML entities
+                img_url = img_url.replace('&amp;', '&')
                 
                 # Преобразование относительного URL в абсолютный
                 if not img_url.startswith('http'):
@@ -430,7 +440,7 @@ class NixParserAsync:
         }
         
         async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
-            # Парсинг списков товаров
+            # Парсинг списков товаров по страницам
             while True:
                 if max_pages and current_page > max_pages:
                     break
@@ -490,14 +500,16 @@ class NixParserAsync:
                 total_time = time.time() - start_time
                 print(f"\n{Fore.CYAN}Страница {current_page} обработана за {total_time:.2f}с ({len(all_products)} товаров){Style.RESET_ALL}\n")
                 
-                # Уже выводится выше
+                # Увеличиваем номер страницы
+                current_page += 1
                 
-                # Проверка следующей страницы
-                next_page_link = soup.find('a', string=re.compile(r'следующая|next', re.I))
-                if not next_page_link:
+                # Если указан max_pages, проверяем лимит
+                if max_pages and current_page > max_pages:
                     break
                 
-                current_page += 1
+                # Если на странице меньше товаров, чем обычно, значит это последняя страница
+                if len(products) < 50:  # Обычно на странице 100 товаров
+                    break
         
         print(f"\n{Fore.CYAN}{Style.BRIGHT}{'='*60}{Style.RESET_ALL}")
         print(f"{Fore.GREEN}{Style.BRIGHT}ПАРСИНГ ЗАВЕРШЕН. Всего получено: {len(all_products)} смартфонов{Style.RESET_ALL}")

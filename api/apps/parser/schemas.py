@@ -12,14 +12,14 @@ class SmartphoneBase(BaseModel):
     brand: Optional[str] = None
     model: Optional[str] = None
     price: int
-    price_min: Optional[int] = None
-    price_max: Optional[int] = None
-    screen_size: Optional[float] = None
+    screen_width: Optional[int] = None
+    screen_height: Optional[int] = None
+    screen_pixels: Optional[int] = None
     ram: Optional[int] = None
     storage: Optional[int] = None
-    battery: Optional[int] = None
     camera_main: Optional[int] = None
     processor: Optional[str] = None
+    cores: Optional[int] = None
     os_version: Optional[str] = None
     device_type: Optional[str] = None
     availability: Optional[str] = None

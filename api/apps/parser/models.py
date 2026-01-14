@@ -19,16 +19,16 @@ class Smartphone(Base):
     
     # Цена
     price = Column(Integer, nullable=False, index=True)
-    price_min = Column(Integer)
-    price_max = Column(Integer)
     
     # Характеристики
-    screen_size = Column(Float)  # дюймы
+    screen_width = Column(Integer)  # разрешение экрана - ширина
+    screen_height = Column(Integer)  # разрешение экрана - высота
+    screen_pixels = Column(Integer)  # общее количество пикселей (width * height)
     ram = Column(Integer)  # ГБ
     storage = Column(Integer)  # ГБ
-    battery = Column(Integer)  # мАч
     camera_main = Column(Integer)  # МП
     processor = Column(String(200))
+    cores = Column(Integer)  # количество ядер процессора
     os_version = Column(String(100))
     
     # Дополнительно

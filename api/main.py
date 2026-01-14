@@ -49,12 +49,8 @@ async def health_check():
 
 # Импорт роутеров
 from apps.parser.routes import router as parser_router
+from apps.analysis.routes import router as analysis_router
 
 app.include_router(parser_router, prefix="/api/parser", tags=["parser"])
-
-# Будут добавлены позже:
-# from apps.analysis.routes import router as analysis_router
-# from apps.api.routes import router as api_router
-# app.include_router(analysis_router, prefix="/api/analysis", tags=["analysis"])
-# app.include_router(api_router, prefix="/api", tags=["api"])
+app.include_router(analysis_router, prefix="/api/analysis", tags=["analysis"])
 
