@@ -1,11 +1,7 @@
-﻿using System.Windows;
+using System.Windows;
 
-namespace lpp
+namespace lpp;
+
+public partial class App : Application
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-    }
 }
