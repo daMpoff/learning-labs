@@ -72,7 +72,10 @@ public static class LinearProgram
 
             var low = freeX ? new Point2(range.Low, 1) : new Point2(1, range.Low);
             var high = freeX ? new Point2(range.High, 1) : new Point2(1, range.High);
-            return Math.Max(CompareScore(a, b, low, default), CompareScore(a, b, high, default));
+            // Any positive improvement grows without bound along a feasible ray.
+            // The tolerance for comparing finite vertices must not turn it into a tie.
+            return Math.Max(Math.Sign(SumProducts(a, low.X, b * low.Y)),
+                Math.Sign(SumProducts(a, high.X, b * high.Y)));
         }
     }
 

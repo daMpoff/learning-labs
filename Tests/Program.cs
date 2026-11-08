@@ -41,6 +41,16 @@ Check("near-parallel boundaries", new(0, 1, Maximize),
 Check("small nonzero objective", new(1e-20, 0, Maximize), [], Unbounded);
 Check("narrow recession ray", new(0, 1, Maximize),
     [new(-1e-20, 1, Equal, 0)], Unbounded);
+Check("nearly perpendicular improving ray, maximum", new(1, -1, Maximize),
+    [new(1, -1.000000000001, Equal, 0)], Unbounded);
+Check("nearly perpendicular improving ray, minimum", new(-1, 1, Minimize),
+    [new(1, -1.000000000001, Equal, 0)], Unbounded);
+Check("nearly perpendicular improving ray, swapped axes", new(-1, 1, Maximize),
+    [new(-1.000000000001, 1, Equal, 0)], Unbounded);
+Check("nearly perpendicular decreasing ray", new(-1, 1, Maximize),
+    [new(1, -1.000000000001, Equal, 0)], Optimal, 0, new(0, 0), alternatives: false);
+Check("perpendicular optimal ray", new(1, -1, Maximize),
+    [new(1, -1, Equal, 0)], Optimal, 0, new(0, 0), alternatives: true);
 Check("tiny positive bound", new(1, 0, Maximize),
     [new(1, 0, LessOrEqual, 1e-15), new(0, 1, Equal, 0)],
     Optimal, 1e-15, new(1e-15, 0), vertices: 2);
