@@ -24,3 +24,4 @@
 - [DominantAndDuplicateStrategies](DominantAndDuplicateStrategies/)
 - [ApproximationInterpolation](ApproximationInterpolation/)
 - [plugin-residential](plugin-residential/) — плагин WordPress для отображения дворов и объектов OpenStreetMap в WorldStat.
+- [Integration](Integration/)
