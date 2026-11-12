@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Aptos';
+  src: local('Aptos');
+  font-display: swap;
+}
+
+body {
+  font-family: 'Aptos', system-ui, -apple-system, sans-serif;
+}
+
