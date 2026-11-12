@@ -10,7 +10,8 @@ namespace socketchat
 {
     public class DBCRUD
     {
-        static readonly string connStr = $"server={SERVER} database={DB} user={USER} password={PASSWORD}";
+        static readonly string connStr =
+            Environment.GetEnvironmentVariable("SOCKETCHAT_MYSQL_CONNECTION_STRING") ?? string.Empty;
         static readonly MySqlConnection conn = new MySqlConnection(connStr);
 
         #region Шифрование пароля
