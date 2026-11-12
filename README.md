@@ -30,3 +30,4 @@
 - [NumericalDifferentation](NumericalDifferentation/) — численное дифференцирование на C# и WPF.
 - [Расчётно-графическая работа](CalculationAndGraphicWork/) — интерполяция и анализ.
 - [VirusTotalASP](VirusTotalASP/) — интерфейс для проверки файлов через VirusTotal на ASP.NET Core и Vue.
+- [DecisionMakingMethods](DecisionMakingMethods/) — многокритериальный выбор смартфонов методом TOPSIS.
