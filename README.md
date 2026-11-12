@@ -20,3 +20,4 @@
 - [ShortestPathInGraph](ShortestPathInGraph/)
 - [SimplexMethod](SimplexMethod/)
 - [MaximumFlow](MaximumFlow/)
+- [OptimalStrategy](OptimalStrategy/)
