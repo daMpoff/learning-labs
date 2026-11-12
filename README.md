@@ -19,3 +19,4 @@
 - [SNU](SNU/) — прототип WPF-приложения для систем нелинейных уравнений.
 - [ShortestPathInGraph](ShortestPathInGraph/)
 - [SimplexMethod](SimplexMethod/)
+- [MaximumFlow](MaximumFlow/)
