@@ -11,3 +11,4 @@
 - [OOP_2_2](OOP_2_2/) — двусвязный список на C#.
 - [OOP_2_3_threads](OOP_2_3_threads/)
 - [OOP_2_5_regex](OOP_2_5_regex/)
+- [MyMarketplaceProject](MyMarketplaceProject/) — API маркетплейса на ASP.NET Core.
