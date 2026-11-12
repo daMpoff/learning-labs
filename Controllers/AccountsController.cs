@@ -202,18 +202,25 @@ namespace MyMarketplaceProject.Controllers
         }
         private async Task SendVerificationEmail(string email, int verificationCode)
         {
+            var smtpUsername = configuration["Smtp:Username"];
+            var smtpPassword = configuration["Smtp:Password"];
+            if (string.IsNullOrWhiteSpace(smtpUsername) || string.IsNullOrWhiteSpace(smtpPassword))
+            {
+                throw new InvalidOperationException("Set Smtp__Username and Smtp__Password.");
+            }
+
             // Настройка данных smtp сервера
             var smtpClient = new SmtpClient("smtp.yandex.ru")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("user@example.invalid", "[REDACTED]"),
                 EnableSsl = true,
-                UseDefaultCredentials = false
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(smtpUsername, smtpPassword)
             };
             //создание сообщения
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("user@example.invalid"),
+                From = new MailAddress(smtpUsername),
                 Subject = "Ваш код подтверждения для регистрации",
                 Body = $@"
                     <html>
