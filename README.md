@@ -28,3 +28,4 @@
 - [Differntation](Differntation/)
 - [lpp](lpp/) — графический метод решения задач линейного программирования.
 - [NumericalDifferentation](NumericalDifferentation/) — численное дифференцирование на C# и WPF.
+- [Расчётно-графическая работа](CalculationAndGraphicWork/) — интерполяция и анализ.
