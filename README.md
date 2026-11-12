@@ -4,7 +4,9 @@
 
 - [EliipseDrawning](EliipseDrawning/) — учебный проект на C# и Windows Forms.
 - [Parking-List](Parking-List/)
-- [tcpchat](tcpchat/)
+- [TCP-чаты](tcp/)
+  - [tcpchat](tcp/tcpchat/) — консольные клиент и сервер.
+  - [socketchat-client](tcp/socketchat-client/) — графический клиент на WPF.
 - [DuckApp](DuckApp/) — учебное Android-приложение.
 - [structExample](structExample/)
 - [OOP_2_1](OOP_2_1/)
