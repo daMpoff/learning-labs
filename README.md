@@ -27,3 +27,4 @@
 - [Integration](Integration/)
 - [Differntation](Differntation/)
 - [lpp](lpp/) — графический метод решения задач линейного программирования.
+- [NumericalDifferentation](NumericalDifferentation/) — численное дифференцирование на C# и WPF.
