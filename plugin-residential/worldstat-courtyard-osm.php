@@ -3,7 +3,7 @@
  * Plugin Name:       WorldStat — Courtyard OSM Map
  * Plugin URI:        https://example.com/worldstat-courtyard-osm
  * Description:       Расширение World Statistics: карта придомовой среды города (OSM + полигоны из эргономики), без правок базовых плагинов.
- * Version:           1.2.12
+ * Version:           1.2.24
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Requires Plugins:  world-statistics-platform, worldstat-cities
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WSCOSM_VERSION', '1.2.12' );
+define( 'WSCOSM_VERSION', '1.2.25' );
 define( 'WSCOSM_FILE', __FILE__ );
 define( 'WSCOSM_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WSCOSM_URL', plugin_dir_url( __FILE__ ) );
@@ -44,6 +44,7 @@ add_action(
 require_once WSCOSM_DIR . 'includes/class-wscosm-db.php';
 require_once WSCOSM_DIR . 'includes/class-wscosm-log.php';
 require_once WSCOSM_DIR . 'includes/class-wscosm-geo.php';
+require_once WSCOSM_DIR . 'includes/class-wscosm-yard-osm-raw.php';
 require_once WSCOSM_DIR . 'includes/class-wscosm-yard-at.php';
 require_once WSCOSM_DIR . 'includes/class-wscosm-scan-progress.php';
 require_once WSCOSM_DIR . 'includes/class-wscosm-feature-store.php';
