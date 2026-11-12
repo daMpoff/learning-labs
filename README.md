@@ -6,3 +6,4 @@
 - [Parking-List](Parking-List/)
 - [tcpchat](tcpchat/)
 - [DuckApp](DuckApp/) — учебное Android-приложение.
+- [structExample](structExample/)
