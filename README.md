@@ -18,3 +18,4 @@
 - [SLAE](SLAE/) — Решение систем линейных алгебраических уравнений на C# и WPF.
 - [SNU](SNU/) — прототип WPF-приложения для систем нелинейных уравнений.
 - [ShortestPathInGraph](ShortestPathInGraph/)
+- [SimplexMethod](SimplexMethod/)
