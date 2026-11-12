@@ -22,3 +22,4 @@
 - [MaximumFlow](MaximumFlow/)
 - [OptimalStrategy](OptimalStrategy/)
 - [DominantAndDuplicateStrategies](DominantAndDuplicateStrategies/)
+- [ApproximationInterpolation](ApproximationInterpolation/)
