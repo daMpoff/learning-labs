@@ -14,3 +14,5 @@
 - [OOP_2_3_threads](OOP_2_3_threads/)
 - [OOP_2_5_regex](OOP_2_5_regex/)
 - [MyMarketplaceProject](MyMarketplaceProject/) — API маркетплейса на ASP.NET Core.
+- [SNE](SNE/) — Решение систем нелинейных уравнений на C# и WPF.
+- [SLAE](SLAE/) — Решение систем линейных алгебраических уравнений на C# и WPF.
