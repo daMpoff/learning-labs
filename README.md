@@ -26,3 +26,4 @@
 - [plugin-residential](plugin-residential/) — плагин WordPress для отображения дворов и объектов OpenStreetMap в WorldStat.
 - [Integration](Integration/)
 - [Differntation](Differntation/)
+- [lpp](lpp/) — графический метод решения задач линейного программирования.
