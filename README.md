@@ -21,3 +21,4 @@
 - [SimplexMethod](SimplexMethod/)
 - [MaximumFlow](MaximumFlow/)
 - [OptimalStrategy](OptimalStrategy/)
+- [DominantAndDuplicateStrategies](DominantAndDuplicateStrategies/)
