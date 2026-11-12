@@ -15,8 +15,12 @@ public class VirusTotalService : IVirusTotalService
     {
         this.httpClient = httpClient;
         this.logger = logger;
-        apiKey = configuration["VirusTotal:ApiKey"] 
-            ?? throw new InvalidOperationException("Ключ API VirusTotal не настроен. Пожалуйста, установите VirusTotal:ApiKey в appsettings.json");
+        var configuredKey = configuration["VirusTotal:ApiKey"];
+        if (string.IsNullOrWhiteSpace(configuredKey))
+        {
+            throw new InvalidOperationException("Установите переменную окружения VirusTotal__ApiKey.");
+        }
+        apiKey = configuredKey;
 
         this.httpClient.BaseAddress = new Uri(BaseUrl + "/");
         this.httpClient.DefaultRequestHeaders.Add("x-apikey", apiKey);
